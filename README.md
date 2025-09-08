@@ -1,34 +1,14 @@
-# my-vite-react-ts a simple template
+# main project BEGINNING
 
-## color theme
+### FE
 
-src\styles\constColors.ts
-// provides colors, themeKeys
+김가람(부팀장) - Ivex0002
+이혜정
+정선영
+김도균
 
-src\store\useColorModeStore.ts
-// change colorMode
+### BE
 
-src\hooks\useThemeColors.ts
-// get color
-
-### usage
-
-```tsx
-import React from "react";
-import { css } from "@emotion/react";
-import { useThemeColors } from "../hooks/useThemeColors";
-
-function MyComponent() {
-  const { text, background } = useThemeColors();
-  // getting colors
-  const myStyle = React.useMemo(
-    () => css`
-      color: ${text};
-      background-color: ${background};
-    `,
-    [text, background]
-  );
-
-  return <div css={myStyle}>테마에 따라 바뀌는 컴포넌트</div>;
-}
-```
+전광일(팀장)
+임예지
+이현빈
