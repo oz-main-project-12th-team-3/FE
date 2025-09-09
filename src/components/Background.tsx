@@ -2,17 +2,22 @@
 import { css } from "@emotion/react";
 import { flexCenter } from "../styles/mixins";
 import { useThemeColors } from "../hooks/useThemeColors";
+import type { PropsWithChildren } from "react";
 
-export default function Background() {
+export default function Background({ children }: PropsWithChildren<{}>) {
   const { gradientBg1, gradientBg2, gradientBg3 } = useThemeColors();
 
   const backgroundSt = css`
     position: fixed;
     inset: 0;
-    background: linear-gradient(135deg, ${gradientBg1}, ${gradientBg2}, ${gradientBg3});
+    background: linear-gradient(
+      135deg,
+      ${gradientBg1},
+      ${gradientBg2},
+      ${gradientBg3}
+    );
     background-size: 170% 170%;
     animation: waveGradient 10s ease infinite;
-    pointer-events: none;
 
     @keyframes waveGradient {
       0% {
@@ -27,7 +32,5 @@ export default function Background() {
     }
   `;
 
-  return <div css={[flexCenter("column"), backgroundSt]} />;
+  return <div css={[flexCenter("column"), backgroundSt]}>{children}</div>;
 }
-
-
