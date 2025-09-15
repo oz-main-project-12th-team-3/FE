@@ -3,14 +3,14 @@ import { create } from "zustand";
 interface MousePosition {
   x: number | null;
   y: number | null;
-  setPosition: (val: [number, number]) => void;
+  setPosition: (arg0: number, arg1: number) => void;
   getMousePosition: () => { x: number | null; y: number | null };
 }
 
 export const useMousePositionStore = create<MousePosition>((set, get) => ({
   x: null,
   y: null,
-  setPosition: (val) => set(() => ({ x: val[0], y: val[1] })),
+  setPosition:  (x:number, y:number) => set({ x:x, y:y }),
   getMousePosition: () => {
     const { x, y } = get();
     return { x, y };
