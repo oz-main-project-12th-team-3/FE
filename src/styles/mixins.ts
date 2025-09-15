@@ -7,6 +7,12 @@ export const flexCenter = (direction: "row" | "column" = "row") => css`
   justify-content: center;
 `;
 
+export const overlay = css`
+  position: fixed;
+  inset: 0;
+  backdrop-filter: blur(8px);
+`;
+
 // const Card = styled.div`
 //   ${flexCenter};
 //   background: #f5f5f5;
