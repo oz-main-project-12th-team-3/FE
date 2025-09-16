@@ -4,6 +4,7 @@ type color = {
   ozPurple: string;
   componentBg: string;
   componentBorder: string;
+  gray: string;
 };
 
 const dark: color = {
@@ -12,6 +13,7 @@ const dark: color = {
   ozPurple: "#622de8",
   componentBg: "#00000028",
   componentBorder: "#ffffff18",
+  gray: "#616161",
 };
 
 const light: color = {
@@ -20,6 +22,7 @@ const light: color = {
   ozPurple: dark.ozPurple,
   componentBg: "#ffffff1c",
   componentBorder: "#00000018",
+  gray: "#616161",
 };
 
 export const colors = { dark, light } as const;
