@@ -2,8 +2,9 @@ import React, { useEffect } from "react";
 import "./App.css";
 import Background from "./components/background/Background";
 import { useMousePositionStore } from "./store/useMousePositionStore";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import Home from "./components/Home";
+import { testLogin } from "./api/test";
 
 const Modal = React.lazy(() => import("./components/modal/Modal"));
 const Login = React.lazy(() => import("./components/modal/Login"));
@@ -16,6 +17,7 @@ export default function App() {
     setPosition(e.clientX, e.clientY);
   };
   useEffect(() => {
+    testLogin()
     window.addEventListener("mousemove", updateMousePosition);
     return () => {
       window.removeEventListener("mousemove", updateMousePosition);
@@ -24,7 +26,6 @@ export default function App() {
 
   return (
     <Background>
-      <BrowserRouter>
         <Routes>
           <Route path="/" element={<Home />} />
 
@@ -32,7 +33,6 @@ export default function App() {
             <Route path="login" element={<Login />} />
           </Route>
         </Routes>
-      </BrowserRouter>
     </Background>
   );
 }
