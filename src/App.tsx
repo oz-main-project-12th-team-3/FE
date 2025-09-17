@@ -7,7 +7,7 @@ import Home from "./components/Home";
 import { testLogin } from "./api/test";
 
 const Modal = React.lazy(() => import("./components/modal/Modal"));
-const Login = React.lazy(() => import("./components/modal/Login"));
+const Login = React.lazy(() => import("./components/modal/authmodal/Login"));
 
 export default function App() {
 

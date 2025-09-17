@@ -5,6 +5,7 @@ import { FaRegEyeSlash } from "react-icons/fa";
 import { IoEyeOutline } from "react-icons/io5";
 
 type Props = {
+  id:string,
   type?: 'text' | 'email' | 'password';
   placeholder?: string;
   value: string;
@@ -14,6 +15,7 @@ type Props = {
 };
 
 export const TextInput = ({
+  id,
   type = 'text',
   placeholder,
   value,
@@ -28,6 +30,7 @@ export const TextInput = ({
     <div css={wrapperStyle}>
       {leftIcon && <div css={iconLeftStyle}>{leftIcon}</div>}
       <input
+        id={id}
         css={inputStyle}
         type={actualType}
         placeholder={placeholder}
