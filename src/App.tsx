@@ -26,12 +26,11 @@ export default function App() {
 
   return (
     <Background>
-      <Login />
         <Routes>
           <Route path="/" element={<Home />} />
 
           <Route path="modal" element={<Modal />}>
-            {/* <Route path="login" element={<Login />} /> */}
+            <Route path="login" element={<Login />} />
           </Route>
         </Routes>
     </Background>
