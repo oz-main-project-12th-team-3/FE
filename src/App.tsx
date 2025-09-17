@@ -10,30 +10,29 @@ const Modal = React.lazy(() => import("./components/modal/Modal"));
 const Login = React.lazy(() => import("./components/modal/Login"));
 
 export default function App() {
-
   // 마우스 포지션 스토어에 저장
-  const { setPosition } = useMousePositionStore();
   const updateMousePosition = (e: MouseEvent) => {
-    setPosition(e.clientX, e.clientY);
+    useMousePositionStore.getState().setMousePosition(e.clientX, e.clientY);
   };
   useEffect(() => {
-    testLogin()
+    testLogin();
     window.addEventListener("mousemove", updateMousePosition);
+    window.addEventListener("dragover", updateMousePosition);
     return () => {
       window.removeEventListener("mousemove", updateMousePosition);
+      window.removeEventListener("dragover", updateMousePosition);
     };
   }, []);
 
   return (
     <Background>
-        <Routes>
-          <Route path="/" element={<Home />} />
+      <Routes>
+        <Route path="/" element={<Home />} />
 
-          <Route path="modal" element={<Modal />}>
-            <Route path="login" element={<Login />} />
-          </Route>
-        </Routes>
+        <Route path="modal" element={<Modal />}>
+          <Route path="login" element={<Login />} />
+        </Route>
+      </Routes>
     </Background>
   );
 }
-
