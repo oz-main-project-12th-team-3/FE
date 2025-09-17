@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 import { useState } from "react";
-import { TextInput } from "../../TextInput";
+import { TextInput } from "../../InputFeild";
 import { FaRegEnvelope, FaLock } from "react-icons/fa";
 
 export default function Login() {
