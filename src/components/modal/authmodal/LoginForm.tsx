@@ -3,10 +3,52 @@ import { css } from "@emotion/react";
 import { useState } from "react";
 import { TextInput } from "../../InputFeild";
 import { FaRegEnvelope, FaLock } from "react-icons/fa";
+import { useThemeColors } from "../../../hooks/useThemeColors";
+import { hover } from "framer-motion";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const {buttonBgColor, modalBackground, hoverBtnColor } = useThemeColors()
+
+  const formStyle = css`
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 320px;
+  margin: 0 auto;
+`;
+
+const labelStyle = css`
+    font-size: 13px;
+    margin-top: 12px;
+    margin-bottom: 6px;
+`;
+
+const passwordTitleStyle = css`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  p{
+    cursor: pointer;
+    font-size:11px;
+  }
+`
+
+const buttonStyle = css`
+  background: ${buttonBgColor};
+  color: ${modalBackground};
+  padding: 12px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+
+  &:hover {
+    background: ${hoverBtnColor};
+  }
+`;
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -52,42 +94,4 @@ export default function Login() {
     </form>
   );
 }
-
-const formStyle = css`
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  width: 320px;
-  margin: 0 auto;
-`;
-
-const labelStyle = css`
-    font-size: 13px;
-    margin-top: 12px;
-    margin-bottom: 6px;
-`;
-
-const passwordTitleStyle = css`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  p{
-    cursor: pointer;
-    font-size:11px;
-  }
-`
-
-const buttonStyle = css`
-  background: #444;
-  color: white;
-  padding: 12px;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  font-size: 14px;
-
-  &:hover {
-    background: #222;
-  }
-`;
 
