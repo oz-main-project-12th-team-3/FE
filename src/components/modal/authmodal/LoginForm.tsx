@@ -4,7 +4,6 @@ import { useState } from "react";
 import { TextInput } from "../../InputFeild";
 import { FaRegEnvelope, FaLock } from "react-icons/fa";
 import { useThemeColors } from "../../../hooks/useThemeColors";
-import { hover } from "framer-motion";
 
 export default function Login() {
   const [email, setEmail] = useState("");

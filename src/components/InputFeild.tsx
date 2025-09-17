@@ -3,6 +3,7 @@ import { css } from '@emotion/react';
 import { useState } from 'react';
 import { FaRegEyeSlash } from "react-icons/fa";
 import { IoEyeOutline } from "react-icons/io5";
+import { useThemeColors } from '../hooks/useThemeColors';
 
 type Props = {
   id:string,
@@ -25,6 +26,42 @@ export const TextInput = ({
 }: Props) => {
   const [show, setShow] = useState(false);
   const actualType = passwordToggle ? (show ? 'text' : 'password') : type;
+  const { inputBorder, inputIcon, tabBtnText } = useThemeColors()
+
+
+
+const wrapperStyle = css`
+  position: relative;
+  width: 100%;
+`;
+
+const inputStyle = css`
+  width: 100%;
+  padding: 12px 40px 12px 36px;
+  border: 1px solid ${inputBorder};
+  border-radius: 6px;
+  font-size: 14px;
+`;
+
+const iconLeftStyle = css`
+  position: absolute;
+  top: 50%;
+  left: 10px;
+  transform: translateY(-50%);
+  color: ${inputIcon};
+`;
+
+const toggleButtonStyle = css`
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  font-size: 12px;
+  cursor: pointer;
+  color: ${tabBtnText};
+`;
 
   return (
     <div css={wrapperStyle}>
@@ -45,36 +82,3 @@ export const TextInput = ({
     </div>
   );
 };
-
-const wrapperStyle = css`
-  position: relative;
-  width: 100%;
-`;
-
-const inputStyle = css`
-  width: 100%;
-  padding: 12px 40px 12px 36px;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  font-size: 14px;
-`;
-
-const iconLeftStyle = css`
-  position: absolute;
-  top: 50%;
-  left: 10px;
-  transform: translateY(-50%);
-  color: #777;
-`;
-
-const toggleButtonStyle = css`
-  position: absolute;
-  right: 10px;
-  top: 50%;
-  transform: translateY(-50%);
-  background: none;
-  border: none;
-  font-size: 12px;
-  cursor: pointer;
-  color: #555;
-`;

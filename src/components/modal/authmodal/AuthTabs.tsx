@@ -9,7 +9,7 @@ interface Props {
 
 export default function AuthTabs({ tab, setTab }: Props) {
 
-  const {tabBgColor, modalBackground, tabBtn } = useThemeColors()
+  const {tabBgColor, modalBackground, tabBtnText, inactiveTabBg } = useThemeColors()
 
   const tabs = css`
   display: flex;
@@ -22,12 +22,12 @@ export default function AuthTabs({ tab, setTab }: Props) {
 const tabButton = css`
   flex: 1;
   border: none;
-  background: transparent;
+  background: ${inactiveTabBg};
   padding: 8px 0;
   border-radius: 30px;
   font-size: 14px;
   cursor: pointer;
-  color: ${tabBtn};
+  color: ${tabBtnText};
 `;
 
 const active = css`
@@ -54,28 +54,3 @@ const active = css`
     </div>
   );
 }
-
-const tabs = css`
-  display: flex;
-  justify-content: space-between;
-  background: #f3f3f3;
-  border-radius: 30px;
-  padding: 4px;
-`;
-
-const tabButton = css`
-  flex: 1;
-  border: none;
-  background: transparent;
-  padding: 8px 0;
-  border-radius: 30px;
-  font-size: 14px;
-  cursor: pointer;
-  color: #555;
-`;
-
-const active = css`
-  background: #fff;
-  font-weight: bold;
-  box-shadow: 0 0 4px rgba(0, 0, 0, 0.1);
-`;
