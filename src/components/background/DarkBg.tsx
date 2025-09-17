@@ -16,7 +16,9 @@ export function DarkThemeBg({ children }: PropsWithChildren<{}>) {
 
   return (
     <div css={DarkBgSt}>
-      <Stars />
+      <div className="stars_wrapper">
+        <Stars />
+      </div>
       {children}
     </div>
   );

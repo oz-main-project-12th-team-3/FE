@@ -13,6 +13,13 @@ export const overlay = css`
   backdrop-filter: blur(8px);
 `;
 
+export const flexWrap = (gap?: "0.5rem", padding?: "0.5rem") => css`
+  display: flex;
+  flex-wrap: wrap;
+  gap: ${gap};
+  padding: ${padding};
+`;
+
 // const Card = styled.div`
 //   ${flexCenter};
 //   background: #f5f5f5;
