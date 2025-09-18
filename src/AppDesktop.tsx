@@ -9,7 +9,7 @@ import { testLogin } from "./api/test";
 const Modal = React.lazy(() => import("./components/modal/Modal"));
 const Login = React.lazy(() => import("./components/modal/Login"));
 
-export default function App() {
+export default function AppDesktop() {
   // 마우스 포지션 스토어에 저장
   const updateMousePosition = (e: MouseEvent) => {
     useMousePositionStore.getState().setMousePosition(e.clientX, e.clientY);
