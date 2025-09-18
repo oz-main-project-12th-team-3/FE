@@ -30,7 +30,7 @@ export default function App() {
           <Route path="/" element={<Home />} />
 
           <Route path="modal" element={<Modal />}>
-            <Route path="login" element={<AuthModal />} />
+            <Route path="auth" element={<AuthModal />} />
           </Route>
         </Routes>
     </Background>
