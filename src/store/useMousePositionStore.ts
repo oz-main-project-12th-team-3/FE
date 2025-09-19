@@ -8,6 +8,7 @@ import { useDeviceTypeStore } from "./useDeviceTypeStore";
 export type WhereIsMouse = "center" | "left" | "right";
 
 export const triggerDistance = 200;
+export const barMargin = 50;
 interface MousePositionState {
   mousePosition: { x: number | null; y: number | null };
   whereIsMouse: WhereIsMouse;
