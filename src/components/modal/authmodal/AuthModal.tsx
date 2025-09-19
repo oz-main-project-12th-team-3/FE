@@ -3,6 +3,7 @@ import { useState } from "react";
 import { css } from "@emotion/react";
 import AuthTabs from "./AuthTabs";
 import LoginForm from "./LoginForm";
+import Signupform from "./SignupForm"
 import SocialLogin from "./SocialLogin";
 
 import { IoShieldOutline } from "react-icons/io5";
@@ -70,7 +71,7 @@ const clickButton = css`
       <AuthTabs tab={tab} setTab={setTab} />
 
       {/* 탭에 따른 폼 */}
-      <LoginForm />
+      {tab === "login" ? <LoginForm /> : <Signupform/>}
 
       {/* 간편 로그인 */}
       <SocialLogin />

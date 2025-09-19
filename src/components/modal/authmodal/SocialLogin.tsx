@@ -41,14 +41,18 @@ const socialIconStyle = css`
 `
 
   return (
-    <div css={wrap}>
-      <p>간편 로그인</p>
-      <div css={btnRow}>
-        <button><img src={googleLogo} css={socialIconStyle}/>Google</button>
-        <button><FaGithub size={20} css={socialIconStyle}/>GitHub</button>
-        <button><img src={naverLogo} css={socialIconStyle}/>Naver</button>
-        <button><img src={kakaoLogo} css={socialIconStyle}/>Kakao</button>
+    <>
+      <hr/>
+      <div css={wrap}>
+        <p>간편 로그인</p>
+        <div css={btnRow}>
+          <button><img src={googleLogo} css={socialIconStyle}/>Google</button>
+          <button><FaGithub size={20} css={socialIconStyle}/>GitHub</button>
+          <button><img src={naverLogo} css={socialIconStyle}/>Naver</button>
+          <button><img src={kakaoLogo} css={socialIconStyle}/>Kakao</button>
+        </div>
       </div>
-    </div>
+    
+    </>
   );
 }
