@@ -14,7 +14,6 @@ type color = {
   tabBgColor: string; 
   tabBtnText: string; 
   inactiveTabBg: string; 
-  activeTabShadow: string; 
   inputBg: string; aColor: string; 
 }; 
 
@@ -33,7 +32,6 @@ const dark: color = {
   btnBorder: "#ddd", 
   hoverSocialBtn:"#f9f9f9", 
   inactiveTabBg: "transparent", 
-  activeTabShadow: "rgba(0, 0, 0, 0.1)", 
   inputBg: "#f8f8f8", aColor:"#4a6df5" 
 }; 
 const light: color = { 
@@ -51,7 +49,6 @@ const light: color = {
   btnBorder: "#ddd", 
   hoverSocialBtn: "#f9f9f9", 
   inactiveTabBg: "transparent", 
-  activeTabShadow: "rgba(0, 0, 0, 0.1)", 
   inputBg:"#f8f8f8", 
   aColor:"#4a6df5" }; 
   export const colors = { dark, light } as const; 

@@ -4,7 +4,7 @@ import { useState } from "react";
 import { InputField } from "../../InputField";
 import { FaEnvelope, FaLock } from "react-icons/fa";
 import { useThemeColors } from "../../../hooks/useThemeColors";
-import { validatorEmail, validatorPassword } from "../../../utils/validator";
+import { validateEmail, validatePassword } from "../../../utils/validator";
 
 export default function Login() {
   const [form, setForm] = useState({ email: '', password: '' });
@@ -58,8 +58,8 @@ export default function Login() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    const emailError = validatorEmail(form.email);
-    const passwordError = validatorPassword(form.password);
+    const emailError = validateEmail(form.email);
+    const passwordError = validatePassword(form.password);
 
     const newErrors = {
       email: emailError,
