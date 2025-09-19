@@ -1,6 +1,6 @@
 import {
-  barMargin,
-  triggerDistance,
+  BAR_MARGIN,
+  TRIGGER_DISTANCE,
   useMousePositionStore,
 } from "../../store/useMousePositionStore";
 import { motion } from "framer-motion";
@@ -9,9 +9,9 @@ export function LeftbarPosition({ children }: { children: React.ReactNode }) {
   const { whereIsMouse } = useMousePositionStore();
   return (
     <motion.div
-      initial={{ x: -triggerDistance }}
+      initial={{ x: -TRIGGER_DISTANCE }}
       animate={{
-        x: whereIsMouse === "left" ? barMargin : -triggerDistance,
+        x: whereIsMouse === "left" ? BAR_MARGIN : -TRIGGER_DISTANCE,
       }}
       transition={{ type: "spring", stiffness: 300, damping: 30 }}
     >

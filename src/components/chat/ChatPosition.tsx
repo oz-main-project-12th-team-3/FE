@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 import {
-  barMargin,
+  BAR_MARGIN,
   useMousePositionStore,
 } from "../../store/useMousePositionStore";
 import { motion } from "framer-motion";
@@ -13,8 +13,8 @@ export function ChatPosition({ children }: { children: React.ReactNode }) {
   const chatX = useMemo(() => {
     const positions = {
       center: 0,
-      left: barMargin,
-      right: -barMargin,
+      left: BAR_MARGIN,
+      right: -BAR_MARGIN,
     };
     return positions[whereIsMouse] ?? 0;
   }, [whereIsMouse]);
