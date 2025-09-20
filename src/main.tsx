@@ -6,7 +6,7 @@ import React from "react";
 import { useDeviceTypeStore } from "./store/useDeviceTypeStore.ts";
 
 const AppMobile = React.lazy(() => import("./AppMobile.tsx"));
-const AppDesktop = React.lazy(() => import("./AppDesktop.tsx"));
+const AppDesktop = React.lazy(() => import("./App.tsx"));
 
 createRoot(document.getElementById("root")!).render(
   <BrowserRouter>
