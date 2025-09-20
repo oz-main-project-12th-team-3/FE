@@ -1,33 +1,28 @@
 import React, { useEffect } from "react";
 import "./App.css";
 import Background from "./components/background/Background";
-import { useMousePositionStore } from "./store/useMousePositionStore";
 import { Route, Routes } from "react-router-dom";
-import Home from "./components/Home";
-import { testLogin } from "./api/test";
+import WindowSizeProvider from "./components/utilComponents/WindowSizeProvider";
+import { MousePositonSetter } from "./components/utilComponents/MousePositionSetter";
 
+// Home은 즉시 로드
+import Home from "./components/Home";
 const Modal = React.lazy(() => import("./components/modal/Modal"));
 const AuthModal = React.lazy(() => import("./components/modal/authmodal/AuthModal"));
 
-export default function App() {
-
-  // 마우스 포지션 스토어에 저장
-  const { setPosition } = useMousePositionStore();
-  const updateMousePosition = (e: MouseEvent) => {
-    setPosition(e.clientX, e.clientY);
-  };
+export default function AppDesktop() {
   useEffect(() => {
-    testLogin()
-    window.addEventListener("mousemove", updateMousePosition);
-    return () => {
-      window.removeEventListener("mousemove", updateMousePosition);
-    };
-  }, []);
+    // testLogin();
+  });
 
   return (
     <Background>
-        <Routes>
-          <Route path="/" element={<Home />} />
+      <WindowSizeProvider />
+      <MousePositonSetter />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/chat/:id" element={<Home />} />
+        <Route path="/chat/new" element={<Home />} />
 
           <Route path="modal" element={<Modal />}>
             <Route path="auth" element={<AuthModal />} />
@@ -36,4 +31,3 @@ export default function App() {
     </Background>
   );
 }
-
