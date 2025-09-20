@@ -7,7 +7,7 @@ import Home from "./components/Home";
 import { testLogin } from "./api/test";
 
 const Modal = React.lazy(() => import("./components/modal/Modal"));
-const Login = React.lazy(() => import("./components/modal/Login"));
+const AuthModal = React.lazy(() => import("./components/modal/authmodal/AuthModal"));
 
 export default function App() {
 
@@ -30,7 +30,7 @@ export default function App() {
           <Route path="/" element={<Home />} />
 
           <Route path="modal" element={<Modal />}>
-            <Route path="login" element={<Login />} />
+            <Route path="auth" element={<AuthModal />} />
           </Route>
         </Routes>
     </Background>
