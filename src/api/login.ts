@@ -1,4 +1,5 @@
-import axios from "axios";
+
+import { api } from "./baseApi";
 
 export interface LoginRequest {
     email: string;
@@ -14,9 +15,7 @@ export interface LoginRespose{
 
 export async function loginApi(payload: LoginRequest): Promise<LoginRespose>{ // 비동기로 응답값을 반환
     try{
-        const res = await axios.post("http://localhost:8080/auth/login", payload, {
-            headers: { "Content-Type" : "application/json" },
-        })
+        const res = await api.post("/auth/login", payload)
         return res.data
     }catch(error:any){
         const message = error.response?.data?.message || error.message;
