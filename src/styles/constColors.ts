@@ -4,7 +4,7 @@ type color = {
   ozPurple: string;
   componentBg: string;
   componentBorder: string;
-  // 추가한 컬러 : Login & Signup
+  // Login & Signup
   modalBackground: string;
   buttonBgColor:string;
   hoverBtnColor: string;
@@ -17,7 +17,7 @@ type color = {
   inputIcon: string;
   inputBorder:string;
   aColor: string;
-  // 추가한 컬러 : schedule
+  // schedule
   headerBorder: string;
   modalHeaderBg: string;
   addButtonBg: string;
@@ -27,6 +27,11 @@ type color = {
   focusCompletedBox: string;
   disabledCompletedBox: string;
   hoverDeleteBtn: string;
+  // scroll
+  scrollColor: string;
+  // rightbar
+  crownIcon: string;
+  scheduleTitleColor:string;
 };
 
 const dark: color = {
@@ -55,7 +60,10 @@ const dark: color = {
   focusCompletedBox: "#2196F3",
   disabledCompletedBox: "#f5f5f5",
   hoverDeleteBtn: "#d32f2f",
-  aColor:"#4a6df5"
+  aColor:"#4a6df5",
+  scrollColor: "#ffffff63",
+  crownIcon: "#ffd700",
+  scheduleTitleColor: "#000000"
 };
 
 const light: color = {
@@ -84,7 +92,10 @@ const light: color = {
   deleteBtnBg: "#f44336",
   hoverDeleteBtn: "#d32f2f",
   disabledCompletedBox: "#f5f5f5",
-  aColor:"#4a6df5"
+  aColor:"#4a6df5",
+  scrollColor: "#00000063",
+  crownIcon: "#ffd700",
+  scheduleTitleColor:"#000000"
 };
 
 export const colors = { dark, light } as const;

@@ -2,7 +2,7 @@
 import { css } from "@emotion/react";
 import { Chat } from "./chat/Chat";
 import { Leftbar } from "./sidebar/Leftbar";
-import { Rightbar } from "./sidebar/Rightbar";
+import { Rightbar } from "./sidebar/Rightbar/Rightbar";
 
 export default function Home() {
   return (

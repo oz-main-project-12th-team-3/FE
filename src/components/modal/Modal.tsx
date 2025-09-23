@@ -6,6 +6,9 @@ import { useEffect } from "react";
 import { flexCenter, overlay } from "../../styles/mixins";
 import { motion, AnimatePresence } from "framer-motion";
 import { modalVariants } from "../../styles/modal/modalVariants";
+import { IoArrowBack } from "react-icons/io5";
+import { css } from "@emotion/react";
+import { useThemeColors } from "../../hooks/useThemeColors";
 
 export default function Modal() {
   const navigate = useNavigate();
@@ -19,6 +22,10 @@ export default function Modal() {
     closeModal();
     window.history.length > 1 ? navigate(-1) : navigate("/", { replace: true });
   };
+  const { text } = useThemeColors();
+  const backBtnColor = css`
+    border-color: ${text};
+  `;
 
   return ReactDOM.createPortal(
     <AnimatePresence>
@@ -41,7 +48,7 @@ export default function Modal() {
             exit={{ scale: 0.9, opacity: 0 }}
             transition={{ type: "spring", stiffness: 300, damping: 25 }}
           >
-            <button onClick={handleClose}>닫기</button>
+            <IoArrowBack css={[closeButtonStyle, backBtnColor]} onClick={handleClose} />
             <Outlet />
           </motion.div>
         </motion.div>
@@ -50,3 +57,9 @@ export default function Modal() {
     document.body
   );
 }
+
+const closeButtonStyle = css`
+  position: absolute;
+  left: -2rem;
+  top: 1rem;
+`;

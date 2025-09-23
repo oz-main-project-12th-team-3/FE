@@ -157,7 +157,7 @@ export default function DragAndDrop<T>({
 }
 
 const overflowCss = css`
-  ${flexColumn()}
+  ${flexColumn("0")}
   overflow-y: auto;
   overflow-x: hidden;
 `
