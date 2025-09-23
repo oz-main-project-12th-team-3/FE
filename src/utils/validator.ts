@@ -1,10 +1,9 @@
-export const validaterName = (name: string): string => {
+export const validateName = (name: string): string => {
   if (!name.trim()) return "이름을 입력해주세요.";
   if (name.length < 2) return "이름은 2자 이상이어야 합니다.";
   if (name.length > 30) return "이름은 30자 이하여야 합니다.";
   return "";
 };
-
 
 export const validateEmail = (email: string): string => {
   if (!email) return "이메일을 입력해주세요.";

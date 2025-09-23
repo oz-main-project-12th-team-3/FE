@@ -6,7 +6,7 @@ import { FaEnvelope, FaLock } from "react-icons/fa";
 import { useThemeColors } from "../../../hooks/useThemeColors";
 import { validateEmail, validatePassword } from "../../../utils/validator";
 
-export default function Login() {
+export default function LoginForm() {
   const [form, setForm] = useState({ email: '', password: '' });
 
   const [errors, setErrors] = useState({

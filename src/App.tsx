@@ -9,6 +9,7 @@ import { MousePositonSetter } from "./components/utilComponents/MousePositionSet
 import Home from "./components/Home";
 const Modal = React.lazy(() => import("./components/modal/Modal"));
 const AuthModal = React.lazy(() => import("./components/modal/authmodal/AuthModal"));
+const ScheduleModal = React.lazy(() => import("./components/modal/schedule_modal/scheduleModal"));
 
 export default function AppDesktop() {
   useEffect(() => {
@@ -26,6 +27,7 @@ export default function AppDesktop() {
 
           <Route path="modal" element={<Modal />}>
             <Route path="auth" element={<AuthModal />} />
+            <Route path="schedule" element={<ScheduleModal />} />
           </Route>
         </Routes>
     </Background>

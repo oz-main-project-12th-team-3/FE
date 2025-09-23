@@ -7,7 +7,7 @@ import { useThemeColors } from "../../../hooks/useThemeColors";
 import {
   validateConfirmPassword,
   validateEmail,
-  validaterName,
+  validateName,
   validatePassword,
 } from "../../../utils/validator";
 

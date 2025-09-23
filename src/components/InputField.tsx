@@ -28,14 +28,14 @@ export const InputField = ({
 }: Props) => {
   const [show, setShow] = useState(false);
   const actualType = passwordToggle ? (show ? 'text' : 'password') : type;
-  const { inputBg, tabBtnText } = useThemeColors();
+ const { inputBorder, tabBtnText, deleteBtnBg } = useThemeColors()
 
   const wrapperStyle = css`
     display: flex;
     align-items: center;
     gap: 8px;
-    background: ${inputBg};
     padding: 12px;
+    border: 1px solid ${inputBorder};
     border-radius: 8px;
     width: 100%;
   `;
@@ -57,7 +57,7 @@ export const InputField = ({
   `;
 
   const errorTextStyle = css`
-    color: red;
+    color: ${deleteBtnBg};
     font-size: 12px;
     margin-top: 4px;
     padding-left: 4px;
