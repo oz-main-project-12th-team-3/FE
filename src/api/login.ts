@@ -1,24 +1,27 @@
-
 import { api } from "./baseApi";
 
-export interface LoginRequest {
-    email: string;
-    password: string;
+export interface LoginReq {
+  email: string;
+  password: string;
 }
 
-export interface LoginRespose{
-    user_id: number;
-    access_token: string;
-    refresh_token: string;
-    expires_in : number;
+export interface LoginRes {
+  detail: string;
+  user_id: number;
+  expires_in: number;
 }
 
-export async function loginApi(payload: LoginRequest): Promise<LoginRespose>{ // 비동기로 응답값을 반환
-    try{
-        const res = await api.post("/auth/login", payload)
-        return res.data
-    }catch(error:any){
-        const message = error.response?.data?.message || error.message;
-        throw new Error(`Login failed: ${message}`);
-    }
+/**
+ *
+ * @param {LoginReq} payload 이메일, 비번 
+ * @returns {LoginRes} .detail에 "로그인 성공" 반환됨
+ */
+export async function loginApi(payload: LoginReq): Promise<LoginRes> {
+  try {
+    const res = await api.post(`/auth/login`, payload);
+    return res.data;
+  } catch (error: any) {
+    const message = error.response?.data?.message || error.message;
+    throw new Error(`login failed: ${message}`);
+  }
 }
