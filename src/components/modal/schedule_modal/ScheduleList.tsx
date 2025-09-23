@@ -34,14 +34,14 @@ const formatTime = (isoString: string): string => {
 };
 
 
-export const ScheduleList = ({
+export const ScheduleList: React.FC<ScheduleListProps> = ({
   schedules,
   loading,
   onAddNew,
   onEdit,
   onDelete,
   onToggleComplete
-}: ScheduleListProps) => {
+}) => {
 
   const { addButtonBg, modalBackground , tabBtnText, inputBorder, descriptionText, scheduleItemBorder, headerBorder, completedText, deleteBtnBg } = useThemeColors();
 
