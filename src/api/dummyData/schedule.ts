@@ -69,6 +69,14 @@ export let dummySchedules: Schedule[] = [
     is_completed: false,
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString()
+  },{
+    id: 8,
+    title: '기획 회의5',
+    start_time: combineDateAndTime("2025-09-27", "10:00"),
+    end_time: combineDateAndTime("2025-09-27", "11:00"),
+    description: '새 프로젝트 기획 회의',
+    is_completed: true,
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString()
   },
-  
 ];
