@@ -9,7 +9,7 @@ import {
   MdCheckBox,
   MdCheckBoxOutlineBlank 
 } from 'react-icons/md';
-import type { Schedule } from '../schedule_modal/types/schedule'
+import type { Schedule } from './types/schedule';
 import { useThemeColors } from '../../../hooks/useThemeColors';
 
 interface ScheduleListProps {
@@ -25,17 +25,23 @@ interface ScheduleListProps {
 const formatTime = (isoString: string): string => {
   const date = new Date(isoString);
   const pad = (n: number) => String(n).padStart(2, '0');
-  return `${pad(date.getUTCHours())}:${pad(date.getUTCMinutes())}`;
+  
+  console.log('ISO 문자열:', isoString);
+  console.log('Date 객체:', date);
+  console.log('getHours:', date.getHours(), 'getMinutes:', date.getMinutes());
+
+  return `${pad(date.getHours())}:${pad(date.getMinutes())}`;
 };
 
-export const ScheduleList = ({
+
+export const ScheduleList: React.FC<ScheduleListProps> = ({
   schedules,
   loading,
   onAddNew,
   onEdit,
   onDelete,
   onToggleComplete
-}: ScheduleListProps) => {
+}) => {
 
   const { addButtonBg, modalBackground , tabBtnText, inputBorder, descriptionText, scheduleItemBorder, headerBorder, completedText, deleteBtnBg } = useThemeColors();
 

@@ -69,7 +69,7 @@ export default function SignupForm() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    const nameError = validaterName(form.name);
+    const nameError = validateName(form.name);
     const emailError = validateEmail(form.email);
     const passwordError = validatePassword(form.password);
     const confirmPasswordError = validateConfirmPassword(

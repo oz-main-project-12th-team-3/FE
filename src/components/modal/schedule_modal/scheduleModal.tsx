@@ -7,11 +7,11 @@ import { DayPicker } from "react-day-picker";
 import "react-day-picker/dist/style.css";
 import { ScheduleList } from "./ScheduleList";
 import { ScheduleForm } from "./ScheduleForm";
-import type { Schedule, ScheduleFormData, ViewType } from "../schedule_modal/types/schedule";
+import type { Schedule, ScheduleFormData, ViewType } from "./types/schedule";
 import { scheduleAPI } from "../../../api/schedule";
 import { useThemeColors } from "../../../hooks/useThemeColors";
 
-const ScheduleModal = () => {
+const ScheduleModal: React.FC = () => {
 const [view, setView] = useState<ViewType>("list"); // 현재 화면 (list or form)
 const [schedules, setSchedules] = useState<Schedule[]>([]); // 일정 목록
 const [selectedDate, setSelectedDate] = useState<Date | undefined>(new Date()); // 선택한 날짜
@@ -124,7 +124,6 @@ const [loading, setLoading] = useState<boolean>(false); // 로딩 상태
     setView("form");
   };
 
-  // 일정 삭제
   const handleDelete = async (scheduleId: number): Promise<void> => {
     if (!confirm("정말 삭제하시겠습니까?")) return;
     try {
@@ -139,7 +138,6 @@ const [loading, setLoading] = useState<boolean>(false); // 로딩 상태
     }
   };
 
-  // 일정 완료 토글
   const handleToggleComplete = async (
     scheduleId: number,
     currentStatus: boolean

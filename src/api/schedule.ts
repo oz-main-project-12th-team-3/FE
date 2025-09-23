@@ -1,12 +1,13 @@
 import type { Schedule, ScheduleFormData, ApiResponse, ScheduleAPI } from '../components/modal/schedule_modal/types/schedule';
 import { combineDateAndTime } from '../utils/time';
 
+// 더미 데이터 (로컬 시간 기반)
 let dummySchedules: Schedule[] = [
   {
     id: 1,
     title: '팀 미팅',
-    start_time: '2025-09-20T09:00:00Z',
-    end_time: '2025-09-20T09:30:00Z',
+    start_time: combineDateAndTime("2025-09-20", "09:00"),
+    end_time: combineDateAndTime("2025-09-20", "09:30"),
     description: '주간 팀 미팅 및 프로젝트 진행사항 공유',
     is_completed: true,
     created_at: new Date().toISOString(),
@@ -15,8 +16,8 @@ let dummySchedules: Schedule[] = [
   {
     id: 2,
     title: '기획 회의',
-    start_time: '2025-09-20T10:00:00Z',
-    end_time: '2025-09-20T11:00:00Z',
+    start_time: combineDateAndTime("2025-09-20", "10:00"),
+    end_time: combineDateAndTime("2025-09-20", "11:00"),
     description: '새 프로젝트 기획 회의',
     is_completed: false,
     created_at: new Date().toISOString(),
@@ -25,25 +26,23 @@ let dummySchedules: Schedule[] = [
 ];
 
 export const scheduleAPI: ScheduleAPI = {
-getSchedules: async (date: string): Promise<Schedule[]> => {
-  console.log('🔍 일정 조회:', date);
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      const filtered = dummySchedules.filter((s) => {
-        // start_time을 로컬 날짜(YYYY-MM-DD)로 변환
-        const scheduleDate = new Date(s.start_time)
-          .toLocaleDateString("sv-SE"); // "2025-09-20" 형식
+  getSchedules: async (date: string): Promise<Schedule[]> => {
+    console.log('🔍 일정 조회:', date);
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        const filtered = dummySchedules.filter((s) => {
+          // start_time을 로컬 날짜(YYYY-MM-DD)로 변환
+          const scheduleDate = new Date(s.start_time)
+            .toLocaleDateString("sv-SE"); // "2025-09-20" 형식
 
-        console.log('일정 날짜:', scheduleDate, '조회 날짜:', date);
-        return scheduleDate === date;
-      });
+          console.log('일정 날짜:', scheduleDate, '조회 날짜:', date);
+          return scheduleDate === date;
+        });
 
-      resolve(filtered);
-    }, 300);
-  });
-},
-
-
+        resolve(filtered);
+      }, 300);
+    });
+  },
 
   createSchedule: async (formData: ScheduleFormData): Promise<ApiResponse<Schedule>> => {
     console.log('➕ 일정 생성:', formData);
