@@ -17,14 +17,14 @@ interface ScheduleFormProps {
 }
 
 
-export const ScheduleForm: React.FC<ScheduleFormProps> = ({
+export const ScheduleForm = ({
   schedule,
   selectedDate,
   loading,
   onSave,
   onDelete,
   onBackToList
-}) => {
+}:ScheduleFormProps) => {
   const [formData, setFormData] = useState<ScheduleFormData>({
     title: '',
     description: '',
