@@ -10,8 +10,11 @@ import {
   validateName,
   validatePassword,
 } from "../../../utils/validator";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 export default function SignupForm() {
+  const navigate = useNavigate();
   const [form, setForm] = useState({
     name: "",
     email: "",
@@ -86,10 +89,16 @@ export default function SignupForm() {
 
     setErrors(newErrors);
 
-    // 에러 없으면 로그인 로직 진행
-    if (!emailError && !passwordError) {
+    // 에러 없으면 회원가입 로직 진행
+    if (!nameError && !emailError && !passwordError && !confirmPasswordError) {
+      // 약관 동의 체크
+      if (!form.agreeTerms) {
+        toast.error("이용약관 및 개인정보 처리방침에 동의해야 회원가입이 가능합니다.");
+        return;
+      }
       console.log("회원가입 시도:", { form });
-    }
+      // TODO: 실제 회원가입 API 호출
+  }
   };
 
   return (
@@ -159,12 +168,16 @@ export default function SignupForm() {
 
       <label css={agree}>
         <input
+          id="agreeTerms"
           type="checkbox"
           checked={form.agreeTerms}
           onChange={(e) => setForm({ ...form, agreeTerms: e.target.checked })}
         />
         이용약관 및 개인정보처리방침에 동의합니다
-        <a href="#">자세히 보기</a>
+        <a href="#" onClick={(e) => {
+          e.preventDefault();
+          navigate("/modal/terms"); // 약관 모달로 이동
+        }}>자세히 보기</a>
       </label>
 
       <button type="submit" css={submit}>

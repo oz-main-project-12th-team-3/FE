@@ -2,7 +2,7 @@ import type { Schedule } from '../../components/modal/schedule_modal/types/sched
 import { combineDateAndTime } from '../../utils/time';
 
 // 더미 데이터
-let dummySchedules: Schedule[] = [
+export let dummySchedules: Schedule[] = [
   {
     id: 1,
     title: '팀 미팅',
