@@ -1,4 +1,4 @@
-import { api } from "./baseApi";
+import { api } from "../baseApi";
 
 interface SignupReq {
   email: string;

@@ -1,4 +1,5 @@
-import { api } from "./baseApi";
+import { api } from "../baseApi";
+
 
 export interface LoginReq {
   email: string;
