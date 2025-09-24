@@ -7,7 +7,6 @@ import Signupform from "./SignupForm"
 import SocialLogin from "./SocialLogin";
 
 import { IoShieldOutline } from "react-icons/io5";
-import { IoIosClose } from "react-icons/io";
 import { useThemeColors } from "../../../hooks/useThemeColors";
 
 export default function AuthModalContent() {
@@ -47,11 +46,6 @@ const description = css`
   color: ${descriptionText};
 `
 
-const clickButton = css`
-  cursor: pointer;
-`;
-
-
 
   return (
     <div css={container}>
@@ -62,7 +56,6 @@ const clickButton = css`
             <IoShieldOutline size={20}/>
             <h2>비서 AI</h2> 
           </div>
-          <IoIosClose size={20} css={clickButton}/>
         </div>
           <p css={description}>AI 가상비서 서비스에 오신 것을 환영합니다</p>
       </div>
