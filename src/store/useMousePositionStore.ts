@@ -7,8 +7,11 @@ import { useDeviceTypeStore } from "./useDeviceTypeStore";
  */
 export type WhereIsMouse = "center" | "left" | "right";
 
-export const TRIGGER_DISTANCE = 200;
-export const BAR_MARGIN = 50;
+export const SIDEBAR_WIDTH = 200;
+export const SIDEBAR_MARGIN = 50;
+const PADDING = 60;
+
+const TRRIGGER = SIDEBAR_WIDTH+SIDEBAR_MARGIN+PADDING;
 interface MousePositionState {
   mousePosition: { x: number | null; y: number | null };
   whereIsMouse: WhereIsMouse;
@@ -27,8 +30,9 @@ export const useMousePositionStore = create<MousePositionState>((set) => ({
     if (useDeviceTypeStore.getState().platform !== "desktop") return;
 
     if (x !== null) {
-      if (x < TRIGGER_DISTANCE) where = "left";
-      else if (x > windowWidth - TRIGGER_DISTANCE) where = "right";
+      if (x < TRRIGGER) where = "left";
+      else if (x > windowWidth - TRRIGGER)
+        where = "right";
     }
     set({ mousePosition: { x, y }, whereIsMouse: where });
   },

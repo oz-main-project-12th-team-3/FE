@@ -3,6 +3,9 @@ import React, { useState, useRef } from "react";
 import { DragPreview } from "./DragPreview";
 import { motion } from "framer-motion";
 import { useMousePositionStore } from "../../store/useMousePositionStore";
+import { css } from "@emotion/react";
+import { flexColumn, scrollCss } from "../../styles/mixins";
+import { useThemeColors } from "../../hooks/useThemeColors";
 
 interface DragAndDropProps<T = unknown> {
   items: T[];
@@ -51,6 +54,7 @@ export default function DragAndDrop<T>({
   const [localItems, setLocalItems] = useState<T[]>(items); // 부드러운 애니메이션을 위해 아이템 로컬에서 제어
   const dragElementRef = useRef<HTMLElement>(null); // 투명도 등 스타일 제어
   const emptyImg = createEmptyImg(); // 드래깅 디폴트 이미지 제거
+  const {scrollColor}=useThemeColors()
 
   // 드래그 시작
   const handleDragStart: DragHandler = (e, index) => {
@@ -114,6 +118,10 @@ export default function DragAndDrop<T>({
     }
   };
 
+  const scroll = css`
+    ${scrollCss(scrollColor)}
+  `
+
   // 자식 요소 렌더링
   const renderItems = () =>
     React.Children.map(children, (child, index) => {
@@ -141,12 +149,18 @@ export default function DragAndDrop<T>({
     });
 
   return (
-    <div>
+    <span css={[overflowCss, scroll]}>
       {renderItems()}
       <DragPreview label={dragText} isVisible={isDragging} />
-    </div>
+    </span>
   );
 }
+
+const overflowCss = css`
+  ${flexColumn()}
+  overflow-y: auto;
+  overflow-x: hidden;
+`
 
 /**
  * 1x1 크기의 빈 캔버스를 생성하여 드래그 시 기본 이미지를 제거하는 데 사용.
