@@ -1,4 +1,4 @@
-import { api } from "./baseApi";
+import { api } from "../baseApi";
 
 export type Sender = "user" | "ai";
 
@@ -49,9 +49,7 @@ export type Message = {
   updated_at: string;
 };
 
-export interface GetChatMessagesBySessionApiRes {
-  messages: Message[];
-}
+export type GetChatMessagesBySessionApiRes = Message[];
 
 /**
  * 세션별 메시지 GET메서드
@@ -127,10 +125,8 @@ export async function putChatMessageApi(
   }
 }
 
-
-
 export interface DeleteChatMessageApiRes {
-  message:string
+  message: string;
 }
 
 /**
@@ -138,7 +134,9 @@ export interface DeleteChatMessageApiRes {
  * @param {number} id 삭제할 메시지의 id
  * @returns {Promise<DeleteChatMessageApiRes>} 응답 데이터
  */
-export async function deleteChatMessageApi(id: number): Promise<DeleteChatMessageApiRes> {
+export async function deleteChatMessageApi(
+  id: number
+): Promise<DeleteChatMessageApiRes> {
   try {
     const res = await api.delete(`/chat-messages/${id}`);
     return res.data;

@@ -1,4 +1,4 @@
-import { api } from "./baseApi";
+import { api } from "../baseApi";
 
 export interface PostChatSessionsApiReq {
   title: string;
@@ -104,4 +104,3 @@ export async function deleteChatSessionApi(
     throw new Error(`deleteChatSessionApi failed: ${message}`);
   }
 }
-

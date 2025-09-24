@@ -1,4 +1,4 @@
-import { api } from "./baseApi";
+import { api } from "../baseApi";
 
 interface GetProfileRes {
   nickname: string;
@@ -9,8 +9,8 @@ interface GetProfileRes {
 }
 
 interface PutProfileReq {
-  nickname:string|null;
-  profile_image_url:string|null
+  nickname: string | null;
+  profile_image_url: string | null;
 }
 interface PutProfileRes {
   nickname: string;
@@ -40,7 +40,9 @@ export async function getProfileApi(): Promise<GetProfileRes> {
  * @param {PutProfileReq} payload nickname, profile_image_url **nullable** 파라미터 둘 다 null 값이면 클라쪽에서 요청 막기
  * @returns {PutProfileRes} .profile_image_url, .nickname > res를 바탕으로 스토어 업데이트 할 것
  */
-export async function putProfileApi(payload:PutProfileReq): Promise<PutProfileRes> {
+export async function putProfileApi(
+  payload: PutProfileReq
+): Promise<PutProfileRes> {
   try {
     const res = await api.put(`/users/profile/`, payload);
     return res.data;

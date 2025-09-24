@@ -1,11 +1,11 @@
 import axios from "axios";
 import type { InternalAxiosRequestConfig } from "axios";
 import type { AxiosError } from "axios";
-import { api, BASE_URL } from "./baseApi";
 import { jwtDecode, type JwtPayload } from "jwt-decode";
 import { toast } from "react-toastify";
+import { api, BASE_URL } from "../baseApi";
 
-interface CustomAxiosRequestConfig extends InternalAxiosRequestConfig {
+export interface CustomAxiosRequestConfig extends InternalAxiosRequestConfig {
   skipAuth?: boolean;
 }
 
@@ -47,7 +47,7 @@ export const tokenUtils = {
       // 초 단위로 평가
       // 백엔드에서도 시간 양식이 같은지 확인 필요
       // >> 시간양식 초단위로 통일해서 변경 예정.
-      return !!decoded.exp && decoded.exp < Date.now() / 1000 + 30; 
+      return !!decoded.exp && decoded.exp < Date.now() / 1000 + 30;
     } catch {
       return true;
     }
@@ -67,7 +67,7 @@ api.interceptors.request.use(
 
     const token = tokenUtils.getAccessToken();
     if (token) {
-      // config.headers.set("Authorization", `Bearer ${token}`); 
+      // config.headers.set("Authorization", `Bearer ${token}`);
       // axios 버전에 따라 사용 안될수도 있음
       // 현재 코드는 1.xx 이상이라 가능하지만 안정성을 위해 객체 할당 방식을 사용
       config.headers["Authorization"] = `Bearer ${token}`;
@@ -133,14 +133,14 @@ api.interceptors.response.use(
 
 /**
  * 로그아웃 메서드
- * 
+ *
  * @summary 사용자 인증 토큰을 무효화하고 로그아웃 처리
- * 
- * @description 
+ *
+ * @description
  * - 인터셉터로 요청된 유저의 토큰을 자동 전송
  * - tokenUtils.clearTokens();로 현재 액세스 토큰을 제거
  * - HTTP-only 쿠키의 리프레시 토큰은 서버에서 자동 처리
- * 
+ *
  * @returns 로그아웃 성공 메시지
  * @example
  * ```typescript
