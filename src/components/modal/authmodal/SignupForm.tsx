@@ -2,7 +2,7 @@
 import { css } from "@emotion/react";
 import { useState } from "react";
 import { FaUser, FaEnvelope, FaLock } from "react-icons/fa";
-import { InputField } from "../../InputField"; // 경로 확인 필요
+import { InputField } from "../../InputField";
 import { useThemeColors } from "../../../hooks/useThemeColors";
 import {
   validateConfirmPassword,
@@ -23,7 +23,7 @@ export default function SignupForm() {
     agreeTerms: false,
   });
 
-  // 에러 상태 (추후 유효성 검사 시 활용 가능)
+  // 에러 상태
   const [errors, setErrors] = useState({
     name: "",
     email: "",
@@ -92,22 +92,24 @@ export default function SignupForm() {
     // 에러 없으면 회원가입 로직 진행
     if (!nameError && !emailError && !passwordError && !confirmPasswordError) {
       // 약관 동의 체크
+      // 어느 시점에서 해야하면 좋을 지 모르겠음
       if (!form.agreeTerms) {
         toast.error("이용약관 및 개인정보 처리방침에 동의해야 회원가입이 가능합니다.");
         return;
       }
-      console.log("회원가입 시도:", { form });
+      toast.success("회원가입 요청을 보냈습니다!");
       // TODO: 실제 회원가입 API 호출
   }
   };
 
   return (
-    <form noValidate css={formStyle} onSubmit={handleSubmit}>
+    <form noValidate css={formStyle}>
       <div>
         <label htmlFor="signup-name" css={labelStyle}>
           이름
         </label>
         <InputField
+          type="text"
           name="signup-name"
           placeholder="홍길동"
           value={form.name}
@@ -143,7 +145,6 @@ export default function SignupForm() {
           value={form.password}
           onChange={(e) => setForm({ ...form, password: e.target.value })}
           leftIcon={<FaLock />}
-          passwordToggle
           error={errors.password}
         />
       </div>
@@ -161,7 +162,6 @@ export default function SignupForm() {
             setForm({ ...form, confirmPassword: e.target.value })
           }
           leftIcon={<FaLock />}
-          passwordToggle
           error={errors.confirmPassword}
         />
       </div>
@@ -180,7 +180,7 @@ export default function SignupForm() {
         }}>자세히 보기</a>
       </label>
 
-      <button type="submit" css={submit}>
+      <button type="button" onClick={handleSubmit} css={submit}>
         회원가입
       </button>
     </form>

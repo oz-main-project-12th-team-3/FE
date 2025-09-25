@@ -1,9 +1,12 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 import { useNavigate } from "react-router-dom";
+import { useThemeColors } from "../../../hooks/useThemeColors";
 
 export default function TermsModal() {
   const navigate = useNavigate();
+
+  const { modalBackground, addButtonBg} = useThemeColors();
 
   const overlay = css`
     position: fixed;
@@ -19,7 +22,7 @@ export default function TermsModal() {
   `;
 
   const modal = css`
-    background: #fff;
+    background: ${modalBackground};
     padding: 24px;
     border-radius: 12px;
     width: 500px;
@@ -30,8 +33,8 @@ export default function TermsModal() {
     margin-top: 16px;
     padding: 8px 12px;
     border-radius: 6px;
-    background: #333;
-    color: #fff;
+    background: ${addButtonBg};
+    color: ${modalBackground};
     cursor: pointer;
   `;
 
