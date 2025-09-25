@@ -1,4 +1,4 @@
-import { api } from "../baseApi";
+import { handleApiCall } from "../apiCallHelper";
 
 export interface PostChatSessionsApiReq {
   title: string;
@@ -10,23 +10,6 @@ export interface PostChatSessionsApiRes {
   title: string;
   created_at: string;
   updated_at: string;
-}
-
-/**
- * 챗 세션 생성 POST메서드
- * @param {PostChatSessionsApiReq} payload title
- * @returns {PostChatSessionsApiRes}
- */
-export async function postChatSessionsApi(
-  payload: PostChatSessionsApiReq
-): Promise<PostChatSessionsApiRes> {
-  try {
-    const res = await api.post(`/chat-sessions`, payload);
-    return res.data;
-  } catch (error: any) {
-    const message = error.response?.data?.message || error.message;
-    throw new Error(`postChatSessionsApi failed: ${message}`);
-  }
 }
 
 export type Session = {
@@ -41,20 +24,6 @@ export interface GetChatSessionsApiRes {
   detail: string;
 }
 
-/**
- * 유저의 채팅 세션들을 불러오는 GET메서드
- * @returns {Promise<GetChatSessionsApiRes> }
- */
-export async function getChatSessionsApi(): Promise<GetChatSessionsApiRes> {
-  try {
-    const res = await api.get(`/chat-sessions`);
-    return res.data;
-  } catch (error: any) {
-    const message = error.response?.data?.message || error.message;
-    throw new Error(`getChatSessionsApi failed: ${message}`);
-  }
-}
-
 export interface PutChatSessionsApiReq {
   title: string;
 }
@@ -65,42 +34,53 @@ export interface PutChatSessionsApiRes {
   updated_at: string;
 }
 
-/**
- * 채팅 세션 제목을 업데이트하는 PUT메서드
- * @param {number} id - 채팅 세션 ID
- * @param {PutChatSessionsApiReq} payload - 업데이트할 데이터
- * @returns {Promise<PutChatSessionsApiRes>} 업데이트된 채팅 세션 정보
- */
-export async function putChatSessionsApi(
-  id: number,
-  payload: PutChatSessionsApiReq
-): Promise<PutChatSessionsApiRes> {
-  try {
-    const res = await api.put(`/chat-sessions/${id}`, payload);
-    return res.data;
-  } catch (error: any) {
-    const message = error.response?.data?.message || error.message;
-    throw new Error(`putChatSessionsApi failed: ${message}`);
-  }
-}
-
 export interface DeleteChatSessionApiRes {
   detail: string;
 }
 
-/**
- * 채팅 세션 삭제 DELETE메서드
- * @param {number} id
- * @returns {Promise<DeleteChatSessionApiRes>} 응답 데이터
- */
-export async function deleteChatSessionApi(
-  id: number
-): Promise<DeleteChatSessionApiRes> {
-  try {
-    const res = await api.delete(`/chat-sessions/${id}`);
-    return res.data;
-  } catch (error: any) {
-    const message = error.response?.data?.message || error.message;
-    throw new Error(`deleteChatSessionApi failed: ${message}`);
-  }
-}
+export const chatSessionApi = {
+  GET: {
+    /**
+     * 유저의 채팅 세션들을 불러오는 GET메서드
+     * @returns {Promise<GetChatSessionsApiRes>}
+     */
+    sessions: async () => {
+      const url = `/chat-sessions`;
+      return await handleApiCall({ method: "GET", url: url });
+    },
+  },
+  POST: {
+    /**
+     * 챗 세션 생성 POST메서드
+     * @param {PostChatSessionsApiReq} payload 생성할 세션의 제목
+     * @returns {Promise<PostChatSessionsApiRes>}
+     */
+    chatSession: async (payload: PostChatSessionsApiReq) => {
+      const url = `/chat-sessions`;
+      return await handleApiCall({ method: "POST", url: url, data: payload });
+    },
+  },
+  PUT: {
+    /**
+     * 채팅 세션 제목을 업데이트하는 PUT메서드
+     * @param {number} id 채팅 세션 ID
+     * @param {PutChatSessionsApiReq} payload 업데이트할 데이터(title)
+     * @returns {Promise<PutChatSessionsApiRes>} 업데이트된 채팅 세션 정보
+     */
+    sessionById: async (id: number, payload: PutChatSessionsApiReq) => {
+      const url = `/chat-sessions/${id}`;
+      return await handleApiCall({ method: "PUT", url: url, data: payload });
+    },
+  },
+  DELETE: {
+    /**
+     * 채팅 세션 삭제 DELETE메서드
+     * @param {number} id
+     * @returns {Promise<DeleteChatSessionApiRes>} 응답 데이터
+     */
+    sessionById: async (id: number) => {
+      const url = `/chat-sessions/${id}`;
+      return await handleApiCall({ method: "DELETE", url: url });
+    },
+  },
+};
