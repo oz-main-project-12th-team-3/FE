@@ -1,20 +1,33 @@
+import type { AxiosRequestConfig, AxiosResponse, Method } from "axios";
+import { api } from "./baseApi";
+
+export interface StrictAxiosRequestConfig
+  extends Omit<AxiosRequestConfig, "method"> {
+  method: Method;
+}
+
 /**
- * 
- * @param apiMethod API 호출 콜백 (예: () => api.get(url))
- * @param method 메서드 이름 (대문자: 'GET', 'DELETE' 등)
- * @param url 엔드포인트 URL (예: '/notifications?status=read')
- * @returns 
+ * api call try-catch-error helper
+ * @param {StrictAxiosRequestConfig} config
+ * @returns {T}
+ * @example
+ * ```tsx
+ * const notifications = await handleApiCall<Notification>({
+ *  method: "GET",
+ *  url: "/notifications?status=unread",
+ * });
+ * ```
  */
 export async function handleApiCall<T>(
-  apiMethod: () => Promise<any>,  
-  method: string,  
-  url: string  
+  config: StrictAxiosRequestConfig
 ): Promise<T> {
   try {
-    const res = await apiMethod();
+    const res: AxiosResponse<T> = await api.request<T>(config);
     return res.data;
   } catch (error: any) {
     const message = error.response?.data?.message || error.message;
-    throw new Error(`!ERROR! \n method : ${method} \n url : ${url} \n  details: ${message}`);
+    throw new Error(
+      `!ERROR!\nmethod: ${config.method}\nurl: ${config.url}\ndetails: ${message}`
+    );
   }
 }
