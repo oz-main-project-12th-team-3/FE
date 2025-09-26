@@ -43,7 +43,7 @@ export const userNotificationPreferenceApi = {
      * @returns {Promise<NotificationPreference[]>} 응답 데이터
      */
     userNotiPrefs: async () => {
-      const url = `/users/notification-preferences`;
+      const url = `/users/notification-preferences/`;
       return await handleApiCall({ method: "GET", url: url });
     },
     /**
@@ -52,7 +52,7 @@ export const userNotificationPreferenceApi = {
      * @returns {Promise<NotificationPreference>} 응답 데이터
      */
     userNotiPrefById: async (id: number) => {
-      const url = `/users/notification-preferences/${id}`;
+      const url = `/users/notification-preferences/${id}/`;
       return await handleApiCall({ method: "GET", url: url });
     },
   },
@@ -63,7 +63,7 @@ export const userNotificationPreferenceApi = {
      * @returns {Promise<PostNotificationPreferenceApiRes>} 응답 데이터
      */
     notiPref: async (payload: PostNotificationPreferenceApiReq) => {
-      const url = `/users/notification-preferences`;
+      const url = `/users/notification-preferences/`;
       return await handleApiCall({ method: "POST", url: url, data: payload });
     },
   },
@@ -78,7 +78,7 @@ export const userNotificationPreferenceApi = {
       id: number,
       payload: PutNotificationPreferenceApiReq
     ) => {
-      const url = `/users/notification-preferences/${id}`;
+      const url = `/users/notification-preferences/${id}/`;
       return await handleApiCall({ method: "PUT", url: url, data: payload });
     },
   },
@@ -89,7 +89,7 @@ export const userNotificationPreferenceApi = {
      * @returns {Promise<DeleteUserNotificationPreferenceApiRes>} 응답 데이터
      */
     notiPrefById: async (id: number) => {
-      const url = `/users/notification-preferences/${id}`;
+      const url = `/users/notification-preferences/${id}/`;
       return await handleApiCall({ method: "DELETE", url: url });
     },
   },

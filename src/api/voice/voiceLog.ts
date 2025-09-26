@@ -30,7 +30,7 @@ export const voiceLogApi = {
      * @returns {Promise<VoiceLog[]>} voiceLog[]
      */
     voiceLogsBySessionId: async (sessionId: number): Promise<VoiceLog[]> => {
-      const url = `/voice-logs?session_id=${sessionId}`;
+      const url = `/voice-logs?session_id=${sessionId}/`;
       return await handleApiCall({ method: "GET", url: url });
     },
     /**
@@ -39,7 +39,7 @@ export const voiceLogApi = {
      * @returns {Promise<VoiceLog>} voiceLog 타입
      */
     voiceLogById: async (id: number): Promise<VoiceLog> => {
-      const url = `/voice-logs/${id}`;
+      const url = `/voice-logs/${id}/`;
       return await handleApiCall({ method: "GET", url: url });
     },
   },
@@ -50,7 +50,7 @@ export const voiceLogApi = {
      * @returns {Promise<VoiceLog>} voiceLog 타입
      */
     voiceLog: async (payload: PostVoiceLogApiReq): Promise<VoiceLog> => {
-      const url = `/voice-logs`;
+      const url = `/voice-logs/`;
       return await handleApiCall({ method: "POST", url: url, data: payload });
     },
   },
@@ -62,7 +62,7 @@ export const voiceLogApi = {
      * @returns {Promise<DeleteVoiceLogRes>}
      */
     voiceLogById: async (id: number): Promise<DeleteVoiceLogRes> => {
-      const url = `/voice-logs/${id}`;
+      const url = `/voice-logs/${id}/`;
       return await handleApiCall({ method: "DELETE", url: url });
     },
   },

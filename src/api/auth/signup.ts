@@ -1,31 +1,29 @@
 import { handleApiCall } from "../apiClient";
 
-export interface SignupReq {
+interface Req {
   email: string;
   password: string;
   nickname: string;
+  enable_2fa: string;
 }
 
-export interface SignupRes {
-  id: number;
-  email: string;
-  role: string;
-  is_active: boolean;
-  two_factor_enabled: boolean;
-  created_at: string;
+interface Res {
   detail: string;
+  user_id: number;
+  email: string;
+  tfa_setup_required: string;
 }
 
 export const signupApi = {
   POST: {
     /**
      * 회원가입 메서드
-     * @param {SignupReq} payload  이메일, 비번, 닉네임
-     * @returns {Promise<SignupRes>} .detail에 "회원가입이 성공적으로 완료되었습니다." 반환됨
+     * @param {Req} payload  이메일, 비번, 닉네임
+     * @returns {Promise<Res>} .detail에 "회원가입이 성공적으로 완료되었습니다." 반환됨
      */
-    signup: async (payload:SignupReq) => {
-      const url = `/auth/signup`;
-      return await handleApiCall({ method: "POST", url: url, data:payload });
+    signup: async (payload: Req): Promise<Res> => {
+      const url = `/api/v1/auth/signup/`;
+      return await handleApiCall({ method: "POST", url: url, data: payload });
     },
   },
 };

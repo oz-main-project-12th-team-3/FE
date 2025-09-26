@@ -48,7 +48,7 @@ export const scheduleNotificationApi = {
      * @returns {Promise<GetUserScheduleNotificationsApiRes>} 응답 데이터
      */
     userScheduleNotis: async (user_id: number) => {
-      const url = `/schedule-notifications/${user_id}`;
+      const url = `/schedule-notifications/${user_id}/`;
       return await handleApiCall({ method: "GET", url: url });
     },
     /**
@@ -57,7 +57,7 @@ export const scheduleNotificationApi = {
      * @returns {Promise<ScheduleNotification>} 응답 데이터
      */
     userScheduleNotiById: async (id: number) => {
-      const url = `/schedule-notifications/${id}`;
+      const url = `/schedule-notifications/${id}/`;
       return await handleApiCall({ method: "GET", url: url });
     },
   },
@@ -68,7 +68,7 @@ export const scheduleNotificationApi = {
      * @returns {Promise<ScheduleNotification>} 응답 데이터
      */
     scheduleNoti: async (payload: postScheduleNotificationsApiReq) => {
-      const url = `/schedule-notifications`;
+      const url = `/schedule-notifications/`;
       return await handleApiCall({ method: "POST", url: url, data: payload });
     },
   },
@@ -83,7 +83,7 @@ export const scheduleNotificationApi = {
       id: number,
       payload: putScheduleNotificationsByIdApiReq
     ) => {
-      const url = `/schedule-notifications/${id}`;
+      const url = `/schedule-notifications/${id}/`;
       return await handleApiCall({ method: "PUT", url: url, data: payload });
     },
   },
@@ -94,7 +94,7 @@ export const scheduleNotificationApi = {
      * @returns {Promise<DeleteScheduleNotificationsByIdApiRes>} 응답 데이터
      */
     scheduleNotiById: async (id: number) => {
-      const url = `/schedule-notifications/${id}`;
+      const url = `/schedule-notifications/${id}/`;
       return await handleApiCall({ method: "DELETE", url: url });
     },
   },

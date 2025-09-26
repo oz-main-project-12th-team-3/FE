@@ -65,7 +65,7 @@ export const chatLogApi = {
      * @returns {Promise<GetChatMessagesBySessionApiRes>} 응답 데이터
      */
     messagesBySessionId: async (sessionId: number) => {
-      const url = `/chat-messages`;
+      const url = `/chat-messages/`;
       return await handleApiCall({
         method: "GET",
         url: url,
@@ -78,7 +78,7 @@ export const chatLogApi = {
      * @returns {Promise<GetChatMessageByIdApiRes>} 응답 데이터
      */
     messageById: async (id: number) => {
-      const url = `/chat-messages/${id}`;
+      const url = `/chat-messages/${id}/`;
       return await handleApiCall({ method: "GET", url: url });
     },
   },
@@ -89,7 +89,7 @@ export const chatLogApi = {
      * @returns {Promise<PostChatMessageApiRes>} 응답 데이터
      */
     message: async (payload: PostChatMessageApiReq) => {
-      const url = `/chat-messages`;
+      const url = `/chat-messages/`;
       return await handleApiCall({ method: "POST", url: url, data: payload });
     },
   },
@@ -101,7 +101,7 @@ export const chatLogApi = {
      * @returns {Promise<PutChatMessageApiRes>} 응답 데이터
      */
     messageById: async (id: number, payload: PutChatMessageApiReq) => {
-      const url = `/chat-messages/${id}`;
+      const url = `/chat-messages/${id}/`;
       return await handleApiCall({ method: "PUT", url: url, data: payload });
     },
   },
@@ -112,7 +112,7 @@ export const chatLogApi = {
      * @returns {Promise<DeleteChatMessageApiRes>} 응답 데이터
      */
     messageById: async (id: number) => {
-      const url = `/chat-messages/${id}`;
+      const url = `/chat-messages/${id}/`;
       return await handleApiCall({ method: "DELETE", url: url });
     },
   },

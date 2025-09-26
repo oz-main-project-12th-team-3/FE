@@ -43,7 +43,7 @@ export const notificationApi = {
      * @returns {Promise<NotificationType[]>} 응답 데이터
      */
     types: async () => {
-      const url = `/notification-types`;
+      const url = `/notification-types/`;
       return await handleApiCall({ method: "GET", url: url });
     },
     /**
@@ -56,7 +56,7 @@ export const notificationApi = {
      * ```
      */
     notifications: async (status: NotificationStatusType) => {
-      const url = `/notifications?&status=${status}`;
+      const url = `/notifications?&status=${status}/`;
       return await handleApiCall({ method: "GET", url: url });
     },
     /**
@@ -65,7 +65,7 @@ export const notificationApi = {
      * @returns {Promise<Notification>} 응답 데이터
      */
     notificationById: async (id: number) => {
-      const url = `/notifications/${id}`;
+      const url = `/notifications/${id}/`;
       return await handleApiCall({ method: "GET", url: url });
     },
   },
@@ -76,7 +76,7 @@ export const notificationApi = {
      * @returns {Promise<PatchNotificationStatusByIdApiRes>} 응답 데이터
      */
     notificationStatusById: async (id: number) => {
-      const url = `notifications/${id}/read`;
+      const url = `notifications/${id}/read/`;
       return await handleApiCall({ method: "PATCH", url: url });
     },
   },
@@ -87,7 +87,7 @@ export const notificationApi = {
      * @returns {Promise<DeleteNotificationByIdApiRes>} 응답 데이터
      */
     notificationById: async (id: number) => {
-      const url = `/notifications/${id}`;
+      const url = `/notifications/${id}/`;
       return await handleApiCall({ method: "DELETE", url: url });
     },
   },
