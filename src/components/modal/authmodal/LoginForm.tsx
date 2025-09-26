@@ -6,12 +6,12 @@ import { FaEnvelope, FaLock } from "react-icons/fa";
 import { useThemeColors } from "../../../hooks/useThemeColors";
 import { validateEmail, validatePassword } from "../../../utils/validator";
 
-export default function Login() {
-  const [form, setForm] = useState({ email: '', password: '' });
+export default function LoginForm() {
+  const [form, setForm] = useState({ email: "", password: "" });
 
   const [errors, setErrors] = useState({
     email: "",
-    password: ""
+    password: "",
   });
 
   const { buttonBgColor, modalBackground, hoverBtnColor } = useThemeColors();
@@ -70,7 +70,7 @@ export default function Login() {
 
     // 에러 없으면 로그인 로직 진행
     if (!emailError && !passwordError) {
-      console.log("로그인 시도:", {form});
+      console.log("로그인 시도:", { form });
     }
   };
 
@@ -78,12 +78,14 @@ export default function Login() {
     <form css={formStyle} onSubmit={handleSubmit}>
       <div>
         <div>
-          <label htmlFor="login-email" css={labelStyle}>이메일</label>
+          <label htmlFor="login-email" css={labelStyle}>
+            이메일
+          </label>
           <InputField
             name="login-email"
             placeholder="your@email.com"
             value={form.email}
-            onChange={(e) => setForm({...form, email:e.target.value})}
+            onChange={(e) => setForm({ ...form, email: e.target.value })}
             leftIcon={<FaEnvelope />}
             error={errors.email}
           />
@@ -91,14 +93,16 @@ export default function Login() {
 
         <div>
           <div css={passwordTitleStyle}>
-            <label htmlFor="login-password" css={labelStyle}>비밀번호</label>
+            <label htmlFor="login-password" css={labelStyle}>
+              비밀번호
+            </label>
             <p>비밀번호 찾기</p>
           </div>
           <InputField
             name="login-password"
             placeholder="비밀번호를 입력하세요"
             value={form.password}
-            onChange={(e) => setForm({...form, password:e.target.value})}
+            onChange={(e) => setForm({ ...form, password: e.target.value })}
             leftIcon={<FaLock />}
             passwordToggle
             error={errors.password}
