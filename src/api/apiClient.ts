@@ -7,21 +7,29 @@ import type {
   AxiosResponse,
   Method,
 } from "axios";
-
-import { jwtDecode, type JwtPayload } from "jwt-decode";
 import { toast } from "react-toastify";
 
-const NO_AUTH_URLS = ["/auth/login"];
+const NO_AUTH_URLS = [
+  "/api/v1/auth/signup/",
+  "/api/v1/auth/login/",
+  "/api/v1/auth/password-reset/",
+  "/api/v1/auth/email-check/",
+];
 
-class TokenManager {
-  static setTokens(accessToken: string, userId?: string) {
+export class TokenManager {
+  static setTokens(accessToken: string, userId?: string, expiresIn?: number) {
     sessionStorage.setItem("access_token", accessToken);
     if (userId) sessionStorage.setItem("user_id", userId);
+    if (expiresIn) {
+      const expirationTime = Date.now() + expiresIn * 1000; // 밀리초로 변환
+      sessionStorage.setItem("expiration_time", expirationTime.toString());
+    }
   }
 
   static clearTokens() {
     sessionStorage.removeItem("access_token");
     sessionStorage.removeItem("user_id");
+    sessionStorage.removeItem("expiration_time");
   }
 
   static getAccessToken(): string | null {
@@ -33,17 +41,19 @@ class TokenManager {
     return id ? parseInt(id, 10) : null;
   }
 
+  static getExpirationTime(): number | null {
+    const exp = sessionStorage.getItem("expiration_time");
+    return exp ? parseInt(exp, 10) : null;
+  }
+
   static isAuthenticated(): boolean {
     return !!this.getAccessToken();
   }
 
-  static isTokenExpired(token: string): boolean {
-    try {
-      const decoded = jwtDecode<JwtPayload>(token);
-      return !!decoded.exp && decoded.exp < Date.now() / 1000 + 30;
-    } catch {
-      return true;
-    }
+  static isTokenExpired(): boolean {
+    const expirationTime = this.getExpirationTime();
+    if (!expirationTime) return true;
+    return expirationTime < Date.now() + 30000; // 30초 마진
   }
 }
 
@@ -88,24 +98,29 @@ class ApiClient {
 
           try {
             const accessToken = TokenManager.getAccessToken();
-            if (accessToken && !TokenManager.isTokenExpired(accessToken)) {
+            if (accessToken && !TokenManager.isTokenExpired()) {
               return this.api(originalRequest);
             }
 
             const res = await axios.post(
-              `${this.baseUrl}/auth/token/refresh/`,
+              `${this.baseUrl}/api/v1/auth/token/refresh/`,
               {},
               { withCredentials: true }
             );
 
-            const { access_token, user_id } = res.data;
-            TokenManager.setTokens(access_token, user_id?.toString());
+            const { access_token, user_id, detail, expires_in } = res.data;
+            TokenManager.setTokens(
+              access_token,
+              user_id?.toString(),
+              expires_in
+            );
 
             if (originalRequest.headers) {
               originalRequest.headers[
                 "Authorization"
               ] = `Bearer ${access_token}`;
             }
+            if (!!this.api(originalRequest)) toast.info(detail);
             return this.api(originalRequest);
           } catch (refreshError) {
             TokenManager.clearTokens();

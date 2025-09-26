@@ -1,14 +1,14 @@
 import { handleApiCall } from "../apiClient";
 
 type Req = {
-  new_password: string;
+  email: string;
 };
 
 export const apiChangePassword = {
-  PATCH: {
+  POST: {
     password: async (payload: Req):Promise<ResDetail> => {
-      const url = `/users/password-change/`;
-      return await handleApiCall({ method: "PATCH", url: url, data: payload });
+      const url = `/api/v1/auth/password-reset/`;
+      return await handleApiCall({ method: "POST", url: url, data: payload });
     },
   },
 };
