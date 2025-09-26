@@ -19,7 +19,7 @@ export const loginApi = {
      * @returns {Promise<LoginRes>} .detail에 "로그인 성공" 반환됨
      */
     login: async (payload: LoginReq) => {
-      const url = `/auth/login`;
+      const url = `/auth/login/`;
       return await handleApiCall({ method: "POST", url: url, data: payload });
     },
   },

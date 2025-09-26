@@ -45,7 +45,7 @@ export const chatSessionApi = {
      * @returns {Promise<GetChatSessionsApiRes>}
      */
     sessions: async () => {
-      const url = `/chat-sessions`;
+      const url = `/chat-sessions/`;
       return await handleApiCall({ method: "GET", url: url });
     },
   },
@@ -56,7 +56,7 @@ export const chatSessionApi = {
      * @returns {Promise<PostChatSessionsApiRes>}
      */
     chatSession: async (payload: PostChatSessionsApiReq) => {
-      const url = `/chat-sessions`;
+      const url = `/chat-sessions/`;
       return await handleApiCall({ method: "POST", url: url, data: payload });
     },
   },

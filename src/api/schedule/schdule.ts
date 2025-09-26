@@ -38,7 +38,7 @@ export const scheduleApi = {
      * @returns {Promise<Schedule[]>} 일정 배열
      */
     allSchedules: async (): Promise<Schedule[]> => {
-      const url = `/schedules`;
+      const url = `/schedules/`;
       return await handleApiCall({ method: "GET", url: url });
     },
     /**
@@ -47,7 +47,7 @@ export const scheduleApi = {
      * @returns {Promise<Schedule>} 일정 객체
      */
     scheduleById: async (id: number): Promise<Schedule> => {
-      const url = `/schedules/${id}`;
+      const url = `/schedules/${id}/`;
       return await handleApiCall({ method: "GET", url: url });
     },
   },
@@ -58,7 +58,7 @@ export const scheduleApi = {
      * @returns {Promise<Schedule>} 생성된 일정 객체
      */
     schedule: async (payload: PostScheduleReq): Promise<Schedule> => {
-      const url = `/schedules`;
+      const url = `/schedules/`;
       return await handleApiCall({ method: "POST", url: url, data: payload });
     },
   },
@@ -73,7 +73,7 @@ export const scheduleApi = {
       id: number,
       payload: PutScheduleReq
     ): Promise<Schedule> => {
-      const url = `/schedules/${id}`;
+      const url = `/schedules/${id}/`;
       return await handleApiCall({ method: "PUT", url: url, data: payload });
     },
   },
@@ -84,7 +84,7 @@ export const scheduleApi = {
      * @returns {Promise<DeleteScheduleRes>} .detail에 삭제 성공 메시지 출력됨
      */
     scheduleById: async (id: number): Promise<DeleteScheduleRes> => {
-      const url = `/schedules/${id}`;
+      const url = `/schedules/${id}/`;
       return await handleApiCall({ method: "DELETE", url: url });
     },
   },
