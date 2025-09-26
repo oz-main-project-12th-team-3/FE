@@ -1,11 +1,17 @@
+/** @jsxImportSource @emotion/react */
 import { useMemo } from "react";
 import {
   SIDEBAR_MARGIN,
   useMousePositionStore,
 } from "../../store/useMousePositionStore";
 import { motion } from "framer-motion";
+import { css } from "@emotion/react";
 
-
+const centerPosition = css`
+  position: fixed;
+  top: 50%;
+  left: 50%;
+`;
 
 export function ChatPosition({ children }: { children: React.ReactNode }) {
   const { whereIsMouse } = useMousePositionStore();
@@ -21,6 +27,7 @@ export function ChatPosition({ children }: { children: React.ReactNode }) {
 
   return (
     <motion.div
+      css={centerPosition}
       initial={{ x: 0 }}
       animate={{
         x: chatX,
