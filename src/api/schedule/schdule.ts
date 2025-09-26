@@ -1,4 +1,4 @@
-import { handleApiCall } from "../apiCallHelper";
+import { handleApiCall } from "../apiClient";
 
 export type Schedule = {
   id: number;
