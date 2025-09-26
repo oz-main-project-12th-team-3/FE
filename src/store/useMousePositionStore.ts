@@ -7,7 +7,7 @@ import { useDeviceTypeStore } from "./useDeviceTypeStore";
  */
 export type WhereIsMouse = "center" | "left" | "right";
 
-export const SIDEBAR_WIDTH = 200;
+export const SIDEBAR_WIDTH = 250;
 export const SIDEBAR_MARGIN = 50;
 const PADDING = 60;
 
