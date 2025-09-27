@@ -42,7 +42,7 @@ export const notificationApi = {
      * init시에만 한번에 받아오기
      * @returns {Promise<NotificationType[]>} 응답 데이터
      */
-    types: async () => {
+    types: async ():Promise<NotificationType[]> => {
       const url = `/notification-types/`;
       return await handleApiCall({ method: "GET", url: url });
     },
@@ -55,7 +55,7 @@ export const notificationApi = {
      * const res = await notificationApi.GET.notifications("unread")
      * ```
      */
-    notifications: async (status: NotificationStatusType) => {
+    notifications: async (status: NotificationStatusType):Promise<Notification[]> => {
       const url = `/notifications?&status=${status}/`;
       return await handleApiCall({ method: "GET", url: url });
     },
@@ -64,7 +64,7 @@ export const notificationApi = {
      * @param {number} id 특정 알림의 id
      * @returns {Promise<Notification>} 응답 데이터
      */
-    notificationById: async (id: number) => {
+    notificationById: async (id: number):Promise<Notification> => {
       const url = `/notifications/${id}/`;
       return await handleApiCall({ method: "GET", url: url });
     },
@@ -75,7 +75,7 @@ export const notificationApi = {
      * @param {number} id 상태를 변경할 알림의 id
      * @returns {Promise<PatchNotificationStatusByIdApiRes>} 응답 데이터
      */
-    notificationStatusById: async (id: number) => {
+    notificationStatusById: async (id: number):Promise<PatchNotificationStatusByIdApiRes> => {
       const url = `notifications/${id}/read/`;
       return await handleApiCall({ method: "PATCH", url: url });
     },
@@ -86,7 +86,7 @@ export const notificationApi = {
      * @param {number} id 삭제할 알림의 id
      * @returns {Promise<DeleteNotificationByIdApiRes>} 응답 데이터
      */
-    notificationById: async (id: number) => {
+    notificationById: async (id: number):Promise<DeleteNotificationByIdApiRes> => {
       const url = `/notifications/${id}/`;
       return await handleApiCall({ method: "DELETE", url: url });
     },

@@ -47,7 +47,9 @@ export const scheduleNotificationApi = {
      * @param {number} user_id 사용자의 id
      * @returns {Promise<GetUserScheduleNotificationsApiRes>} 응답 데이터
      */
-    userScheduleNotis: async (user_id: number) => {
+    userScheduleNotis: async (
+      user_id: number
+    ): Promise<GetUserScheduleNotificationsApiRes> => {
       const url = `/schedule-notifications/${user_id}/`;
       return await handleApiCall({ method: "GET", url: url });
     },
@@ -56,7 +58,7 @@ export const scheduleNotificationApi = {
      * @param {number} id 조회할 예약 알림의 id
      * @returns {Promise<ScheduleNotification>} 응답 데이터
      */
-    userScheduleNotiById: async (id: number) => {
+    userScheduleNotiById: async (id: number): Promise<ScheduleNotification> => {
       const url = `/schedule-notifications/${id}/`;
       return await handleApiCall({ method: "GET", url: url });
     },
@@ -67,7 +69,9 @@ export const scheduleNotificationApi = {
      * @param {postScheduleNotificationsApiReq} payload 새로운 예약
      * @returns {Promise<ScheduleNotification>} 응답 데이터
      */
-    scheduleNoti: async (payload: postScheduleNotificationsApiReq) => {
+    scheduleNoti: async (
+      payload: postScheduleNotificationsApiReq
+    ): Promise<ScheduleNotification> => {
       const url = `/schedule-notifications/`;
       return await handleApiCall({ method: "POST", url: url, data: payload });
     },
@@ -82,7 +86,7 @@ export const scheduleNotificationApi = {
     scheduleNotiById: async (
       id: number,
       payload: putScheduleNotificationsByIdApiReq
-    ) => {
+    ): Promise<putScheduleNotificationsByIdApiRes> => {
       const url = `/schedule-notifications/${id}/`;
       return await handleApiCall({ method: "PUT", url: url, data: payload });
     },
@@ -93,7 +97,9 @@ export const scheduleNotificationApi = {
      * @param {number} id 삭제할 예약 알림의 id
      * @returns {Promise<DeleteScheduleNotificationsByIdApiRes>} 응답 데이터
      */
-    scheduleNotiById: async (id: number) => {
+    scheduleNotiById: async (
+      id: number
+    ): Promise<DeleteScheduleNotificationsByIdApiRes> => {
       const url = `/schedule-notifications/${id}/`;
       return await handleApiCall({ method: "DELETE", url: url });
     },

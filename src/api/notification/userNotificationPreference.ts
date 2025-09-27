@@ -42,7 +42,7 @@ export const userNotificationPreferenceApi = {
      * 사용자 알림 설정 목록들을 조회하는 GET메서드
      * @returns {Promise<NotificationPreference[]>} 응답 데이터
      */
-    userNotiPrefs: async () => {
+    userNotiPrefs: async (): Promise<NotificationPreference[]> => {
       const url = `/users/notification-preferences/`;
       return await handleApiCall({ method: "GET", url: url });
     },
@@ -51,7 +51,7 @@ export const userNotificationPreferenceApi = {
      * @param {number} id 특정 알림 설정 항목의 id
      * @returns {Promise<NotificationPreference>} 응답 데이터
      */
-    userNotiPrefById: async (id: number) => {
+    userNotiPrefById: async (id: number): Promise<NotificationPreference> => {
       const url = `/users/notification-preferences/${id}/`;
       return await handleApiCall({ method: "GET", url: url });
     },
@@ -62,7 +62,9 @@ export const userNotificationPreferenceApi = {
      * @param {PostNotificationPreferenceApiReq} payload - 요청 데이터
      * @returns {Promise<PostNotificationPreferenceApiRes>} 응답 데이터
      */
-    notiPref: async (payload: PostNotificationPreferenceApiReq) => {
+    notiPref: async (
+      payload: PostNotificationPreferenceApiReq
+    ): Promise<PostNotificationPreferenceApiRes> => {
       const url = `/users/notification-preferences/`;
       return await handleApiCall({ method: "POST", url: url, data: payload });
     },
@@ -77,7 +79,7 @@ export const userNotificationPreferenceApi = {
     notiPrefById: async (
       id: number,
       payload: PutNotificationPreferenceApiReq
-    ) => {
+    ): Promise<PutNotificationPreferenceApiRes> => {
       const url = `/users/notification-preferences/${id}/`;
       return await handleApiCall({ method: "PUT", url: url, data: payload });
     },
@@ -88,7 +90,9 @@ export const userNotificationPreferenceApi = {
      * @param {number} id 삭제할 유저알림설정의 id
      * @returns {Promise<DeleteUserNotificationPreferenceApiRes>} 응답 데이터
      */
-    notiPrefById: async (id: number) => {
+    notiPrefById: async (
+      id: number
+    ): Promise<DeleteUserNotificationPreferenceApiRes> => {
       const url = `/users/notification-preferences/${id}/`;
       return await handleApiCall({ method: "DELETE", url: url });
     },

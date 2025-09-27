@@ -64,7 +64,9 @@ export const chatLogApi = {
      * @param {number} sessionId - 요청할 세션 id
      * @returns {Promise<GetChatMessagesBySessionApiRes>} 응답 데이터
      */
-    messagesBySessionId: async (sessionId: number) => {
+    messagesBySessionId: async (
+      sessionId: number
+    ): Promise<GetChatMessagesBySessionApiRes> => {
       const url = `/chat-messages/`;
       return await handleApiCall({
         method: "GET",
@@ -77,7 +79,7 @@ export const chatLogApi = {
      * @param {number} id - 메시지 id
      * @returns {Promise<GetChatMessageByIdApiRes>} 응답 데이터
      */
-    messageById: async (id: number) => {
+    messageById: async (id: number): Promise<GetChatMessageByIdApiRes> => {
       const url = `/chat-messages/${id}/`;
       return await handleApiCall({ method: "GET", url: url });
     },
@@ -88,7 +90,9 @@ export const chatLogApi = {
      * @param {PostChatMessageApiReq} payload - 요청 데이터
      * @returns {Promise<PostChatMessageApiRes>} 응답 데이터
      */
-    message: async (payload: PostChatMessageApiReq) => {
+    message: async (
+      payload: PostChatMessageApiReq
+    ): Promise<PostChatMessageApiRes> => {
       const url = `/chat-messages/`;
       return await handleApiCall({ method: "POST", url: url, data: payload });
     },
@@ -100,7 +104,10 @@ export const chatLogApi = {
      * @param {PutChatMessageApiReq} payload  is_important 불린 값
      * @returns {Promise<PutChatMessageApiRes>} 응답 데이터
      */
-    messageById: async (id: number, payload: PutChatMessageApiReq) => {
+    messageById: async (
+      id: number,
+      payload: PutChatMessageApiReq
+    ): Promise<PutChatMessageApiRes> => {
       const url = `/chat-messages/${id}/`;
       return await handleApiCall({ method: "PUT", url: url, data: payload });
     },
@@ -111,7 +118,7 @@ export const chatLogApi = {
      * @param {number} id 삭제할 메시지의 id
      * @returns {Promise<DeleteChatMessageApiRes>} 응답 데이터
      */
-    messageById: async (id: number) => {
+    messageById: async (id: number): Promise<DeleteChatMessageApiRes> => {
       const url = `/chat-messages/${id}/`;
       return await handleApiCall({ method: "DELETE", url: url });
     },
