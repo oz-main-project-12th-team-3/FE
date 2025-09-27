@@ -1,8 +1,8 @@
 import { handleApiCall } from "../apiClient";
 
-export type ScheduleNotificationStatus = "pending" | "sent";
+type ScheduleNotificationStatus = "pending" | "sent";
 
-export type ScheduleNotification = {
+type ScheduleNotification = {
   id: number;
   user_id: number;
   notification_id: number;
@@ -13,22 +13,22 @@ export type ScheduleNotification = {
   updated_at: string;
 };
 
-export type GetUserScheduleNotificationsApiRes = ScheduleNotification[];
+type GetUserScheduleNotificationsApiRes = ScheduleNotification[];
 
-export interface postScheduleNotificationsApiReq {
+interface postScheduleNotificationsApiReq {
   user_id: number;
   notification_id: number;
   scheduled_time: string;
   status: ScheduleNotificationStatus;
 }
 
-export interface putScheduleNotificationsByIdApiReq {
+interface putScheduleNotificationsByIdApiReq {
   scheduled_time: string;
   status: ScheduleNotificationStatus;
   sent_at: string;
 }
 
-export interface putScheduleNotificationsByIdApiRes {
+interface putScheduleNotificationsByIdApiRes {
   id: number;
   scheduled_time: string;
   sent_at: string;
@@ -36,7 +36,7 @@ export interface putScheduleNotificationsByIdApiRes {
   updated_at: string;
 }
 
-export interface DeleteScheduleNotificationsByIdApiRes {
+interface DeleteScheduleNotificationsByIdApiRes {
   detail: string;
 }
 

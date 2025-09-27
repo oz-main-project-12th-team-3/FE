@@ -1,6 +1,6 @@
 import { handleApiCall } from "../apiClient";
 
-export type Schedule = {
+type Schedule = {
   id: number;
   title: string;
   description: string;
@@ -11,7 +11,7 @@ export type Schedule = {
   updated_at: string;
 };
 
-export type PostScheduleReq = {
+type PostScheduleReq = {
   title: string;
   description: string;
   start_time: string;
@@ -19,7 +19,7 @@ export type PostScheduleReq = {
   is_completed: boolean;
 };
 
-export type PutScheduleReq = {
+type PutScheduleReq = {
   title: string | null;
   description: string | null;
   start_time: string | null;
@@ -27,7 +27,7 @@ export type PutScheduleReq = {
   is_completed: boolean | null;
 };
 
-export type DeleteScheduleRes = {
+type DeleteScheduleRes = {
   detail: string;
 };
 

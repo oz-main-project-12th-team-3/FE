@@ -1,8 +1,8 @@
 import { handleApiCall } from "../apiClient";
 
-export type Sender = "user" | "ai";
+type Sender = "user" | "ai";
 
-export interface PostChatMessageApiReq {
+interface PostChatMessageApiReq {
   session_id: number;
   message: string;
   sender: Sender;
@@ -10,7 +10,7 @@ export interface PostChatMessageApiReq {
   timestamp: string;
 }
 
-export interface PostChatMessageApiRes {
+interface PostChatMessageApiRes {
   id: number;
   user_id: number;
   session_id: number;
@@ -20,7 +20,7 @@ export interface PostChatMessageApiRes {
   timestamp: string;
 }
 
-export type Message = {
+type Message = {
   id: number;
   user_id: number;
   session_id: number;
@@ -32,9 +32,9 @@ export type Message = {
   updated_at: string;
 };
 
-export type GetChatMessagesBySessionApiRes = Message[];
+type GetChatMessagesBySessionApiRes = Message[];
 
-export interface GetChatMessageByIdApiRes {
+interface GetChatMessageByIdApiRes {
   id: number;
   session_id: number;
   sender: Sender;
@@ -43,17 +43,17 @@ export interface GetChatMessageByIdApiRes {
   timestamp: string;
 }
 
-export interface PutChatMessageApiReq {
+interface PutChatMessageApiReq {
   is_important: boolean;
 }
 
-export interface PutChatMessageApiRes {
+interface PutChatMessageApiRes {
   id: number;
   detail: { is_important: boolean };
   updated_at: string;
 }
 
-export interface DeleteChatMessageApiRes {
+interface DeleteChatMessageApiRes {
   detail: string;
 }
 

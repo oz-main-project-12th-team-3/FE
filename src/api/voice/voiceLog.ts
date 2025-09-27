@@ -1,6 +1,6 @@
 import { handleApiCall } from "../apiClient";
 
-export type VoiceLog = {
+type VoiceLog = {
   id: number;
   user_id: number;
   session_id: number;
@@ -12,13 +12,13 @@ export type VoiceLog = {
   updated_at: string;
 };
 
-export interface PostVoiceLogApiReq {
+interface PostVoiceLogApiReq {
   user_id: number;
   session_id: number;
   input_audio_url: string;
 }
 
-export type DeleteVoiceLogRes = {
+type DeleteVoiceLogRes = {
   detail: string;
 };
 

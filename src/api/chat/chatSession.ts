@@ -1,10 +1,10 @@
 import { handleApiCall } from "../apiClient";
 
-export interface PostChatSessionsApiReq {
+interface PostChatSessionsApiReq {
   title: string;
 }
 
-export interface PostChatSessionsApiRes {
+interface PostChatSessionsApiRes {
   id: number;
   user_id: number;
   title: string;
@@ -12,29 +12,29 @@ export interface PostChatSessionsApiRes {
   updated_at: string;
 }
 
-export type Session = {
+type Session = {
   id: number;
   title: string;
   last_message: string;
   updated_at: string;
 };
 
-export interface GetChatSessionsApiRes {
+interface GetChatSessionsApiRes {
   sessions: Session[];
   detail: string;
 }
 
-export interface PutChatSessionsApiReq {
+interface PutChatSessionsApiReq {
   title: string;
 }
 
-export interface PutChatSessionsApiRes {
+interface PutChatSessionsApiRes {
   id: number;
   title: string;
   updated_at: string;
 }
 
-export interface DeleteChatSessionApiRes {
+interface DeleteChatSessionApiRes {
   detail: string;
 }
 
@@ -44,7 +44,7 @@ export const chatSessionApi = {
      * 유저의 채팅 세션들을 불러오는 GET메서드
      * @returns {Promise<GetChatSessionsApiRes>}
      */
-    sessions: async ():Promise<GetChatSessionsApiRes> => {
+    sessions: async (): Promise<GetChatSessionsApiRes> => {
       const url = `/chat-sessions/`;
       return await handleApiCall({ method: "GET", url: url });
     },
@@ -55,7 +55,9 @@ export const chatSessionApi = {
      * @param {PostChatSessionsApiReq} payload 생성할 세션의 제목
      * @returns {Promise<PostChatSessionsApiRes>}
      */
-    chatSession: async (payload: PostChatSessionsApiReq):Promise<PostChatSessionsApiRes> => {
+    chatSession: async (
+      payload: PostChatSessionsApiReq
+    ): Promise<PostChatSessionsApiRes> => {
       const url = `/chat-sessions/`;
       return await handleApiCall({ method: "POST", url: url, data: payload });
     },
@@ -67,7 +69,10 @@ export const chatSessionApi = {
      * @param {PutChatSessionsApiReq} payload 업데이트할 데이터(title)
      * @returns {Promise<PutChatSessionsApiRes>} 업데이트된 채팅 세션 정보
      */
-    sessionById: async (id: number, payload: PutChatSessionsApiReq):Promise<PutChatSessionsApiRes> => {
+    sessionById: async (
+      id: number,
+      payload: PutChatSessionsApiReq
+    ): Promise<PutChatSessionsApiRes> => {
       const url = `/chat-sessions/${id}`;
       return await handleApiCall({ method: "PUT", url: url, data: payload });
     },
@@ -78,7 +83,7 @@ export const chatSessionApi = {
      * @param {number} id
      * @returns {Promise<DeleteChatSessionApiRes>} 응답 데이터
      */
-    sessionById: async (id: number):Promise<DeleteChatSessionApiRes> => {
+    sessionById: async (id: number): Promise<DeleteChatSessionApiRes> => {
       const url = `/chat-sessions/${id}`;
       return await handleApiCall({ method: "DELETE", url: url });
     },

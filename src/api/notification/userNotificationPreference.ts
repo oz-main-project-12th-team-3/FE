@@ -1,6 +1,6 @@
 import { handleApiCall } from "../apiClient";
 
-export type NotificationPreference = {
+type NotificationPreference = {
   id: number;
   notification_type_id: number;
   is_enabled: boolean;
@@ -8,12 +8,12 @@ export type NotificationPreference = {
   updated_at: string;
 };
 
-export interface PostNotificationPreferenceApiReq {
+interface PostNotificationPreferenceApiReq {
   notification_type_id: number;
   is_enabled: boolean;
 }
 
-export interface PostNotificationPreferenceApiRes {
+interface PostNotificationPreferenceApiRes {
   id: number;
   notification_type_id: number;
   is_enabled: boolean;
@@ -21,18 +21,18 @@ export interface PostNotificationPreferenceApiRes {
   updated_at: string;
 }
 
-export interface PutNotificationPreferenceApiReq {
+interface PutNotificationPreferenceApiReq {
   is_enabled: boolean;
 }
 
-export interface PutNotificationPreferenceApiRes {
+interface PutNotificationPreferenceApiRes {
   id: number;
   notification_type_id: number;
   is_enabled: boolean;
   updated_at: string;
 }
 
-export interface DeleteUserNotificationPreferenceApiRes {
+interface DeleteUserNotificationPreferenceApiRes {
   detail: string;
 }
 
