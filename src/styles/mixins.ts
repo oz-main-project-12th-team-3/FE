@@ -12,7 +12,6 @@ export const overlay = css`
   position: fixed;
   inset: 0;
   backdrop-filter: blur(8px);
-  z-index: 1000; // 모달이 토스트 메시지보다 아래로 오게 z-index 설정
 `;
 
 export const flexWrap = (

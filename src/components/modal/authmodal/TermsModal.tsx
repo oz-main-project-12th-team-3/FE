@@ -61,7 +61,7 @@ export default function TermsModal() {
       <h2 css={title}>이용약관 및 개인정보 처리방침</h2>
       <div css={content}>
         <p>
-          본 약관은 <strong>[서비스 이름]</strong> (이하 "회사")가 제공하는
+          본 약관은 <strong>[비서 AI]</strong> (이하 "회사")가 제공하는
           모든 서비스의 이용과 관련하여 회사와 이용자 간의 권리, 의무 및
           책임사항을 규정함을 목적으로 합니다.
         </p>
