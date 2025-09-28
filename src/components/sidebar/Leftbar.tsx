@@ -1,60 +1,62 @@
 /** @jsxImportSource @emotion/react */
-import { useState } from "react";
+import { css } from "@emotion/react";
 import { GlassmorphismDesign } from "../../styles/baseDesign/GlassmorphismDesign";
-import { itemMixin, SidebarColor, sideBarMixin } from "../../styles/mixins";
-import DragAndDrop from "../dragAndDrop/DragAndDrop";
 import { LeftbarPosition } from "./LeftbarPosition";
-import { useThemeColors } from "../../hooks/useThemeColors";
-
-type MOCDATA = {
-  id: number;
-  title: string;
-  value: string;
-};
+import { LeftbarWrapper } from "./LeftbarWrapper";
+import Logo from "./Logo";
+import SearchBar from "./SearchBar";
 
 export function Leftbar() {
-  const [items, setItems] = useState<MOCDATA[]>(
-    Array.from({ length: 20 }, (_, idx) => {
-      return { id: idx, title: `chat${idx}`, value: `value${idx}` };
-    })
-  );
-
-  const { text, background } = useThemeColors();
-
-  const sidebarColor = SidebarColor(text, background);
-
-  const handleClick = () => {
-    //해당 채팅으로 이동 로직
-  };
-
   return (
-    <LeftbarPosition>
-      <GlassmorphismDesign>
-        <div css={[sideBarMixin, sidebarColor]}>
-          <div>새 채팅</div>
-          <div>model</div>
-          <hr />
-          <span>voice</span>
-          <div>음성인식</div>
-          <hr />
-          <div>검색</div>
-          <hr />
-          <DragAndDrop
-            items={items}
-            onItemsChange={setItems}
-            dragTitle={"title"}
-          >
-            {items.map((el) => {
-              return (
-                <div key={el.id} css={itemMixin} onClick={handleClick}>
-                  {el.value}
-                </div>
-              );
-            })}
-          </DragAndDrop>
+    <LeftbarWrapper>
+      <LeftbarPosition>
+        {/* 바깥 겹: 부모 높이 100% 유지 */}
+        <div css={frame}>
+          {/* 안쪽 겹: 바로 아래 자식을 강제로 꽉 채우게 */}
+          <div css={panel}>
+            <GlassmorphismDesign>
+              <div css={wrap}>
+                <Logo />
+                <SearchBar />
+                <hr />
+                <div css={content}>{/* 리스트/히스토리 섹션 */}</div>
+              </div>
+            </GlassmorphismDesign>
+          </div>
         </div>
-      </GlassmorphismDesign>
-    </LeftbarPosition>
+      </LeftbarPosition>
+    </LeftbarWrapper>
   );
 }
 
+const frame = css`
+  height: 100%;
+  display: flex;
+`;
+
+const panel = css`
+  flex: 1;
+  display: flex;
+
+  /* GlassmorphismDesign의 루트 DOM을 강제로 채우게 */
+  > * {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 0; /* 내부 스크롤 정상화 */
+  }
+`;
+
+const wrap = css`
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+  overflow: visible; /* 드롭다운 허용 */
+`;
+
+const content = css`
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+`;
