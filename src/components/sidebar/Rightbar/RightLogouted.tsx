@@ -13,35 +13,17 @@ export default function RightLogouted({
 }: {
   setIsLogin: (bool: boolean) => void;
 }) {
-  const {  } = useThemeColors()
+  const { modalBackground, scheduleTitleColor, crownIcon, scheduleItemBorder } = useThemeColors()
   const openLoginModal = () => {
     setIsLogin(true);
   };
 
-  return (
-    <div css={[flexCenter(), logoutContainerCss]}>
-      <div css={defaultProfileCss}>
-        <div css={[defaultProfileImage]}></div>
-      </div>
-      <div css={logoutButtonSectionCss}>
-        <button css={baseButton} onClick={openLoginModal}>
-          로그인
-        </button>
-        <button css={premiumButtonCss} onClick={openLoginModal}>
-          <FaCrown css={crownIconCss} />
-          프리미엄
-        </button>
-      </div>
-    </div>
-  );
-}
-
-const premiumButtonCss = css`
+  const premiumButtonCss = css`
   padding: 0.75rem 1rem;
-  background: white;
+  background: ${modalBackground};
   border: none;
   border-radius: 8px;
-  color: black;
+  color: ${scheduleTitleColor};
   font-size: 0.9rem;
   font-weight: 600;
   cursor: pointer;
@@ -52,14 +34,14 @@ const premiumButtonCss = css`
   gap: 0.5rem;
 
   &:hover {
-    background: #e5e5e5;
+    background: ${scheduleItemBorder};
     transform: translateY(-1px);
   }
 `;
 
 const crownIconCss = css`
   font-size: 1rem;
-  color: #ffd700;
+  color: ${crownIcon};
 `;
 
 const logoutContainerCss = css`
@@ -84,3 +66,21 @@ const logoutButtonSectionCss = css`
   gap: 1rem;
   width: 100%;
 `;
+
+  return (
+    <div css={[flexCenter(), logoutContainerCss]}>
+      <div css={defaultProfileCss}>
+        <div css={[defaultProfileImage]}></div>
+      </div>
+      <div css={logoutButtonSectionCss}>
+        <button css={baseButton} onClick={openLoginModal}>
+          로그인
+        </button>
+        <button css={premiumButtonCss} onClick={openLoginModal}>
+          <FaCrown css={crownIconCss} />
+          프리미엄
+        </button>
+      </div>
+    </div>
+  );
+}
