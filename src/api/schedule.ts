@@ -16,7 +16,7 @@ export const scheduleAPI: ScheduleAPI = {
 
           console.log('일정 날짜:', scheduleDate, '조회 날짜:', date);
           return scheduleDate === date;
-        });
+        }); 
 
         resolve(filtered);
       }, 300);

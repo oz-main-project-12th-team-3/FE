@@ -11,7 +11,7 @@ export default function LoginForm() {
 
   const [errors, setErrors] = useState({
     email: "",
-    password: ""
+    password: "",
   });
 
   const { buttonBgColor, modalBackground, hoverBtnColor } = useThemeColors();
@@ -70,7 +70,7 @@ export default function LoginForm() {
 
     // 에러 없으면 로그인 로직 진행
     if (!emailError && !passwordError) {
-      console.log("로그인 시도:", {form});
+      console.log("로그인 시도:", { form });
     }
   };
 
@@ -78,13 +78,15 @@ export default function LoginForm() {
     <form css={formStyle}>
       <div>
         <div>
-          <label htmlFor="login-email" css={labelStyle}>이메일</label>
+          <label htmlFor="login-email" css={labelStyle}>
+            이메일
+          </label>
           <InputField
             type="text"
             name="login-email"
             placeholder="your@email.com"
             value={form.email}
-            onChange={(e) => setForm({...form, email:e.target.value})}
+            onChange={(e) => setForm({ ...form, email: e.target.value })}
             leftIcon={<FaEnvelope />}
             error={errors.email}
           />
@@ -92,7 +94,9 @@ export default function LoginForm() {
 
         <div>
           <div css={passwordTitleStyle}>
-            <label htmlFor="login-password" css={labelStyle}>비밀번호</label>
+            <label htmlFor="login-password" css={labelStyle}>
+              비밀번호
+            </label>
             <p>비밀번호 찾기</p>
           </div>
           <InputField
@@ -100,7 +104,7 @@ export default function LoginForm() {
             name="login-password"
             placeholder="비밀번호를 입력하세요"
             value={form.password}
-            onChange={(e) => setForm({...form, password:e.target.value})}
+            onChange={(e) => setForm({ ...form, password: e.target.value })}
             leftIcon={<FaLock />}
             error={errors.password}
           />
