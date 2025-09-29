@@ -3,7 +3,7 @@ import {
   SIDEBAR_MARGIN,
   SIDEBAR_WIDTH,
   useMousePositionStore,
-} from "../../store/useMousePositionStore";
+} from "../../../store/useMousePositionStore";
 import { motion } from "framer-motion";
 import { css } from "@emotion/react";
 
