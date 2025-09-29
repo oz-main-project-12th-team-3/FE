@@ -1,10 +1,10 @@
 /** @jsxImportSource @emotion/react */
 import { useState } from "react";
-import { GlassmorphismDesign } from "../../styles/baseDesign/GlassmorphismDesign";
-import { itemMixin, SidebarColor, sideBarMixin } from "../../styles/mixins";
-import DragAndDrop from "../dragAndDrop/DragAndDrop";
 import { LeftbarPosition } from "./LeftbarPosition";
-import { useThemeColors } from "../../hooks/useThemeColors";
+import { useThemeColors } from "../../../hooks/useThemeColors";
+import { itemMixin, SidebarColor, sideBarMixin } from "../../../styles/mixins";
+import { GlassmorphismDesign } from "../../../styles/baseDesign/GlassmorphismDesign";
+import DragAndDrop from "../../dragAndDrop/DragAndDrop";
 
 type MOCDATA = {
   id: number;
