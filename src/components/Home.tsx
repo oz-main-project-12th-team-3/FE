@@ -6,7 +6,7 @@ import { Rightbar } from "./sidebar/Rightbar";
 
 export default function Home() {
   return (
-    <div css={HomeCss}>
+    <div css={HomeCss} className="Home">
       <Leftbar />
       <Rightbar />
       <Chat />
