@@ -28,7 +28,7 @@ export default function AppDesktop() {
           <MousePositonSetter />
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/chat/:id" element={<Home />} />
+            <Route path="/chat/:session_id" element={<Home />} />
             <Route path="/chat/new" element={<Home />} />
 
               <Route path="modal" element={<Modal />}>

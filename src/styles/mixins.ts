@@ -80,7 +80,7 @@ export const itemMixin = css`
   background-color: white;
   width: 10rem;
   border-radius: 0.5rem;
-  `;
+`;
 
 export function SidebarColor(text: string, background: string) {
   return css`
@@ -128,6 +128,14 @@ export const defaultProfileImage = css`
   }
 `;
 
+export const wordBreak = css`
+  word-break: break-word;
+  white-space: pre-wrap;
+`;
+
+export const blurFilter = css`
+  backdrop-filter: blur(6px);
+`;
 
 // const Card = styled.div`
 //   ${flexCenter};
