@@ -8,13 +8,13 @@ interface LoginReq {
 interface LoginRes {
   detail: string;
   user_id: number;
-  email:string
+  email: string;
   expires_in: number;
   access_token: string;
   tfa_required: boolean;
-  tfa_step:string
-  temporary_access_token:string
-  temporary_refresh_token:string
+  tfa_step: string;
+  temporary_access_token: string;
+  temporary_refresh_token: string;
 }
 
 type EmailCheckReq = {
@@ -56,6 +56,20 @@ export const loginApi = {
     ): Promise<EmailCheckRes> => {
       const url = `/api/v1/auth/email-check/`;
       return await handleApiCall({ method: "POST", url: url, data: payload });
+    },
+  },
+  DELETE: {
+    /**
+     * 로그아웃
+     * @returns {Promise<ResDetail>}
+     */
+    logout: async (): Promise<ResDetail> => {
+      const url = `/api/v1/auth/logout/`;
+      try {
+        return await handleApiCall({ method: "DELETE", url: url });
+      } finally {
+        TokenManager.clearTokens();
+      }
     },
   },
 };

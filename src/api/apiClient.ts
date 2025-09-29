@@ -14,6 +14,7 @@ const NO_AUTH_URLS = [
   "/api/v1/auth/login/",
   "/api/v1/auth/password-reset/",
   "/api/v1/auth/email-check/",
+  "/plans/",
 ];
 
 export class TokenManager {
