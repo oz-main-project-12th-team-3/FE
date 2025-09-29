@@ -8,6 +8,7 @@ import { scheduleAPI } from "../../../api/schedule";
 import { useThemeColors } from "../../../hooks/useThemeColors";
 import ScheduleHeader from "./ScheduleHeader";
 import ScheduleCalendar from "./ScheduleCalendar";
+import { getLocalDateString } from "../../../utils/time";
 
 const ScheduleModal = () => {
   const [view, setView] = useState<ViewType>("list");
@@ -45,18 +46,18 @@ const ScheduleModal = () => {
 
   // 일정 목록 로드
   const loadSchedules = async (): Promise<void> => {
-    if (!selectedDate) return;
-    setLoading(true);
-    try {
-      const dateStr = selectedDate.toLocaleDateString("sv-SE"); // YYYY-MM-DD
-      const data = await scheduleAPI.getSchedules(dateStr);
-      setSchedules(data);
-    } catch (error) {
-      console.error("일정 로드 실패:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
+  if (!selectedDate) return;
+  setLoading(true);
+  try {
+    const dateStr = getLocalDateString(selectedDate); // 로컬 날짜 사용
+    const data = await scheduleAPI.getSchedules(dateStr);
+    setSchedules(data);
+  } catch (error) {
+    console.error("일정 로드 실패:", error);
+  } finally {
+    setLoading(false);
+  }
+};
 
   useEffect(() => {
     loadSchedules();
@@ -159,7 +160,7 @@ const ScheduleModal = () => {
           ) : (
             <ScheduleForm
               schedule={editingSchedule}
-              selectedDate={selectedDate?.toISOString().split("T")[0] || ""}
+              selectedDate={selectedDate ? getLocalDateString(selectedDate) : ""}
               loading={loading}
               onSave={handleSave}
               onDelete={

@@ -7,6 +7,9 @@ import {
 import { css } from "@emotion/react";
 import { FaCrown } from "react-icons/fa";
 import { useThemeColors } from "../../../hooks/useThemeColors";
+import {
+  sideBarMixin
+} from "../../../styles/mixins";
 
 export default function RightLogouted({
   setIsLogin,
@@ -68,6 +71,7 @@ const logoutButtonSectionCss = css`
 `;
 
   return (
+    <div css={[sideBarMixin]}>
     <div css={[flexCenter(), logoutContainerCss]}>
       <div css={defaultProfileCss}>
         <div css={[defaultProfileImage]}></div>
@@ -81,6 +85,7 @@ const logoutButtonSectionCss = css`
           프리미엄
         </button>
       </div>
+    </div>
     </div>
   );
 }

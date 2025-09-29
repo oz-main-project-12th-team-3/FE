@@ -1,5 +1,5 @@
 import { validateEmail, validatePassword } from "../utils/validator";
-import { loginApi } from "./login";
+import { loginApi } from "./auth/login"
 
 export async function testLogin() {
     const email = "user@example.com"
@@ -16,8 +16,8 @@ export async function testLogin() {
     }
 
     try {
-        const data = await loginApi({email, password});
-        console.log("로그인 성공:", data);
+        // const data = await loginApi({email, password});
+        // console.log("로그인 성공:", data);
     } catch (err) {
         console.error("로그인 실패:", err);
     }

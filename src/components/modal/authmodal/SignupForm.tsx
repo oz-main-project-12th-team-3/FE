@@ -31,7 +31,7 @@ export default function SignupForm() {
     confirmPassword: "",
   });
 
-  const { modalBackground, descriptionText, aColor, tabBtnText } =
+  const { modalBackground, descriptionText, aColor, tabBtnText, inputBorder } =
     useThemeColors();
 
   const formStyle = css`
@@ -114,7 +114,7 @@ export default function SignupForm() {
           placeholder="홍길동"
           value={form.name}
           onChange={(e) => setForm({ ...form, name: e.target.value })}
-          leftIcon={<FaUser />}
+          leftIcon={<FaUser color={inputBorder}/>}
           error={errors.name}
         />
       </div>
@@ -129,7 +129,7 @@ export default function SignupForm() {
           type="email"
           value={form.email}
           onChange={(e) => setForm({ ...form, email: e.target.value })}
-          leftIcon={<FaEnvelope />}
+          leftIcon={<FaEnvelope color={inputBorder}/>}
           error={errors.email}
         />
       </div>
@@ -144,7 +144,7 @@ export default function SignupForm() {
           type="password"
           value={form.password}
           onChange={(e) => setForm({ ...form, password: e.target.value })}
-          leftIcon={<FaLock />}
+          leftIcon={<FaLock color={inputBorder}/>}
           error={errors.password}
         />
       </div>
@@ -161,7 +161,7 @@ export default function SignupForm() {
           onChange={(e) =>
             setForm({ ...form, confirmPassword: e.target.value })
           }
-          leftIcon={<FaLock />}
+          leftIcon={<FaLock color={inputBorder}/>}
           error={errors.confirmPassword}
         />
       </div>
