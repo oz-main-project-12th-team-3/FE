@@ -13,7 +13,6 @@ type Props = {
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   error: string;
   leftIcon?: React.ReactNode;
-  passwordToggle?: boolean;
 };
 
 export const InputField = ({
@@ -24,18 +23,17 @@ export const InputField = ({
   onChange,
   error,
   leftIcon,
-  passwordToggle,
 }: Props) => {
   const [show, setShow] = useState(false);
-  const actualType = passwordToggle ? (show ? 'text' : 'password') : type;
-  const { inputBg, tabBtnText } = useThemeColors();
+  const actualType = type === 'password' ? (show ? 'text' : 'password') : type;
+ const { inputBorder, tabBtnText, deleteBtnBg } = useThemeColors()
 
   const wrapperStyle = css`
     display: flex;
     align-items: center;
     gap: 8px;
-    background: ${inputBg};
     padding: 12px;
+    border: 1px solid ${inputBorder};
     border-radius: 8px;
     width: 100%;
   `;
@@ -57,7 +55,7 @@ export const InputField = ({
   `;
 
   const errorTextStyle = css`
-    color: red;
+    color: ${deleteBtnBg};
     font-size: 12px;
     margin-top: 4px;
     padding-left: 4px;
@@ -76,8 +74,12 @@ export const InputField = ({
           value={value}
           onChange={onChange}
         />
-        {passwordToggle && (
-          <button type="button" css={toggleButtonStyle} onClick={() => setShow(!show)}>
+        {type === 'password' && (
+          <button
+            type="button"
+            css={toggleButtonStyle}
+            onClick={() => setShow(!show)}
+          >
             {show ? <IoEyeOutline /> : <FaRegEyeSlash />}
           </button>
         )}

@@ -56,11 +56,18 @@ export const scrollCss = (color: string) => css`
   }
 `;
 
+export const scrollbarHidden = css`
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE, Edge */
+  &::-webkit-scrollbar {
+    display: none; /* Chrome, Safari */
+  }
+`;
+
 export const sideBarMixin = css`
   ${flexColumn()}
   width: ${SIDEBAR_WIDTH}px;
   div {
-    border-radius: 0.5rem;
     padding: 0.3rem;
   }
   font-size: 1.3rem;
@@ -70,7 +77,10 @@ export const sideBarMixin = css`
 
 export const itemMixin = css`
   cursor: pointer;
-`;
+  background-color: white;
+  width: 10rem;
+  border-radius: 0.5rem;
+  `;
 
 export function SidebarColor(text: string, background: string) {
   return css`
@@ -86,6 +96,38 @@ export function SidebarColor(text: string, background: string) {
     }
   `;
 }
+
+// 기본 버튼 스타일
+export const baseButton = css`
+  padding: 0.75rem 1rem;
+  background: white;
+  border: none;
+  border-radius: 8px;
+  color: black;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.2s;
+
+  &:hover {
+    background: #e5e5e5;
+    transform: translateY(-1px);
+  }
+`;
+
+// 기본 프로필 이미지
+export const defaultProfileImage = css`
+  width: 3.5rem;
+  height: 3.5rem;
+  border-radius: 50%;
+  background: white;
+  ${flexCenter()};
+
+  &::after {
+    content: "👤";
+    font-size: 2rem;
+  }
+`;
+
 
 // const Card = styled.div`
 //   ${flexCenter};

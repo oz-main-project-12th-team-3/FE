@@ -7,7 +7,9 @@ import { useThemeColors } from "../../../hooks/useThemeColors";
 import { validateEmail, validatePassword } from "../../../utils/validator";
 
 export default function LoginForm() {
+
   const [form, setForm] = useState({ email: "", password: "" });
+
 
   const [errors, setErrors] = useState({
     email: "",
@@ -75,13 +77,14 @@ export default function LoginForm() {
   };
 
   return (
-    <form css={formStyle} onSubmit={handleSubmit}>
+    <form css={formStyle}>
       <div>
         <div>
           <label htmlFor="login-email" css={labelStyle}>
             이메일
           </label>
           <InputField
+            type="text"
             name="login-email"
             placeholder="your@email.com"
             value={form.email}
@@ -99,18 +102,18 @@ export default function LoginForm() {
             <p>비밀번호 찾기</p>
           </div>
           <InputField
+            type="password"
             name="login-password"
             placeholder="비밀번호를 입력하세요"
             value={form.password}
             onChange={(e) => setForm({ ...form, password: e.target.value })}
             leftIcon={<FaLock />}
-            passwordToggle
             error={errors.password}
           />
         </div>
       </div>
 
-      <button type="submit" css={buttonStyle}>
+      <button type="button" onClick={handleSubmit} css={buttonStyle}>
         로그인
       </button>
     </form>
