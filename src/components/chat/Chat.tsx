@@ -1,11 +1,13 @@
+import { GlassmorphismDesign } from "../../styles/baseDesign/GlassmorphismDesign";
+import { ChatContent } from "./ChatContent";
 import { ChatPosition } from "./ChatPosition";
 
-
 export function Chat() {
-
   return (
     <ChatPosition>
-      <div className="chatbox"></div>
+      <GlassmorphismDesign>
+        <ChatContent/>
+      </GlassmorphismDesign>
     </ChatPosition>
   );
 }
