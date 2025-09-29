@@ -1,11 +1,20 @@
+/** @jsxImportSource @emotion/react */
 import { useEffect, useState } from "react";
 import { chatLogApi } from "../../api/chat/chatLog";
 import { toast, type ToastOptions } from "react-toastify";
 import { useParams } from "react-router-dom";
+import { AIChatBox } from "./AIChatBox";
+import { UserChatBox } from "./UserChatBox";
+import { MsgSendBox } from "./MsgSendBox";
+import { useThemeColors } from "../../hooks/useThemeColors";
+import { css } from "@emotion/react";
+import { SIDEBAR_WIDTH } from "../../store/useMousePositionStore";
+import { dummyMessages } from "../../api/dummyData/dummyChat";
+import { scrollCss } from "../../styles/mixins";
 
 type Sender = "user" | "ai";
 
-interface Message {
+export interface Message {
   id: number;
   session_id: number;
   message: string;
@@ -16,9 +25,9 @@ interface Message {
 
 export function ChatContent() {
   const [messages, setMessages] = useState<Message[]>([]);
-  const [input, setInput] = useState("");
-  const {session_id} = useParams<{ session_id: string }>();
-  const sessionId = Number(session_id)
+  const { session_id } = useParams<{ session_id: string }>();
+  const sessionId = Number(session_id);
+  const { text, scrollColor } = useThemeColors();
 
   // 세션별 메시지 불러오기
   useEffect(() => {
@@ -28,51 +37,56 @@ export function ChatContent() {
         setMessages(res);
       } catch (err: unknown) {
         toast.error("메시지 불러오기 실패:", err as ToastOptions<unknown>);
+      } finally {
+        // 일단 더미데이터 활용
+        setMessages(
+          dummyMessages.filter((msg) => msg.session_id === sessionId)
+        );
       }
     };
     fetchMessages();
   }, [sessionId]);
 
-  // 메시지 전송
-  const handleSend = async () => {
-    if (!input.trim()) return;
-    try {
-      const newMsg = await chatLogApi.POST.message({
-        session_id: sessionId,
-        message: input,
-        sender: "user",
-        is_important: false,
-        timestamp: new Date().toISOString(),
-      });
-      setMessages((prev) => [...prev, newMsg]);
-      setInput("");
-    } catch (err) {
-      console.error("메시지 전송 실패:", err);
-    }
-  };
+  const borderColorCss = css`
+    border-color: ${text};
+  `;
 
   return (
-    <div>
-      {/* 메시지 리스트 */}
-      <div>
-        {messages.map((msg) => (
-          <div key={msg.id}>
-            <p>{msg.message}</p>
-            <span>{msg.timestamp}</span>
-          </div>
+    <div css={chatContentCss}>
+      <div className="chats" css={scrollCss(scrollColor)}>
+        {messages.map((el) => (
+          <>
+            {el.sender === "ai" ? (
+              <AIChatBox msg={el} />
+            ) : (
+              <UserChatBox msg={el} />
+            )}
+            <hr css={borderColorCss} />
+          </>
         ))}
-      </div>
-
-      {/* 입력창 */}
-      <div>
-        <input
-          type="text"
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          placeholder="메시지를 입력하세요..."
-        />
-        <button onClick={handleSend}>전송</button>
+        <MsgSendBox sessionId={sessionId} setMessages={setMessages} />
       </div>
     </div>
   );
 }
+
+const chatContentCss = css`
+  width: ${SIDEBAR_WIDTH * 3}px;
+  height: 40rem;
+  padding-bottom: 4rem;
+
+  .chats {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    overflow-y: auto;
+    max-height: 100%;
+    padding-bottom: 10rem;
+
+    hr {
+      opacity: 0.3;
+      margin: auto;
+      width: 80%;
+    }
+  }
+`;
