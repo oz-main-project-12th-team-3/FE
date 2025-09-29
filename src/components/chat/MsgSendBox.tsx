@@ -6,7 +6,7 @@ import { TbMessageCircle } from "react-icons/tb";
 import { css } from "@emotion/react";
 import { useThemeColors } from "../../hooks/useThemeColors";
 import { SIDEBAR_WIDTH } from "../../store/useMousePositionStore";
-import { blurFilter, scrollCss } from "../../styles/mixins";
+import { scrollCss } from "../../styles/mixins";
 
 interface MsgSendBoxProps {
   sessionId: number;
@@ -74,7 +74,7 @@ const msgSendBoxCss = css`
   position: absolute;
   bottom: 1rem;
   display: flex;
-  gap:1rem;
+  gap: 1rem;
   width: ${SIDEBAR_WIDTH * 3}px;
   border-radius: 0.5rem;
   height: fit-content;
