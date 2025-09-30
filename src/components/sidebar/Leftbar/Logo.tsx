@@ -6,6 +6,7 @@ export function Logo() {
   const logoCss = css`
     width: 4rem;
     border-radius: 0.5rem;
+    border:1px solid #ffffff;
   `;
   return <img src="/logo.png" css={logoCss}></img>;
 }
