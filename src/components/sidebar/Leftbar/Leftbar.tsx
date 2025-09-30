@@ -1,60 +1,55 @@
 /** @jsxImportSource @emotion/react */
-import { useState } from "react";
 import { LeftbarPosition } from "./LeftbarPosition";
 import { useThemeColors } from "../../../hooks/useThemeColors";
-import { itemMixin, SidebarColor, sideBarMixin } from "../../../styles/mixins";
+import { flexCenter, spaceBetween } from "../../../styles/mixins";
 import { GlassmorphismDesign } from "../../../styles/baseDesign/GlassmorphismDesign";
-import DragAndDrop from "../../dragAndDrop/DragAndDrop";
-
-type MOCDATA = {
-  id: number;
-  title: string;
-  value: string;
-};
+import { css } from "@emotion/react";
+import {
+  SIDEBAR_HEIGHT,
+  SIDEBAR_WIDTH,
+} from "../../../store/useMousePositionStore";
+import { ThemeModeBtn } from "./ThemeModeBtn";
+import { Searchbar } from "./Searchbar";
+import { NewChat } from "./NewChatBtn";
+import { VoiceChat } from "./VoiceChat";
+import { ChatLogs } from "./ChatLogs";
+import { Logo } from "./Logo";
 
 export function Leftbar() {
-  const [items, setItems] = useState<MOCDATA[]>(
-    Array.from({ length: 20 }, (_, idx) => {
-      return { id: idx, title: `chat${idx}`, value: `value${idx}` };
-    })
-  );
+  const { text } = useThemeColors();
 
-  const { text, background } = useThemeColors();
-
-  const sidebarColor = SidebarColor(text, background);
-
-  const handleClick = () => {
-    //해당 채팅으로 이동 로직
-  };
+  const sidebarColor = css`
+    hr {
+      border-color: ${text};
+    }
+  `;
 
   return (
     <LeftbarPosition>
       <GlassmorphismDesign>
-        <div css={[sideBarMixin, sidebarColor]}>
-          <div>새 채팅</div>
-          <div>model</div>
+        <div css={[sideBarSize, sidebarColor]}>
+          <div css={[flexCenter("row"), spaceBetween]}>
+            <Logo />
+            <ThemeModeBtn />
+          </div>
+          <div css={flexCenter("row")}>
+            <Searchbar />
+            <NewChat />
+          </div>
           <hr />
-          <span>voice</span>
-          <div>음성인식</div>
+          <VoiceChat />
           <hr />
-          <div>검색</div>
-          <hr />
-          <DragAndDrop
-            items={items}
-            onItemsChange={setItems}
-            dragTitle={"title"}
-          >
-            {items.map((el) => {
-              return (
-                <div key={el.id} css={itemMixin} onClick={handleClick}>
-                  {el.value}
-                </div>
-              );
-            })}
-          </DragAndDrop>
+          <ChatLogs />
         </div>
       </GlassmorphismDesign>
     </LeftbarPosition>
   );
 }
+
+export const sideBarSize = css`
+  width: ${SIDEBAR_WIDTH}px;
+  height: ${SIDEBAR_HEIGHT}px;
+`;
+
+
 

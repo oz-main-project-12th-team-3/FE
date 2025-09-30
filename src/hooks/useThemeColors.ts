@@ -1,9 +1,9 @@
-import { useColorModeStore } from "../store/useColorModeStore";
+import { storeColorMode } from "../store/storeColorMode";
 import { colors } from "../styles/constColors";
 
 
 export const useThemeColors = () => {
-  const mode = useColorModeStore((state) => state.mode);
+  const mode = storeColorMode((state) => state.mode);
   return colors[mode];
 };
 
