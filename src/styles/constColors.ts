@@ -32,6 +32,12 @@ type color = {
   // rightbar
   crownIcon: string;
   scheduleTitleColor:string;
+  menuItemBg:string;
+  iconContainerBg:string;
+  worningBoxBg:string;
+  worningBoxBorder:string;
+  // nofication
+  unreadBg:string;
 };
 
 const dark: color = {
@@ -63,7 +69,12 @@ const dark: color = {
   aColor:"#4a6df5",
   scrollColor: "#ffffff63",
   crownIcon: "#ffd700",
-  scheduleTitleColor: "#000000"
+  scheduleTitleColor: "#000000",
+  menuItemBg:"#FFFFFF1A",
+  iconContainerBg:"#fee2e2",
+  worningBoxBg:"#fef2f2",
+  worningBoxBorder:"#fecaca",
+  unreadBg:"#f5f8ff"
 };
 
 const light: color = {
@@ -95,7 +106,12 @@ const light: color = {
   aColor:"#4a6df5",
   scrollColor: "#00000063",
   crownIcon: "#ffd700",
-  scheduleTitleColor:"#000000"
+  scheduleTitleColor:"#000000",
+  menuItemBg:"#FFFFFF1A",
+  iconContainerBg:"#fee2e2",
+  worningBoxBg:"#fef2f2",
+  worningBoxBorder:"#fecaca",
+  unreadBg:"#f5f8ff"
 };
 
 export const colors = { dark, light } as const;

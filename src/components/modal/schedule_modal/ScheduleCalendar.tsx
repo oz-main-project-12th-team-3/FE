@@ -31,13 +31,31 @@ export const ScheduleCalendar = ({
     height: 100%;
   `;
 
+  const handleSelect = (date: Date | undefined) => {
+    if (date) {
+      // 로컬 정오로 설정하여 타임존 문제 방지
+      const localDate = new Date(
+        date.getFullYear(),
+        date.getMonth(),
+        date.getDate(),
+        12, // 정오
+        0,
+        0,
+        0
+      );
+      onSelect(localDate);
+    } else {
+      onSelect(date);
+    }
+  };
+
   return (
     <div css={calendarWrapper}>
       <div css={calendarBox}>
         <DayPicker
           mode="single"
           selected={selectedDate}
-          onSelect={onSelect}
+          onSelect={handleSelect}
           styles={{
             root: { height: "100%" },
           }}

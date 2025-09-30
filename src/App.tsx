@@ -13,7 +13,10 @@ import Home from "./components/Home";
 const Modal = React.lazy(() => import("./components/modal/Modal"));
 const AuthModal = React.lazy(() => import("./components/modal/authmodal/AuthModal"));
 const ScheduleModal = React.lazy(() => import("./components/modal/schedule_modal/scheduleModal"));
+const NotificationModal = React.lazy(() => import("./components/modal/notification_modal/NotificationModal"))
 const TermsModal = React.lazy(() => import("./components/modal/authmodal/TermsModal"));
+const PasswordChangeModal = React.lazy(() => import("./components/modal/passwordChang/PasswordChangeModal"))
+const DeleteAccountModal = React.lazy(() => import("./components/modal/deleteAccount_modal/DeleteAccountModal"))
 
 export default function AppDesktop() {
   useEffect(() => {
@@ -28,13 +31,16 @@ export default function AppDesktop() {
           <MousePositonSetter />
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/chat/:id" element={<Home />} />
+            <Route path="/chat/:session_id" element={<Home />} />
             <Route path="/chat/new" element={<Home />} />
 
               <Route path="modal" element={<Modal />}>
                 <Route path="auth" element={<AuthModal />} />
                 <Route path="terms" element={<TermsModal />} />
                 <Route path="schedule" element={<ScheduleModal />} />
+                <Route path="notification" element={<NotificationModal />} />
+                <Route path="password" element={<PasswordChangeModal />} />
+                <Route path="deleteaccount" element={<DeleteAccountModal />} />
               </Route>
             </Routes>
         </Background>
