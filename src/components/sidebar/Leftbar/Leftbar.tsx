@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { LeftbarPosition } from "./LeftbarPosition";
 import { useThemeColors } from "../../../hooks/useThemeColors";
-import { flexCenter, spaceBetween } from "../../../styles/mixins";
+import { flexCenter, gap, spaceBetween } from "../../../styles/mixins";
 import { GlassmorphismDesign } from "../../../styles/baseDesign/GlassmorphismDesign";
 import { css } from "@emotion/react";
 import {
@@ -21,6 +21,7 @@ export function Leftbar() {
   const sidebarColor = css`
     hr {
       border-color: ${text};
+      opacity:0.2;
     }
   `;
 
@@ -32,7 +33,8 @@ export function Leftbar() {
             <Logo />
             <ThemeModeBtn />
           </div>
-          <div css={flexCenter("row")}>
+          <hr />
+          <div css={[flexCenter("row"), gap("0.5rem")]}>
             <Searchbar />
             <NewChat />
           </div>
@@ -49,6 +51,9 @@ export function Leftbar() {
 export const sideBarSize = css`
   width: ${SIDEBAR_WIDTH}px;
   height: ${SIDEBAR_HEIGHT}px;
+  display:flex;
+  flex-direction:column;
+  gap:1rem;
 `;
 
 

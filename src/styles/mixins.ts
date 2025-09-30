@@ -8,7 +8,7 @@ export const flexCenter = (direction: "row" | "column" = "row") => css`
   justify-content: center;
 `;
 
-export const spaceBetween =  css`
+export const spaceBetween = css`
   justify-content: space-between;
 `;
 
@@ -124,6 +124,10 @@ export const wordBreak = css`
 
 export const blurFilter = css`
   backdrop-filter: blur(6px);
+`;
+
+export const gap = (gap: string) => css`
+  gap: ${gap};
 `;
 
 // const Card = styled.div`
