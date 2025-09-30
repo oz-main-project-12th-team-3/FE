@@ -36,6 +36,8 @@ type color = {
   iconContainerBg:string;
   worningBoxBg:string;
   worningBoxBorder:string;
+  // nofication
+  unreadBg:string;
 };
 
 const dark: color = {
@@ -71,7 +73,8 @@ const dark: color = {
   menuItemBg:"#FFFFFF1A",
   iconContainerBg:"#fee2e2",
   worningBoxBg:"#fef2f2",
-  worningBoxBorder:"#fecaca"
+  worningBoxBorder:"#fecaca",
+  unreadBg:"#f5f8ff"
 };
 
 const light: color = {
@@ -107,7 +110,8 @@ const light: color = {
   menuItemBg:"#FFFFFF1A",
   iconContainerBg:"#fee2e2",
   worningBoxBg:"#fef2f2",
-  worningBoxBorder:"#fecaca"
+  worningBoxBorder:"#fecaca",
+  unreadBg:"#f5f8ff"
 };
 
 export const colors = { dark, light } as const;

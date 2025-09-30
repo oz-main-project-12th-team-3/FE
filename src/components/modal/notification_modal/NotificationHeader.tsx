@@ -1,6 +1,7 @@
 /** @jsxImportSource @emotion/react */
-import { IoNotifications, IoClose } from "react-icons/io5";
+import { IoNotifications } from "react-icons/io5";
 import { css } from "@emotion/react";
+import { useThemeColors } from "../../../hooks/useThemeColors";
 
 type TabType = "all" | "unread";
 
@@ -8,14 +9,21 @@ interface NotificationHeaderProps {
   activeTab: TabType;
   setActiveTab: (tab: TabType) => void;
   unreadCount: number;
-  totalCount: number;
-  onClose?: () => void;
   onMarkAllRead: () => void;
 }
 
-const header = css`
+const NotificationHeader = ({
+  activeTab,
+  setActiveTab,
+  unreadCount,
+  onMarkAllRead,
+}: NotificationHeaderProps) => {
+
+  const { scheduleTitleColor, inputBorder, modalBackground, headerBorder, completedText, disabledCompletedBox, modalHeaderBg, focusCompletedBox } = useThemeColors()
+
+  const header = css`
   padding: 20px 24px 16px;
-  border-bottom: 1px solid #f0f0f0;
+  border-bottom: 1px solid ${headerBorder};
   position: relative;
 `;
 
@@ -32,34 +40,18 @@ const title = css`
   gap: 8px;
   font-size: 18px;
   font-weight: 600;
-  color: #1a1a1a;
-`;
-
-const closeButton = css`
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 4px;
-  border-radius: 4px;
-  color: #666;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  &:hover {
-    background: #f5f5f5;
-  }
+  color: ${scheduleTitleColor};
 `;
 
 const subtitle = css`
-  color: #999;
+  color: ${completedText};
   font-size: 14px;
   margin: 0;
 `;
 
 const tabContainer = css`
   display: flex;
-  border-bottom: 1px solid #f0f0f0;
+  border-bottom: 1px solid ${headerBorder};
 `;
 
 const tab = css`
@@ -69,7 +61,7 @@ const tab = css`
   border: none;
   cursor: pointer;
   font-size: 14px;
-  color: #666;
+  color: ${inputBorder};
   position: relative;
   display: flex;
   align-items: center;
@@ -77,12 +69,12 @@ const tab = css`
   gap: 4px;
 
   &:hover {
-    background: #fafafa;
+    background: ${modalHeaderBg};
   }
 `;
 
 const activeTabStyle = css`
-  color: #1a1a1a;
+  color: ${scheduleTitleColor};
   font-weight: 500;
 
   &::after {
@@ -92,13 +84,13 @@ const activeTabStyle = css`
     left: 0;
     right: 0;
     height: 2px;
-    background: #007aff;
+    background: ${focusCompletedBox};
   }
 `;
 
 const badge = css`
-  background: #007aff;
-  color: white;
+  background: ${focusCompletedBox};
+  color: ${modalBackground};
   font-size: 12px;
   padding: 2px 6px;
   border-radius: 10px;
@@ -111,12 +103,12 @@ const topActionBar = css`
   display: flex;
   justify-content: flex-end;
   padding: 12px 24px;
-  border-bottom: 1px solid #f0f0f0;
+  border-bottom: 1px solid ${headerBorder};
 `;
 
 const markAllReadButton = css`
   font-size: 13px;
-  color: #007aff;
+  color: ${focusCompletedBox};
   background: none;
   border: none;
   cursor: pointer;
@@ -124,18 +116,10 @@ const markAllReadButton = css`
   border-radius: 6px;
 
   &:hover {
-    background: #f5f5f5;
+    background: ${disabledCompletedBox};
   }
 `;
 
-const NotificationHeader = ({
-  activeTab,
-  setActiveTab,
-  unreadCount,
-  totalCount,
-  onClose,
-  onMarkAllRead,
-}: NotificationHeaderProps) => {
   return (
     <div>
       {/* 상단 타이틀 */}
@@ -145,11 +129,6 @@ const NotificationHeader = ({
             <IoNotifications size={20} />
             알림
           </div>
-          {onClose && (
-            <button css={closeButton} onClick={onClose}>
-              <IoClose size={20} />
-            </button>
-          )}
         </div>
         <p css={subtitle}>
           {unreadCount > 0
@@ -184,5 +163,6 @@ const NotificationHeader = ({
     </div>
   );
 };
+
 
 export default NotificationHeader;

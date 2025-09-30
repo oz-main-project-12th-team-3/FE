@@ -1,10 +1,10 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 // 소셜로그인 아이콘
-import google_login from '../../../assets/google_login.png';
-import github from '../../../assets/github.png';
-import naver_login from '../../../assets/naver_login.png';
-import kakao_login from '../../../assets/kakao_login.png';
+import google_login from '../../../../public/socialAuth/google_login.png';
+import github from '../../../../public/socialAuth/github.png';
+import naver_login from '../../../../public/socialAuth/naver_login.png';
+import kakao_login from '../../../../public/socialAuth/kakao_login.png';
 import { useThemeColors } from "../../../hooks/useThemeColors";
 
 export default function SocialLogin() {

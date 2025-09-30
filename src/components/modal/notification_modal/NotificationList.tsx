@@ -6,24 +6,33 @@ import { css } from "@emotion/react";
 import type { NotificationUI } from "../../../api/notification/notification";
 import { useThemeColors } from "../../../hooks/useThemeColors";
 
-const notificationItem = css`
-  padding: 16px 24px;
-  border-bottom: 1px solid #f8f8f8;
-  display: flex;
-  gap: 12px;
-  align-items: flex-start;
-  transition: background 0.2s ease;
-  &:hover {
-    background: #fafafa;
-  }
-  &:last-child {
-    border-bottom: none;
-  }
-`;
+interface Props {
+  notifications: NotificationUI[];
+  onMarkAsRead: (id: number) => void;
+  onDelete: (id: number) => void;
+}
+
+const NotificationList = ({ notifications, onMarkAsRead, onDelete }: Props) => {
+    const { hoverDeleteBtn, modalBackground, headerBorder, scheduleTitleColor, focusCompletedBox, descriptionText, completedText, unreadBg, btnBorder,tabBgColor, modalHeaderBg } = useThemeColors()
+
+    const notificationItem = css`
+      padding: 16px 24px;
+      border-bottom: 1px solid ${tabBgColor};
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      transition: background 0.2s ease;
+      &:hover {
+        background: ${modalHeaderBg};
+      }
+      &:last-child {
+        border-bottom: none;
+      }
+    `;
 
 // 읽지 않은 알림 전용 스타일
 const unreadItem = css`
-  background: #f5f8ff;
+  background: ${unreadBg};
 `;
 
 const notificationItemWrapper = css`
@@ -45,13 +54,13 @@ const iconContainer = css`
 `;
 const aiIcon = css`
   ${iconContainer}
-  background: #007aff;
-  color: white;
+  background: ${focusCompletedBox};
+  color: ${modalBackground};
 `;
 const systemIcon = css`
   ${iconContainer}
-  background: #f0f0f0;
-  color: #666;
+  background: ${headerBorder};
+  color: ${descriptionText};
 `;
 const notificationContent = css`
   flex: 1;
@@ -59,12 +68,12 @@ const notificationContent = css`
 `;
 const notificationTitle = css`
   font-weight: 600;
-  color: #1a1a1a;
+  color: ${scheduleTitleColor};
   margin: 0 0 4px 0;
   font-size: 14px;
 `;
 const notificationText = css`
-  color: #666;
+  color: ${descriptionText};
   font-size: 13px;
   line-height: 1.4;
   margin: 0;
@@ -76,7 +85,7 @@ const timeAndAction = css`
   margin-top: 8px;
 `;
 const timeText = css`
-  color: #999;
+  color: ${completedText};
   font-size: 12px;
 `;
 const deleteButton = css`
@@ -85,13 +94,13 @@ const deleteButton = css`
   cursor: pointer;
   padding: 4px;
   border-radius: 4px;
-  color: #999;
+  color: ${completedText};
   display: flex;
   align-items: center;
   justify-content: center;
   &:hover {
-    background: #f0f0f0;
-    color: #666;
+    background: ${headerBorder};
+    color: ${descriptionText};
   }
 `;
 const readButton = css`
@@ -107,22 +116,14 @@ const notificationActions = css`
 const emptyState = css`
   padding: 60px 24px;
   text-align: center;
-  color: #999;
+  color: ${completedText};
 `;
 const emptyIcon = css`
   margin: 0 auto 16px;
   font-size: 48px;
-  color: #ddd;
+  color: ${btnBorder};
 `;
 
-interface Props {
-  notifications: NotificationUI[];
-  onMarkAsRead: (id: number) => void;
-  onDelete: (id: number) => void;
-}
-
-const NotificationList = ({ notifications, onMarkAsRead, onDelete }: Props) => {
-    const { hoverDeleteBtn } = useThemeColors()
   if (notifications.length === 0) {
     return (
       <motion.div

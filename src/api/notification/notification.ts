@@ -9,7 +9,7 @@ type NotificationType = {
   updated_at: string;
 };
 
-type Notification = {
+export type Notification = {
   id: number;
   notification_type_id: number;
   title: string;
@@ -60,7 +60,7 @@ export const formatRelativeTime = (isoDate: string): string => {
   return `${Math.floor(diff / 86400)}일 전`;
 };
 
-export const mapNotification = (apiData: any): NotificationUI => ({
+export const mapNotification = (apiData: Notification): NotificationUI => ({
   id: apiData.id,
   type: apiData.notification_type_id === 1 ? "ai" : "system",
   title: apiData.title,
