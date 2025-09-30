@@ -9,6 +9,8 @@ export type WhereIsMouse = "center" | "left" | "right";
 
 export const SIDEBAR_WIDTH = 200;
 export const SIDEBAR_MARGIN = 50;
+export const SIDEBAR_HEIGHT = 640;
+
 const PADDING = 60;
 
 const TRRIGGER = SIDEBAR_WIDTH+SIDEBAR_MARGIN+PADDING;

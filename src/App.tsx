@@ -24,7 +24,6 @@ export default function AppDesktop() {
   });
 
   return (
-
     <>
         <Background>
           <WindowSizeProvider />

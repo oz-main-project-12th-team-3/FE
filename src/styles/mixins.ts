@@ -8,6 +8,10 @@ export const flexCenter = (direction: "row" | "column" = "row") => css`
   justify-content: center;
 `;
 
+export const spaceBetween =  css`
+  justify-content: space-between;
+`;
+
 export const overlay = css`
   position: fixed;
   inset: 0;
@@ -81,21 +85,6 @@ export const itemMixin = css`
   width: 10rem;
   border-radius: 0.5rem;
 `;
-
-export function SidebarColor(text: string, background: string) {
-  return css`
-    div {
-      background-color: ${text};
-      color: ${background};
-    }
-    hr {
-      border-color: ${text};
-    }
-    span {
-      color: ${text};
-    }
-  `;
-}
 
 // 기본 버튼 스타일
 export const baseButton = css`
