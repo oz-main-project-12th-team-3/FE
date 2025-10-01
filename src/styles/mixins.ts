@@ -1,11 +1,17 @@
 import { css } from "@emotion/react";
-import { SIDEBAR_WIDTH } from "../store/useMousePositionStore";
+import { SIDEBAR_HEIGHT, SIDEBAR_WIDTH } from "../store/useMousePositionStore";
 
-export const flexCenter = (direction: "row" | "column" = "row") => css`
+export const flexCenter = (
+  direction: "row" | "column" = "row",
+  padding: string = "0",
+  gap: string = "0"
+) => css`
   display: flex;
   flex-direction: ${direction};
   align-items: center;
   justify-content: center;
+  padding: ${padding};
+  gap: ${gap};
 `;
 
 export const spaceBetween = css`
@@ -44,6 +50,12 @@ export const grid = (
   gap: ${gap};
 `;
 
+/**
+ * @example
+ * ```tsx
+ * const {  scrollColor } = useThemeColors();
+ * <div css={scrollCss(scrollColor)}/>
+ */
 export const scrollCss = (color: string) => css`
   &::-webkit-scrollbar {
     width: 6px;
@@ -78,6 +90,15 @@ export const sideBarMixin = css`
   height: 40rem;
   overflow: hidden;
 `;
+
+export const sideBarSize = css`
+  width: ${SIDEBAR_WIDTH}px;
+  height: ${SIDEBAR_HEIGHT}px;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+`;
+
 
 export const itemMixin = css`
   cursor: pointer;
@@ -126,9 +147,6 @@ export const blurFilter = css`
   backdrop-filter: blur(6px);
 `;
 
-export const gap = (gap: string) => css`
-  gap: ${gap};
-`;
 
 // const Card = styled.div`
 //   ${flexCenter};

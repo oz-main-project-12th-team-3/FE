@@ -12,7 +12,7 @@ interface PostChatSessionsApiRes {
   updated_at: string;
 }
 
-type Session = {
+export type Session = {
   id: number;
   title: string;
   last_message: string;
