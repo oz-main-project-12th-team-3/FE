@@ -16,7 +16,7 @@ export function GlassmorphismDesign({
 }
 
 const glassSt = css`
-  background-color: "#0000000";
+  background-color: transparent;
   backdrop-filter: blur(6px);
   border-radius: 1rem;
   padding: 1rem;
