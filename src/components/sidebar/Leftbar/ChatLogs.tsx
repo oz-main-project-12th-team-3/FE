@@ -11,17 +11,22 @@ import { useThemeColors } from "../../../hooks/useThemeColors";
 import { IoTrashSharp } from "react-icons/io5";
 import { RxCountdownTimer } from "react-icons/rx";
 import { BiSortDown, BiSortUp } from "react-icons/bi";
+import {
+  useNavigate,
+  // useParams
+} from "react-router-dom";
+// import { voiceLogApi } from "../../../api/voice/voiceLog";
 
 export function ChatLogs() {
   const { text, scrollColor } = useThemeColors();
-
+  // 더미데이터
   const [items, setItems] = useState<Session[]>(() => {
     const mocData = Array.from({ length: 20 }, (_, idx) => {
       const baseDate = new Date("2025-10-01T00:00:00Z");
       baseDate.setDate(baseDate.getDate() + idx);
       return {
-        id: idx,
-        title: `chat Session ${idx}`,
+        id: 100 + idx,
+        title: `chat Session 길이테스트길이테스트길이테스트길이테스트길이테스트길이테스트길이테스트길이테스트길이테스트길이테스트길이테스트길이테스트길이테스트길이테스트길이테스트${idx}`,
         last_message: `last_message ${idx}`,
         updated_at: baseDate.toISOString(),
       };
@@ -29,6 +34,9 @@ export function ChatLogs() {
     return sorting(true, mocData);
   });
 
+  const navi = useNavigate();
+  // const { session_id } = useParams<{ session_id: string }>();
+  // const sessionId = Number(session_id);
   const [isSort, setIsSort] = useState<boolean>(true);
   const [isAsc, setIsAsc] = useState<boolean>(true);
 
@@ -53,7 +61,17 @@ export function ChatLogs() {
     setIsAsc(!isAsc);
   };
 
-  const handleVoiceChat = () => {};
+  const handleVoiceChat = async () => {
+    // try {
+    //   const res = await voiceLogApi.GET.voiceLogsBySessionId(sessionId);
+    //   setItems(sorting(isAsc, res))
+    // } catch (e) {
+    //   toast.error(`음성 채팅 기록 불러오기 중 오류 발생 : ${e}`);
+    // }
+    // 타입 지정 => ?
+    // title 대신에 무엇을 표시?
+    // updated_at 있으니 그대로 재활용은 가능할듯
+  };
 
   const handleDel = async (id: number) => {
     try {
@@ -68,6 +86,10 @@ export function ChatLogs() {
   const handleItemDnD = (newItems: Session[]) => {
     setItems(newItems);
     setIsSort(false);
+  };
+
+  const handleClickLog = (sessionId: number) => {
+    navi(`/chat/${sessionId}`);
   };
 
   const spanColorCss = css`
@@ -108,10 +130,14 @@ export function ChatLogs() {
         <DragAndDrop
           items={items}
           onItemsChange={handleItemDnD}
-          dragTitle={"updated_at"}
+          dragTitle={"title"}
         >
           {items.map((el) => (
-            <div css={[BasicBtnSt, btnCss]} key={el.id}>
+            <div
+              css={[BasicBtnSt, btnCss]}
+              key={el.id}
+              onClick={() => handleClickLog(el.id)}
+            >
               <span>{el.title}</span>
               <IoTrashSharp onClick={() => handleDel(el.id)} />
             </div>
@@ -157,13 +183,39 @@ const dndCss = css`
   overflow-y: auto;
 `;
 
+const bgTransition = css`
+  transition: 0.2s background ease;
+  &:hover {
+    background: #0000002f;
+  }
+`;
+
 const btnCss = css`
   ${[flexCenter(), spaceBetween]}
-  padding:0.5rem;
   margin-bottom: 1rem;
+
+  span {
+    cursor: pointer;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: fit-content;
+    margin-right: 0.5rem;
+    margin-left: 0.5rem;
+    border-radius: 0.3rem;
+    padding: 0.3rem ;
+    padding-right:0.8rem;
+
+    ${bgTransition}
+  }
 
   svg {
     font-size: 1.3rem;
     cursor: pointer;
+    border-radius: 0.3rem;
+    flex-shrink: 0;
+    margin-right:0.3rem;
+
+    ${bgTransition}
   }
 `;
