@@ -103,7 +103,7 @@ export const sideBarSize = css`
 export const itemMixin = css`
   cursor: pointer;
   background-color: white;
-  width: 10rem;
+  width: 13rem;
   border-radius: 0.5rem;
 `;
 
