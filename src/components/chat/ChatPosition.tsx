@@ -11,6 +11,9 @@ const centerPosition = css`
   position: fixed;
   top: 50%;
   left: 50%;
+  .inner_div{
+    transform: translate(-50%, -50%);
+  }
 `;
 
 export function ChatPosition({ children }: { children: React.ReactNode }) {
@@ -34,7 +37,7 @@ export function ChatPosition({ children }: { children: React.ReactNode }) {
       }}
       transition={{ type: "spring", stiffness: 300, damping: 30 }}
     >
-      {children}
+      <div className="inner_div">{children}</div>
     </motion.div>
   );
 }

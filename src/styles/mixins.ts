@@ -1,11 +1,21 @@
 import { css } from "@emotion/react";
-import { SIDEBAR_WIDTH } from "../store/useMousePositionStore";
+import { SIDEBAR_HEIGHT, SIDEBAR_WIDTH } from "../store/useMousePositionStore";
 
-export const flexCenter = (direction: "row" | "column" = "row") => css`
+export const flexCenter = (
+  direction: "row" | "column" = "row",
+  padding: string = "0",
+  gap: string = "0"
+) => css`
   display: flex;
   flex-direction: ${direction};
   align-items: center;
   justify-content: center;
+  padding: ${padding};
+  gap: ${gap};
+`;
+
+export const spaceBetween = css`
+  justify-content: space-between;
 `;
 
 export const overlay = css`
@@ -40,6 +50,12 @@ export const grid = (
   gap: ${gap};
 `;
 
+/**
+ * @example
+ * ```tsx
+ * const {  scrollColor } = useThemeColors();
+ * <div css={scrollCss(scrollColor)}/>
+ */
 export const scrollCss = (color: string) => css`
   &::-webkit-scrollbar {
     width: 6px;
@@ -75,27 +91,21 @@ export const sideBarMixin = css`
   overflow: hidden;
 `;
 
+export const sideBarSize = css`
+  width: ${SIDEBAR_WIDTH}px;
+  height: ${SIDEBAR_HEIGHT}px;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+`;
+
+
 export const itemMixin = css`
   cursor: pointer;
   background-color: white;
   width: 10rem;
   border-radius: 0.5rem;
-  `;
-
-export function SidebarColor(text: string, background: string) {
-  return css`
-    div {
-      background-color: ${text};
-      color: ${background};
-    }
-    hr {
-      border-color: ${text};
-    }
-    span {
-      color: ${text};
-    }
-  `;
-}
+`;
 
 // 기본 버튼 스타일
 export const baseButton = css`
@@ -126,6 +136,15 @@ export const defaultProfileImage = css`
     content: "👤";
     font-size: 2rem;
   }
+`;
+
+export const wordBreak = css`
+  word-break: break-word;
+  white-space: pre-wrap;
+`;
+
+export const blurFilter = css`
+  backdrop-filter: blur(6px);
 `;
 
 
