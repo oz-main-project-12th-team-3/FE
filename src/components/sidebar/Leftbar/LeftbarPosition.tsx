@@ -1,15 +1,12 @@
-import {
-  SIDEBAR_MARGIN,
-  SIDEBAR_WIDTH,
-  useMousePositionStore,
-} from "../../store/useMousePositionStore";
+
 import { motion } from "framer-motion";
+import { SIDEBAR_MARGIN, SIDEBAR_WIDTH, useMousePositionStore } from "../../../store/useMousePositionStore";
 
 export function LeftbarPosition({ children }: { children: React.ReactNode }) {
   const { whereIsMouse } = useMousePositionStore();
   return (
     <motion.div
-      initial={{ x: -SIDEBAR_WIDTH-SIDEBAR_MARGIN }}
+      initial={{ x: whereIsMouse === "left" ? SIDEBAR_MARGIN : -SIDEBAR_WIDTH-SIDEBAR_MARGIN, }}
       animate={{
         x: whereIsMouse === "left" ? SIDEBAR_MARGIN : -SIDEBAR_WIDTH-SIDEBAR_MARGIN,
       }}

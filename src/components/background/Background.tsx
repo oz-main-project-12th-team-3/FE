@@ -1,13 +1,13 @@
 /** @jsxImportSource @emotion/react */
 import { type PropsWithChildren } from "react";
-import { useColorModeStore } from "../../store/useColorModeStore";
+import { storeColorMode } from "../../store/storeColorMode";
 import { themeKeys } from "../../styles/constColors";
 import { LightBg } from "./LightBg";
 import { DarkThemeBg } from "./DarkBg";
 import { Logo } from "./Logo";
 
 export default function Background({ children }: PropsWithChildren<{}>) {
-  const mode = useColorModeStore((state) => state.mode);
+  const mode = storeColorMode((state) => state.mode);
   const content = (
     <>
       <Logo />

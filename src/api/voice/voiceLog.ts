@@ -46,7 +46,7 @@ export const voiceLogApi = {
   POST: {
     /**
      * 음성채팅 생성 메서드
-     * @param {PostVoiceLogApiReq} 유저id, 세션id, 인풋url
+     * @param {PostVoiceLogApiReq} payload 유저id, 세션id, 인풋url
      * @returns {Promise<VoiceLog>} voiceLog 타입
      */
     voiceLog: async (payload: PostVoiceLogApiReq): Promise<VoiceLog> => {
