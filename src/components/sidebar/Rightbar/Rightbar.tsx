@@ -1,12 +1,12 @@
 /** @jsxImportSource @emotion/react */
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { GlassmorphismDesign } from "../../../styles/baseDesign/GlassmorphismDesign";
-import {
-  sideBarMixin,
-} from "../../../styles/mixins";
+import { sideBarMixin } from "../../../styles/mixins";
 import { RightbarPosition } from "./RightbarPosition";
 import RightLogined from "./RightLogined";
 import RightLogouted from "./RightLogouted";
+import { TokenManager } from "../../../api/apiClient";
+import { toast } from "react-toastify";
 
 // 팀 노션 api 명세서
 
@@ -35,7 +35,21 @@ import RightLogouted from "./RightLogouted";
 // const { completedText, descriptionText, addButtonBg } = useThemeColors();
 
 export function Rightbar() {
-  const [isLogin, setIsLogin] = useState<boolean>(true);
+  const [isLogin, setIsLogin] = useState<boolean>(false);
+
+  useEffect(() => {
+    (() => {
+      try {
+        setIsLogin(
+          !TokenManager.getAccessToken() || !TokenManager.getUserId()
+            ? false
+            : true
+        );
+      } catch (e) {
+        toast.error(`토큰 확인 중 오류가 발생했습니다:${e}`);
+      }
+    })();
+  }, []);
 
   return (
     <RightbarPosition>
@@ -44,7 +58,7 @@ export function Rightbar() {
           {isLogin ? (
             <RightLogined setIsLogin={setIsLogin} />
           ) : (
-            <RightLogouted setIsLogin={setIsLogin} />
+            <RightLogouted />
           )}
         </div>
       </GlassmorphismDesign>

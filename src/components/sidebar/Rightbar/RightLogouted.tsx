@@ -7,15 +7,13 @@ import {
 import { css } from "@emotion/react";
 import { FaCrown } from "react-icons/fa";
 import { useThemeColors } from "../../../hooks/useThemeColors";
+import { useNavigate } from "react-router-dom";
 
-export default function RightLogouted({
-  setIsLogin,
-}: {
-  setIsLogin: (bool: boolean) => void;
-}) {
+export default function RightLogouted() {
   const { modalBackground, scheduleTitleColor, crownIcon, scheduleItemBorder } = useThemeColors()
+  const navi = useNavigate();
   const openLoginModal = () => {
-    setIsLogin(true);
+    navi("/modal/auth")
   };
 
   const premiumButtonCss = css`

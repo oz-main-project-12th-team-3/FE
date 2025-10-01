@@ -15,6 +15,8 @@ import { useNavigate } from "react-router-dom";
 import { dummySchedules } from "../../../api/dummyData/schedule";
 import { formatTime } from "../../../utils/time";
 import { useThemeColors } from "../../../hooks/useThemeColors";
+import { TokenManager } from "../../../api/apiClient";
+import { loginApi } from "../../../api/auth/login";
 
 const mocUser = {
   user_id: 1,
@@ -218,6 +220,11 @@ export default function RightLogined({
     navigate("/modal/schedule");
   };
 
+  const handleLogout = () => {
+    setIsLogin(false);
+    loginApi.DELETE.logout();
+  };
+
   return (
     <div css={loginedContainerCss}>
       {/* 프로필 섹션 */}
@@ -290,7 +297,7 @@ export default function RightLogined({
 
       {/* 하단 버튼들 */}
       <div css={buttonSectionCss}>
-        <button css={baseButton} onClick={() => setIsLogin(false)}>
+        <button css={baseButton} onClick={handleLogout}>
           로그아웃
         </button>
         <button css={[baseButton]} onClick={goToPremium}>
