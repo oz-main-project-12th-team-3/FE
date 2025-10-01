@@ -13,7 +13,7 @@ export default function RightLogouted() {
   const { modalBackground, scheduleTitleColor, crownIcon, scheduleItemBorder } = useThemeColors()
   const navi = useNavigate();
   const openLoginModal = () => {
-    navi("/modal/auth")
+    navi("/modal/auth");
   };
 
   const premiumButtonCss = css`
@@ -71,7 +71,7 @@ const logoutButtonSectionCss = css`
         <div css={[defaultProfileImage]}></div>
       </div>
       <div css={logoutButtonSectionCss}>
-        <button css={baseButton} onClick={openLoginModal}>
+        <button css={[baseButton, loginBtnCss]} onClick={openLoginModal}>
           로그인
         </button>
         <button css={premiumButtonCss} onClick={openLoginModal}>
@@ -82,3 +82,7 @@ const logoutButtonSectionCss = css`
     </div>
   );
 }
+
+const loginBtnCss = css`
+  cursor: pointer;
+`
