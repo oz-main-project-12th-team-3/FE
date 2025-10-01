@@ -1,22 +1,38 @@
 /** @jsxImportSource @emotion/react */
 import { useEffect,  useRef, useState } from "react";
 import { css } from "@emotion/react";
-import AuthTabs from "./AuthTabs";
+import AuthTabs, { type tab } from "./AuthTabs";
 import LoginForm from "./LoginForm";
 import Signupform from "./SignupForm";
 import SocialLogin from "./SocialLogin";
 import { AnimatePresence, motion } from "framer-motion";
+import { useSearchParams } from "react-router-dom";
 
 import { IoShieldOutline } from "react-icons/io5";
 import { useThemeColors } from "../../../hooks/useThemeColors";
 
+
 export default function AuthModalContent() {
-  const [tab, setTab] = useState<"login" | "register">("login");
+  const [searchParams, setSearchParams] = useSearchParams();
+  const currentTab = searchParams.get("tab") as tab | null;
+  const [tab, setTab] = useState<tab>(currentTab ?? "login");
 
   const { modalBackground, descriptionText } = useThemeColors();
+  
 
   const [height, setHeight] = useState<number | "auto">("auto");
   const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+  if (currentTab && currentTab !== tab) {
+    setTab(currentTab);
+  }
+}, [currentTab]);
+
+const handleChangeTab = (value:tab) => {
+  setTab(value);
+  setSearchParams({ tab: value });
+};
 
 useEffect(() => {
   if (!containerRef.current) return;
@@ -29,7 +45,7 @@ useEffect(() => {
 
   observer.observe(containerRef.current);
 
-  return () => observer.disconnect();
+  return () => observer.disconnect();;
 }, []);
 
 
@@ -84,7 +100,7 @@ useEffect(() => {
       </div>
 
       {/* 로그인/회원가입 탭 */}
-      <AuthTabs tab={tab} setTab={setTab} />
+      <AuthTabs tab={tab} setTab={handleChangeTab} />
 
       {/* 탭에 따른 폼 */}
       <div ref={containerRef}>

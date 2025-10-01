@@ -15,7 +15,6 @@ import { useNavigate } from "react-router-dom";
 import { dummySchedules } from "../../../api/dummyData/schedule";
 import { formatTime } from "../../../utils/time";
 import { useThemeColors } from "../../../hooks/useThemeColors";
-import { TokenManager } from "../../../api/apiClient";
 import { loginApi } from "../../../api/auth/login";
 
 const mocUser = {
@@ -217,7 +216,9 @@ export default function RightLogined({
 
   // 일정관리 페이지로 이동
   const handleSchedule = () => {
-    navigate("/modal/schedule");
+    navigate("/modal/schedule", { 
+  state: { prevPath: location.pathname } 
+});
   };
 
   const handleLogout = () => {

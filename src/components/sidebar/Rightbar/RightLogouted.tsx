@@ -13,7 +13,9 @@ export default function RightLogouted() {
   const { modalBackground, scheduleTitleColor, crownIcon, scheduleItemBorder } = useThemeColors()
   const navi = useNavigate();
   const openLoginModal = () => {
-    navi("/modal/auth");
+    navi("/modal/auth", { 
+  state: { prevPath: location.pathname } 
+});
   };
 
   const premiumButtonCss = css`
