@@ -42,8 +42,8 @@
   <br>
 
   <img src="https://img.shields.io/badge/axios-6935D3?style=for-the-badge&logo=axios&logoColor=white">
-  <img src="https://img.shields.io/badge/emtioncss-E9568E?style=for-the-badge&logoColor=white">
-  <img src="https://img.shields.io/badge/zustand-66459B?style=for-the-badge&logoColor=white">
+  <img src="https://img.shields.io/badge/emtioncss-d36ac2?style=for-the-badge&logoColor=white">
+  <img src="https://img.shields.io/badge/zustand-ffbb4a?style=for-the-badge&logoColor=white">
   <img src="https://img.shields.io/badge/npm-ED1C24?style=for-the-badge&logo=npm&logoColor=white">
   <br>
 
