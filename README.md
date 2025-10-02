@@ -20,11 +20,17 @@
 ## 🖥️ 서비스 소개
 |   메인화면+채팅  |  챗 세션 소팅기능(프론트)  |   비로그인시 음성채팅 시도   |
 |:--------:|:------:|:--------:|
-||||
+|![메인화면+채팅](https://github.com/user-attachments/assets/ea77c807-24dd-412a-9244-39eca4e5aa35)
+|![챗 세션 소팅기능(프론트)](https://github.com/user-attachments/assets/7f0d1fae-4efa-48d3-b712-c740e4c7002c)
+|![비로그인시 음성채팅 시도](https://github.com/user-attachments/assets/72e5bc09-00b5-4c1d-a1a2-2921c9bbbbb5)
+|
 
 |   회원가입 탭 이동  |  회원가입 폼 저장(zst스토어 활용)  |   chat에 모션 추가   |
 |:--------:|:------:|:--------:|
-||||
+|![회원가입 탭 이동](https://github.com/user-attachments/assets/619202c9-f021-4d2e-8e18-834b7d10e9e2)
+|![회원가입 폼 저장(zst스토어 활용)](https://github.com/user-attachments/assets/2b19b0a5-67a9-447f-8aa1-345b2c6f28a0)
+|![chat에 모션 추가](https://github.com/user-attachments/assets/dad31e88-5161-4afa-8294-67ef9f206193)
+|
 
 ## 🧰 사용 스택
 ### FE
