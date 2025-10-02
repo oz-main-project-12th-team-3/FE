@@ -5,11 +5,11 @@ import { InputField } from "../../InputField";
 import { FaEnvelope, FaLock } from "react-icons/fa";
 import { useThemeColors } from "../../../hooks/useThemeColors";
 import { validateEmail, validatePassword } from "../../../utils/validator";
+import { loginApi, type LoginReq } from "../../../api/auth/login";
+import { toast } from "react-toastify";
 
 export default function LoginForm() {
-
-  const [form, setForm] = useState({ email: "", password: "" });
-
+  const [form, setForm] = useState<LoginReq>({ email: "", password: "" });
 
   const [errors, setErrors] = useState({
     email: "",
@@ -57,7 +57,7 @@ export default function LoginForm() {
     }
   `;
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     const emailError = validateEmail(form.email);
@@ -70,9 +70,16 @@ export default function LoginForm() {
 
     setErrors(newErrors);
 
+    console.log(form);
+
     // 에러 없으면 로그인 로직 진행
     if (!emailError && !passwordError) {
-      console.log("로그인 시도:", { form });
+      try {
+        const res = await loginApi.POST.login(form);
+        toast.success(res.detail);
+      } catch (e) {
+        toast.error(`로그인 에러 발생 : ${e}`);
+      }
     }
   };
 

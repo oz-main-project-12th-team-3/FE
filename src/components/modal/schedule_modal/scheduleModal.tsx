@@ -14,7 +14,9 @@ import { dummySchedules } from "../../../api/dummyData/schedule";
 const ScheduleModal = () => {
   const [view, setView] = useState<ViewType>("list");
   const [schedules, setSchedules] = useState<Schedule[]>([]);
-  const [selectedDate, setSelectedDate] = useState<Date | undefined>(new Date());
+  const [selectedDate, setSelectedDate] = useState<Date | undefined>(
+    new Date()
+  );
   const [editingSchedule, setEditingSchedule] = useState<Schedule | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
 

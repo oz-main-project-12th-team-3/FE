@@ -2,8 +2,10 @@
 import { css } from "@emotion/react";
 import { useThemeColors } from "../../../hooks/useThemeColors";
 
+
+export type tab = "login" | "register";
 interface Props {
-  tab: "login" | "register";
+  tab: tab;
   setTab: (tab: "login" | "register") => void;
 }
 
