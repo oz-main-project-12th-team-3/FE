@@ -11,6 +11,7 @@ import { css } from "@emotion/react";
 import { SIDEBAR_WIDTH } from "../../store/useMousePositionStore";
 import { dummyMessages } from "../../api/dummyData/dummyChat";
 import { scrollCss } from "../../styles/mixins";
+import { AnimatePresence, motion } from "framer-motion";
 
 type Sender = "user" | "ai";
 
@@ -53,19 +54,29 @@ export function ChatContent() {
 
   return (
     <div css={chatContentCss}>
-      <div className="chats" css={scrollCss(scrollColor)}>
-        {messages.map((el) => (
-          <>
-            {el.sender === "ai" ? (
-              <AIChatBox msg={el} />
-            ) : (
-              <UserChatBox msg={el} />
-            )}
-            <hr css={borderColorCss} />
-          </>
-        ))}
-        <MsgSendBox sessionId={sessionId} setMessages={setMessages} />
-      </div>
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={sessionId}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.3, ease: "easeInOut" }}
+          className="chats"
+          css={scrollCss(scrollColor)}
+        >
+          {messages.map((el) => (
+            <>
+              {el.sender === "ai" ? (
+                <AIChatBox msg={el} />
+              ) : (
+                <UserChatBox msg={el} />
+              )}
+              <hr css={borderColorCss} />
+            </>
+          ))}
+          <MsgSendBox sessionId={sessionId} setMessages={setMessages} />
+        </motion.div>
+      </AnimatePresence>
     </div>
   );
 }
