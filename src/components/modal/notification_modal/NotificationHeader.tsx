@@ -19,7 +19,7 @@ const NotificationHeader = ({
   onMarkAllRead,
 }: NotificationHeaderProps) => {
 
-  const { scheduleTitleColor, inputBorder, modalBackground, headerBorder, completedText, disabledCompletedBox, modalHeaderBg, focusCompletedBox } = useThemeColors()
+  const { scheduleTitleColor, modalBackground, headerBorder, completedText, disabledCompletedBox, modalHeaderBg, focusCompletedBox } = useThemeColors()
 
   const header = css`
   padding: 20px 24px 16px;

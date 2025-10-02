@@ -77,13 +77,6 @@ const AccountInfo = ({ nickname, email, profileImageUrl }: AccountInfoSectionPro
     white-space: nowrap;
   `;
 
-  const noteStyle = css`
-    font-size: 12px;
-    color: ${scheduleTitleColor};
-    opacity: 0.5;
-    margin-top: 8px;
-  `;
-
   const getInitial = () => {
     if (!nickname) return 'T';
     return nickname.charAt(0).toUpperCase();
