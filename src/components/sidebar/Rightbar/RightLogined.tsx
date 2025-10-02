@@ -64,7 +64,8 @@ export default function RightLogined({
         // 프로필 설정 모드
         <ProfileSettings 
           onBack={() => setIsProfileSettingOpen(false)}
-          onPasswordClick={() => navigate("/modal/password")} 
+          onChangeProfile={() => navigate("/modal/profilesetting")}
+          onChangePassword={() => navigate("/modal/password")} 
           onDeleteAccount={() => navigate("/modal/deleteaccount")}/>
       ) : (
         // 기본 모드

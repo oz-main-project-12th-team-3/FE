@@ -40,7 +40,7 @@ export function TodaySchedule({
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
-    max-height: 19rem;
+    max-height: 18rem;
     overflow-y: auto;
     ${scrollbarHidden};
   `;

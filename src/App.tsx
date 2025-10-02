@@ -17,6 +17,8 @@ const NotificationModal = React.lazy(() => import("./components/modal/notificati
 const TermsModal = React.lazy(() => import("./components/modal/authmodal/TermsModal"));
 const PasswordChangeModal = React.lazy(() => import("./components/modal/passwordChang/PasswordChangeModal"))
 const DeleteAccountModal = React.lazy(() => import("./components/modal/deleteAccount_modal/DeleteAccountModal"))
+const ProfileSettingModal = React.lazy(() => import("./components/modal/profileSetting_modal/ProfileSettingModal"))
+
 
 export default function AppDesktop() {
   useEffect(() => {
@@ -24,7 +26,6 @@ export default function AppDesktop() {
   });
 
   return (
-
     <>
         <Background>
           <WindowSizeProvider />
@@ -41,6 +42,7 @@ export default function AppDesktop() {
                 <Route path="notification" element={<NotificationModal />} />
                 <Route path="password" element={<PasswordChangeModal />} />
                 <Route path="deleteaccount" element={<DeleteAccountModal />} />
+                <Route path="profilesetting" element={<ProfileSettingModal/>} />
               </Route>
             </Routes>
         </Background>

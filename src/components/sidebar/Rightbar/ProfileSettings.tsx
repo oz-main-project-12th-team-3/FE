@@ -4,11 +4,13 @@ import { baseButton } from "../../../styles/mixins"
 
 export function ProfileSettings({
   onBack,
-  onPasswordClick,
+  onChangeProfile,
+  onChangePassword,
   onDeleteAccount
 }: {
   onBack: () => void;
-  onPasswordClick: () => void
+  onChangeProfile: () => void;
+  onChangePassword: () => void
   onDeleteAccount: () => void
 }) {
 
@@ -21,7 +23,8 @@ export function ProfileSettings({
 
   return (
     <div css={profileSettingCss}>
-      <button css={baseButton} onClick={onPasswordClick}>비밀번호 변경</button>
+      <button css={baseButton} onClick={onChangeProfile}>프로필 변경</button>
+      <button css={baseButton} onClick={onChangePassword}>비밀번호 변경</button>
       <button css={baseButton} onClick={onDeleteAccount}>회원탈퇴</button>
       <button css={baseButton} onClick={onBack}>
         ← 돌아가기
