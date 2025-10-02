@@ -10,6 +10,7 @@ import {
 } from 'react-icons/md';
 import type { Schedule } from './types/schedule';
 import { useThemeColors } from '../../../hooks/useThemeColors';
+import { formatTime } from '../../../utils/time';
 
 interface ScheduleListProps {
   schedules: Schedule[];
@@ -19,19 +20,6 @@ interface ScheduleListProps {
   onDelete: (scheduleId: number) => void;
   onToggleComplete: (scheduleId: number, currentStatus: boolean) => void;
 }
-
-// 시간 변환 헬퍼 (UTC ISO → HH:mm)
-const formatTime = (isoString: string): string => {
-  const date = new Date(isoString);
-  const pad = (n: number) => String(n).padStart(2, '0');
-  
-  console.log('ISO 문자열:', isoString);
-  console.log('Date 객체:', date);
-  console.log('getHours:', date.getHours(), 'getMinutes:', date.getMinutes());
-
-  return `${pad(date.getHours())}:${pad(date.getMinutes())}`;
-};
-
 
 export const ScheduleList = ({
   schedules,

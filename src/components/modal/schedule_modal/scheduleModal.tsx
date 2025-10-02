@@ -4,10 +4,12 @@ import { useState, useEffect } from "react";
 import { ScheduleList } from "./ScheduleList";
 import { ScheduleForm } from "./ScheduleForm";
 import type { Schedule, ScheduleFormData, ViewType } from "./types/schedule";
-import { scheduleAPI } from "../../../api/schedule";
+import { useSchedule } from "../../../hooks/api/useSchedule";
 import { useThemeColors } from "../../../hooks/useThemeColors";
 import ScheduleHeader from "./ScheduleHeader";
 import ScheduleCalendar from "./ScheduleCalendar";
+import { getLocalDateString } from "../../../utils/time";
+import { dummySchedules } from "../../../api/dummyData/schedule";
 
 const ScheduleModal = () => {
   const [view, setView] = useState<ViewType>("list");
@@ -17,6 +19,15 @@ const ScheduleModal = () => {
   );
   const [editingSchedule, setEditingSchedule] = useState<Schedule | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
+
+  // 커스텀 훅 사용
+  const {
+    getSchedules,
+    createSchedule,
+    updateSchedule,
+    deleteSchedule,
+    toggleComplete
+  } = useSchedule();
 
   const { modalBackground } = useThemeColors();
 
@@ -50,12 +61,13 @@ const ScheduleModal = () => {
     if (!selectedDate) return;
     setLoading(true);
     try {
-      const dateStr = selectedDate.toLocaleDateString("sv-SE"); // YYYY-MM-DD
-      const data = await scheduleAPI.getSchedules(dateStr);
+      const dateStr = getLocalDateString(selectedDate);
+      const data = await getSchedules(dateStr);
       setSchedules(data);
     } catch (error) {
       console.error("일정 로드 실패:", error);
     } finally {
+      setSchedules(dummySchedules);
       setLoading(false);
     }
   };
@@ -78,7 +90,7 @@ const ScheduleModal = () => {
     if (!confirm("정말 삭제하시겠습니까?")) return;
     try {
       setLoading(true);
-      await scheduleAPI.deleteSchedule(scheduleId);
+      await deleteSchedule(scheduleId);
       setSchedules(schedules.filter((s) => s.id !== scheduleId));
     } catch (error) {
       console.error("일정 삭제 실패:", error);
@@ -94,10 +106,13 @@ const ScheduleModal = () => {
   ): Promise<void> => {
     try {
       const newStatus = !currentStatus;
-      await scheduleAPI.toggleComplete(scheduleId, newStatus);
+      // toggleComplete는 내부적으로 getScheduleById + updateSchedule 사용
+      const updatedSchedule = await toggleComplete(scheduleId, newStatus);
+      
+      // 반환된 Schedule로 상태 업데이트
       setSchedules(
         schedules.map((s) =>
-          s.id === scheduleId ? { ...s, is_completed: newStatus } : s
+          s.id === scheduleId ? updatedSchedule : s
         )
       );
     } catch (error) {
@@ -110,18 +125,13 @@ const ScheduleModal = () => {
     try {
       setLoading(true);
       if (editingSchedule) {
-        const result = await scheduleAPI.updateSchedule(
-          editingSchedule.id,
-          formData
-        );
-        if (result.success && result.data) {
-          await loadSchedules();
-        }
+        // 수정
+        await updateSchedule(editingSchedule.id, formData);
+        await loadSchedules();
       } else {
-        const result = await scheduleAPI.createSchedule(formData);
-        if (result.success && result.data) {
-          await loadSchedules();
-        }
+        // 생성
+        await createSchedule(formData);
+        await loadSchedules();
       }
       setView("list");
       setEditingSchedule(null);
@@ -161,7 +171,7 @@ const ScheduleModal = () => {
           ) : (
             <ScheduleForm
               schedule={editingSchedule}
-              selectedDate={selectedDate?.toISOString().split("T")[0] || ""}
+              selectedDate={selectedDate ? getLocalDateString(selectedDate) : ""}
               loading={loading}
               onSave={handleSave}
               onDelete={

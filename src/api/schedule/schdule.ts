@@ -31,7 +31,7 @@ type DeleteScheduleRes = {
   detail: string;
 };
 
-export const scheduleApi = {
+export const scheduleAPI = {
   GET: {
     /**
      * 사용자의 모든 일정을 조회
@@ -89,3 +89,6 @@ export const scheduleApi = {
     },
   },
 };
+
+// 타입 export
+export type { Schedule, PostScheduleReq, PutScheduleReq, DeleteScheduleRes };

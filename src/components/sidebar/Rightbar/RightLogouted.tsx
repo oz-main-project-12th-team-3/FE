@@ -8,6 +8,9 @@ import { css } from "@emotion/react";
 import { FaCrown } from "react-icons/fa";
 import { useThemeColors } from "../../../hooks/useThemeColors";
 import { useNavigate } from "react-router-dom";
+import {
+  sideBarMixin
+} from "../../../styles/mixins";
 
 export default function RightLogouted() {
   const { modalBackground, scheduleTitleColor, crownIcon, scheduleItemBorder } = useThemeColors()
@@ -68,6 +71,7 @@ const logoutButtonSectionCss = css`
 `;
 
   return (
+    <div css={[sideBarMixin]}>
     <div css={[flexCenter(), logoutContainerCss]}>
       <div css={defaultProfileCss}>
         <div css={[defaultProfileImage]}></div>
@@ -81,6 +85,7 @@ const logoutButtonSectionCss = css`
           프리미엄
         </button>
       </div>
+    </div>
     </div>
   );
 }

@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import  { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import type { FormEvent } from 'react';
 import { css } from '@emotion/react';
 import { MdCalendarToday, MdAccessTime, MdDescription, MdCheck, MdDelete } from 'react-icons/md';
@@ -184,12 +184,17 @@ color: ${deleteBtnBg};
 font-size: 12px; 
 margin-top: 4px;`;
 
-  // 수정 모드 초기화
-useEffect(() => {
+  useEffect(() => {
   if (schedule) {
+    // UTC 시간을 로컬 시간으로 변환
     const start = new Date(schedule.start_time);
     const end = new Date(schedule.end_time);
-    const dateStr = start.toISOString().split('T')[0];
+    
+    // 로컬 날짜 추출
+    const year = start.getFullYear();
+    const month = String(start.getMonth() + 1).padStart(2, '0');
+    const day = String(start.getDate()).padStart(2, '0');
+    const dateStr = `${year}-${month}-${day}`;
 
     const pad = (n: number) => String(n).padStart(2, '0');
 
@@ -197,8 +202,8 @@ useEffect(() => {
       title: schedule.title,
       description: schedule.description || '',
       date: dateStr,
-      start_time: `${pad(start.getHours())}:${pad(start.getMinutes())}`, // 로컬 기준 HH:mm
-      end_time: `${pad(end.getHours())}:${pad(end.getMinutes())}`,       // 로컬 기준 HH:mm
+      start_time: `${pad(start.getHours())}:${pad(start.getMinutes())}`,
+      end_time: `${pad(end.getHours())}:${pad(end.getMinutes())}`,
       is_completed: schedule.is_completed
     });
   } else {
@@ -213,7 +218,6 @@ useEffect(() => {
   }
   setErrors({});
 }, [schedule, selectedDate]);
-
 
   const validateForm = (): boolean => {
     const newErrors: Partial<Record<keyof ScheduleFormData, string>> = {};
@@ -237,11 +241,12 @@ useEffect(() => {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    if (!validateForm()) return;
-    await onSave(formData);
-  };
+ const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+  e.preventDefault();
+  if (!validateForm()) return;
+  
+  await onSave(formData);
+};
 
   const handleChange = (field: keyof ScheduleFormData, value: string | boolean) => {
     setFormData(prev => ({ ...prev, [field]: value }));
@@ -280,7 +285,7 @@ useEffect(() => {
             type="date"
             value={formData.date}
             onChange={(e) => handleChange('date', e.target.value)}
-            disabled={loading}
+            disabled
           />
           {errors.date && <div css={errorMessage}>{errors.date}</div>}
         </div>

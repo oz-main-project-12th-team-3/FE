@@ -27,3 +27,8 @@ export const validateConfirmPassword = (
   if (password !== confirmPassword) return "비밀번호가 일치하지 않습니다.";
   return "";
 };
+
+export const validateCurrentPassword = (password: string): string => {
+  if (!password) return "현재 비밀번호를 입력해주세요.";
+  return "";
+};

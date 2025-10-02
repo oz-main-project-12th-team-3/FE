@@ -1,73 +1,354 @@
 import type { Schedule } from '../../components/modal/schedule_modal/types/schedule';
-import { combineDateAndTime } from '../../utils/time';
 
-// 더미 데이터
 export let dummySchedules: Schedule[] = [
   {
     id: 1,
     title: '팀 미팅',
-    start_time: combineDateAndTime("2025-09-25", "09:00"),
-    end_time: combineDateAndTime("2025-09-25", "09:30"),
     description: '주간 팀 미팅 및 프로젝트 진행사항 공유',
-    is_completed: true,
-    created_at: new Date().toISOString(),
-    updated_at: new Date().toISOString()
+    start_time: '2025-10-01T00:00:00Z',
+    end_time: '2025-10-01T01:00:00Z',
+    is_completed: false,
+    created_at: '2025-09-30T12:00:00Z',
+    updated_at: '2025-09-30T12:00:00Z'
   },
   {
     id: 2,
     title: '기획 회의',
-    start_time: combineDateAndTime("2025-09-25", "10:00"),
-    end_time: combineDateAndTime("2025-09-25", "11:00"),
     description: '새 프로젝트 기획 회의',
+    start_time: '2025-10-01T02:00:00Z',
+    end_time: '2025-10-01T03:00:00Z',
     is_completed: false,
-    created_at: new Date().toISOString(),
-    updated_at: new Date().toISOString()
+    created_at: '2025-09-30T13:00:00Z',
+    updated_at: '2025-09-30T13:00:00Z'
   },
   {
     id: 3,
-    title: '팀 미팅',
-    start_time: combineDateAndTime("2025-09-28", "10:00"),
-    end_time: combineDateAndTime("2025-09-28", "11:00"),
-    description: '주간 팀 미팅 및 프로젝트 진행사항 공유',
+    title: '디자인 검토',
+    description: 'UI/UX 디자인 리뷰',
+    start_time: '2025-10-01T04:00:00Z',
+    end_time: '2025-10-01T05:00:00Z',
     is_completed: false,
-    created_at: new Date().toISOString(),
-    updated_at: new Date().toISOString()
+    created_at: '2025-09-30T14:00:00Z',
+    updated_at: '2025-09-30T14:00:00Z'
   },
   {
     id: 4,
-    title: '기획 회의1',
-    start_time: combineDateAndTime("2025-09-28", "10:00"),
-    end_time: combineDateAndTime("2025-09-28", "11:00"),
-    description: '새 프로젝트 기획 회의',
+    title: '개발 작업',
+    description: '프론트엔드 기능 구현',
+    start_time: '2025-10-01T06:00:00Z',
+    end_time: '2025-10-01T07:00:00Z',
     is_completed: false,
-    created_at: new Date().toISOString(),
-    updated_at: new Date().toISOString()
-  },{
+    created_at: '2025-09-30T15:00:00Z',
+    updated_at: '2025-09-30T15:00:00Z'
+  },
+  {
     id: 5,
-    title: '기획 회의2',
-    start_time: combineDateAndTime("2025-09-28", "10:00"),
-    end_time: combineDateAndTime("2025-09-28", "11:00"),
-    description: '새 프로젝트 기획 회의',
+    title: 'QA 테스트',
+    description: '기능 테스트 및 버그 수정',
+    start_time: '2025-10-01T08:00:00Z',
+    end_time: '2025-10-01T09:00:00Z',
     is_completed: false,
-    created_at: new Date().toISOString(),
-    updated_at: new Date().toISOString()
-  },{
+    created_at: '2025-09-30T16:00:00Z',
+    updated_at: '2025-09-30T16:00:00Z'
+  },
+  {
     id: 6,
-    title: '기획 회의3',
-    start_time: combineDateAndTime("2025-09-28", "10:00"),
-    end_time: combineDateAndTime("2025-09-28", "11:00"),
-    description: '새 프로젝트 기획 회의',
+    title: '팀 미팅',
+    description: '데일리 스크럼',
+    start_time: '2025-10-02T00:00:00Z',
+    end_time: '2025-10-02T01:00:00Z',
     is_completed: false,
-    created_at: new Date().toISOString(),
-    updated_at: new Date().toISOString()
-  },{
+    created_at: '2025-10-01T12:00:00Z',
+    updated_at: '2025-10-01T12:00:00Z'
+  },
+  {
     id: 7,
-    title: '기획 회의4',
-    start_time: combineDateAndTime("2025-09-28", "10:00"),
-    end_time: combineDateAndTime("2025-09-28", "11:00"),
-    description: '새 프로젝트 기획 회의',
+    title: '기획 회의',
+    description: '신규 기능 브레인스토밍',
+    start_time: '2025-10-02T02:00:00Z',
+    end_time: '2025-10-02T03:00:00Z',
     is_completed: false,
-    created_at: new Date().toISOString(),
-    updated_at: new Date().toISOString()
+    created_at: '2025-10-01T13:00:00Z',
+    updated_at: '2025-10-01T13:00:00Z'
+  },
+  {
+    id: 8,
+    title: '디자인 검토',
+    description: '프로토타입 리뷰',
+    start_time: '2025-10-02T04:00:00Z',
+    end_time: '2025-10-02T05:00:00Z',
+    is_completed: false,
+    created_at: '2025-10-01T14:00:00Z',
+    updated_at: '2025-10-01T14:00:00Z'
+  },
+  {
+    id: 9,
+    title: '개발 작업',
+    description: 'API 연동',
+    start_time: '2025-10-02T06:00:00Z',
+    end_time: '2025-10-02T07:00:00Z',
+    is_completed: false,
+    created_at: '2025-10-01T15:00:00Z',
+    updated_at: '2025-10-01T15:00:00Z'
+  },
+  {
+    id: 10,
+    title: 'QA 테스트',
+    description: '기능 테스트 및 버그 수정',
+    start_time: '2025-10-02T08:00:00Z',
+    end_time: '2025-10-02T09:00:00Z',
+    is_completed: false,
+    created_at: '2025-10-01T16:00:00Z',
+    updated_at: '2025-10-01T16:00:00Z'
+  },
+  {
+    id: 11,
+    title: '팀 미팅',
+    description: '데일리 스크럼',
+    start_time: '2025-10-03T00:00:00Z',
+    end_time: '2025-10-03T01:00:00Z',
+    is_completed: false,
+    created_at: '2025-10-02T12:00:00Z',
+    updated_at: '2025-10-02T12:00:00Z'
+  },
+  {
+    id: 12,
+    title: '기획 회의',
+    description: '요구사항 정의',
+    start_time: '2025-10-03T02:00:00Z',
+    end_time: '2025-10-03T03:00:00Z',
+    is_completed: false,
+    created_at: '2025-10-02T13:00:00Z',
+    updated_at: '2025-10-02T13:00:00Z'
+  },
+  {
+    id: 13,
+    title: '디자인 검토',
+    description: '컬러 시스템 점검',
+    start_time: '2025-10-03T04:00:00Z',
+    end_time: '2025-10-03T05:00:00Z',
+    is_completed: false,
+    created_at: '2025-10-02T14:00:00Z',
+    updated_at: '2025-10-02T14:00:00Z'
+  },
+  {
+    id: 14,
+    title: '개발 작업',
+    description: '상태 관리 구현',
+    start_time: '2025-10-03T06:00:00Z',
+    end_time: '2025-10-03T07:00:00Z',
+    is_completed: false,
+    created_at: '2025-10-02T15:00:00Z',
+    updated_at: '2025-10-02T15:00:00Z'
+  },
+  {
+    id: 15,
+    title: 'QA 테스트',
+    description: '리그레션 테스트',
+    start_time: '2025-10-03T08:00:00Z',
+    end_time: '2025-10-03T09:00:00Z',
+    is_completed: false,
+    created_at: '2025-10-02T16:00:00Z',
+    updated_at: '2025-10-02T16:00:00Z'
+  },
+  {
+    id: 16,
+    title: '팀 미팅',
+    description: '데일리 스크럼',
+    start_time: '2025-10-04T00:00:00Z',
+    end_time: '2025-10-04T01:00:00Z',
+    is_completed: false,
+    created_at: '2025-10-03T12:00:00Z',
+    updated_at: '2025-10-03T12:00:00Z'
+  },
+  {
+    id: 17,
+    title: '기획 회의',
+    description: '프로젝트 범위 조율',
+    start_time: '2025-10-04T02:00:00Z',
+    end_time: '2025-10-04T03:00:00Z',
+    is_completed: false,
+    created_at: '2025-10-03T13:00:00Z',
+    updated_at: '2025-10-03T13:00:00Z'
+  },
+  {
+    id: 18,
+    title: '디자인 검토',
+    description: '타이포그래피 점검',
+    start_time: '2025-10-04T04:00:00Z',
+    end_time: '2025-10-04T05:00:00Z',
+    is_completed: false,
+    created_at: '2025-10-03T14:00:00Z',
+    updated_at: '2025-10-03T14:00:00Z'
+  },
+  {
+    id: 19,
+    title: '개발 작업',
+    description: '라우팅 구현',
+    start_time: '2025-10-04T06:00:00Z',
+    end_time: '2025-10-04T07:00:00Z',
+    is_completed: false,
+    created_at: '2025-10-03T15:00:00Z',
+    updated_at: '2025-10-03T15:00:00Z'
+  },
+  {
+    id: 20,
+    title: 'QA 테스트',
+    description: '모바일 환경 점검',
+    start_time: '2025-10-04T08:00:00Z',
+    end_time: '2025-10-04T09:00:00Z',
+    is_completed: false,
+    created_at: '2025-10-03T16:00:00Z',
+    updated_at: '2025-10-03T16:00:00Z'
+  },
+  {
+    id: 21,
+    title: '팀 미팅',
+    description: '데일리 스크럼',
+    start_time: '2025-10-05T00:00:00Z',
+    end_time: '2025-10-05T01:00:00Z',
+    is_completed: false,
+    created_at: '2025-10-04T12:00:00Z',
+    updated_at: '2025-10-04T12:00:00Z'
+  },
+  {
+    id: 22,
+    title: '기획 회의',
+    description: '로드맵 업데이트',
+    start_time: '2025-10-05T02:00:00Z',
+    end_time: '2025-10-05T03:00:00Z',
+    is_completed: false,
+    created_at: '2025-10-04T13:00:00Z',
+    updated_at: '2025-10-04T13:00:00Z'
+  },
+  {
+    id: 23,
+    title: '디자인 검토',
+    description: '반응형 레이아웃 체크',
+    start_time: '2025-10-05T04:00:00Z',
+    end_time: '2025-10-05T05:00:00Z',
+    is_completed: false,
+    created_at: '2025-10-04T14:00:00Z',
+    updated_at: '2025-10-04T14:00:00Z'
+  },
+  {
+    id: 24,
+    title: '개발 작업',
+    description: '폼 검증 구현',
+    start_time: '2025-10-05T06:00:00Z',
+    end_time: '2025-10-05T07:00:00Z',
+    is_completed: false,
+    created_at: '2025-10-04T15:00:00Z',
+    updated_at: '2025-10-04T15:00:00Z'
+  },
+  {
+    id: 25,
+    title: 'QA 테스트',
+    description: '크로스브라우저 테스트',
+    start_time: '2025-10-05T08:00:00Z',
+    end_time: '2025-10-05T09:00:00Z',
+    is_completed: false,
+    created_at: '2025-10-04T16:00:00Z',
+    updated_at: '2025-10-04T16:00:00Z'
+  },
+  {
+    id: 26,
+    title: '팀 미팅',
+    description: '데일리 스크럼',
+    start_time: '2025-10-06T00:00:00Z',
+    end_time: '2025-10-06T01:00:00Z',
+    is_completed: false,
+    created_at: '2025-10-05T12:00:00Z',
+    updated_at: '2025-10-05T12:00:00Z'
+  },
+  {
+    id: 27,
+    title: '기획 회의',
+    description: '우선순위 재정의',
+    start_time: '2025-10-06T02:00:00Z',
+    end_time: '2025-10-06T03:00:00Z',
+    is_completed: false,
+    created_at: '2025-10-05T13:00:00Z',
+    updated_at: '2025-10-05T13:00:00Z'
+  },
+  {
+    id: 28,
+    title: '디자인 검토',
+    description: '아이콘셋 리뷰',
+    start_time: '2025-10-06T04:00:00Z',
+    end_time: '2025-10-06T05:00:00Z',
+    is_completed: false,
+    created_at: '2025-10-05T14:00:00Z',
+    updated_at: '2025-10-05T14:00:00Z'
+  },
+  {
+    id: 29,
+    title: '개발 작업',
+    description: '에러 로깅 시스템',
+    start_time: '2025-10-06T06:00:00Z',
+    end_time: '2025-10-06T07:00:00Z',
+    is_completed: false,
+    created_at: '2025-10-05T15:00:00Z',
+    updated_at: '2025-10-05T15:00:00Z'
+  },
+  {
+    id: 30,
+    title: 'QA 테스트',
+    description: '보안 점검',
+    start_time: '2025-10-06T08:00:00Z',
+    end_time: '2025-10-06T09:00:00Z',
+    is_completed: false,
+    created_at: '2025-10-05T16:00:00Z',
+    updated_at: '2025-10-05T16:00:00Z'
+  },
+  {
+    id: 31,
+    title: '팀 미팅',
+    description: '데일리 스크럼',
+    start_time: '2025-10-07T00:00:00Z',
+    end_time: '2025-10-07T01:00:00Z',
+    is_completed: false,
+    created_at: '2025-10-06T12:00:00Z',
+    updated_at: '2025-10-06T12:00:00Z'
+  },
+  {
+    id: 32,
+    title: '기획 회의',
+    description: '출시 계획 논의',
+    start_time: '2025-10-07T02:00:00Z',
+    end_time: '2025-10-07T03:00:00Z',
+    is_completed: false,
+    created_at: '2025-10-06T13:00:00Z',
+    updated_at: '2025-10-06T13:00:00Z'
+  },
+  {
+    id: 33,
+    title: '디자인 검토',
+    description: '마지막 UI 검토',
+    start_time: '2025-10-07T04:00:00Z',
+    end_time: '2025-10-07T05:00:00Z',
+    is_completed: false,
+    created_at: '2025-10-06T14:00:00Z',
+    updated_at: '2025-10-06T14:00:00Z'
+  },
+  {
+    id: 34,
+    title: '개발 작업',
+    description: '최종 빌드 준비',
+    start_time: '2025-10-07T06:00:00Z',
+    end_time: '2025-10-07T07:00:00Z',
+    is_completed: false,
+    created_at: '2025-10-06T15:00:00Z',
+    updated_at: '2025-10-06T15:00:00Z'
+  },
+  {
+    id: 35,
+    title: 'QA 테스트',
+    description: '최종 QA 점검',
+    start_time: '2025-10-07T08:00:00Z',
+    end_time: '2025-10-07T09:00:00Z',
+    is_completed: false,
+    created_at: '2025-10-06T16:00:00Z',
+    updated_at: '2025-10-06T16:00:00Z'
   }
 ];

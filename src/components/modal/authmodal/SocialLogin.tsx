@@ -1,58 +1,94 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 // 소셜로그인 아이콘
-import { FaGithub } from 'react-icons/fa';
-import googleLogo from '../../../assets/google.png';
-import naverLogo from '../../../assets/naver.png';
-import kakaoLogo from '../../../assets/kakao.png';
+import google_login from '../../../../public/socialAuth/google_login.png';
+import github from '../../../../public/socialAuth/github.png';
+import naver_login from '../../../../public/socialAuth/naver_login.png';
+import kakao_login from '../../../../public/socialAuth/kakao_login.png';
 import { useThemeColors } from "../../../hooks/useThemeColors";
 
 export default function SocialLogin() {
-  const {descriptionText, modalBackground, btnBorder, hoverSocialBtn} = useThemeColors()
+  const { descriptionText } = useThemeColors();
 
   const wrap = css`
-  text-align: center;
-  font-size: 14px;
-  color: ${descriptionText};
-`;
+    text-align: center;
+    font-size: 14px;
+    color: ${descriptionText};
+  `;
 
-const btnRow = css`
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 8px;
-  margin-top: 8px;
+  const btnGrid = css`
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    margin-top: 16px;
+  `;
 
-  button {
-    border: 1px solid ${btnBorder};
-    border-radius: 8px;
-    padding: 8px;
-    background: ${modalBackground};
+  const socialButton = css`
+    border: none;
+    background: none;
+    padding: 0;
     cursor: pointer;
-
-    &:hover{
-      background: ${hoverSocialBtn};
+    width: 100%;
+    
+    img {
+      width: 100%;
+      height: auto;
+      display: block;
     }
-  }
-`;
 
-const socialIconStyle = css`
-    width: 25px;
-    margin-right: 10px;
-`
+    &:hover {
+      opacity: 0.9;
+    }
+  `;
+
+  const divider = css`
+    border: none;
+    border-top: 1px solid #e5e7eb;
+  `;
+
+  const githubBtn = css`
+    border: none;
+    border-radius: 8px;
+    background: #24292e;
+    color: white;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    &:hover {
+      background: #1b1f23;
+    }
+
+    img{
+        width: 20px;
+        height: 20px;
+    }
+  `
 
   return (
     <>
-      <hr/>
+      <hr css={divider} />
       <div css={wrap}>
         <p>간편 로그인</p>
-        <div css={btnRow}>
-          <button><img src={googleLogo} css={socialIconStyle}/>Google</button>
-          <button><FaGithub size={20} css={socialIconStyle}/>GitHub</button>
-          <button><img src={naverLogo} css={socialIconStyle}/>Naver</button>
-          <button><img src={kakaoLogo} css={socialIconStyle}/>Kakao</button>
+        <div css={btnGrid}>
+          <button css={socialButton}>
+            <img src={naver_login} alt="Naver Login" />
+          </button>
+          <button css={socialButton}>
+            <img src={kakao_login} alt="Kakao Login" />
+          </button>
+          <button css={socialButton}>
+            <img src={google_login} alt="Google Login" />
+          </button>
+          <button css={[socialButton, githubBtn]}>
+            <img src={github} alt="GitHub Login" />
+            Sign in with
+          </button>
         </div>
       </div>
-    
     </>
   );
 }

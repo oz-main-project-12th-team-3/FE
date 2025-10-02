@@ -1,26 +1,22 @@
 /** @jsxImportSource @emotion/react */
-import { useState } from "react";
-import {
-  flexCenter,
-  itemMixin,
-  scrollbarHidden,
-  defaultProfileImage,
-  baseButton,
-} from "../../../styles/mixins";
-import DragAndDrop from "../../dragAndDrop/DragAndDrop";
-import { MdAccessTime } from "react-icons/md";
 import { css } from "@emotion/react";
-import { FaCalendarAlt, FaBell, FaClock, FaCrown } from "react-icons/fa";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { dummySchedules } from "../../../api/dummyData/schedule";
-import { formatTime } from "../../../utils/time";
+import { Notifications } from "../../../api/dummyData/notification";
+import { ProfileSection } from "./ProfileSection";
+import { MenuSection } from "./MenuSection";
+import { TodaySchedule } from "./TodaySchedule";
+import { BottomButtons } from "./BottomButtons";
+import { ProfileSettings } from "./ProfileSettings";
 import { useThemeColors } from "../../../hooks/useThemeColors";
+import {
+  sideBarMixin
+} from "../../../styles/mixins";
 import { loginApi } from "../../../api/auth/login";
 
 const mocUser = {
-  user_id: 1,
   username: "user123",
-  token: "eyJhbGciOiJI...",
   userEmail: "user123@email.com",
 };
 
@@ -30,66 +26,31 @@ export default function RightLogined({
   setIsLogin: (bool: boolean) => void;
 }) {
   const navigate = useNavigate();
-  // 오늘 날짜 구하기
   const today = new Date().toISOString().split("T")[0];
-
-  // 오늘 일정 필터링
   const todaySchedules = dummySchedules.filter(
     (schedule) => schedule.start_time.split("T")[0] === today
   );
-
   const [items, setItems] = useState(todaySchedules);
+  const unreadCount = Notifications.filter((n) => !n.is_read).length;
 
-  const {
-    disabledCompletedBox,
-    inputBorder,
-    modalBackground,
-    deleteBtnBg,
-    tabBtnText,
-    scheduleTitleColor,
-    crownIcon,
-  } = useThemeColors();
+  const [isProfileSettingOpen, setIsProfileSettingOpen] = useState(false);
 
-  // 스타일 정의
+  const { modalBackground } = useThemeColors()
+
   const loginedContainerCss = css`
     display: flex;
     flex-direction: column;
     height: 100%;
     gap: 0.5rem;
   `;
-
-  const profileSectionCss = css`
-    display: flex;
-    align-items: center;
-  `;
-
-  const profileIconCss = css`
-    position: relative;
-  `;
-
-  const profileInfoCss = css`
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-  `;
-
-  const usernameCss = css`
-    font-size: 1rem;
-    font-weight: 600;
-    color: ${disabledCompletedBox};
-  `;
-
-  const emailCss = css`
-    font-size: 0.75rem;
-    color: ${inputBorder};
-  `;
-
+  const hoverProfile = css`
+    cursor: pointer;
+  `
   const dividerCss = css`
-    border: none;
-    height: 1px;
     background: ${modalBackground};
     margin: 0;
   `;
+
 
   const menuSectionCss = css`
     display: flex;
@@ -227,34 +188,34 @@ export default function RightLogined({
   };
 
   return (
+    <div css={[sideBarMixin]}>
     <div css={loginedContainerCss}>
-      {/* 프로필 섹션 */}
-      <div css={profileSectionCss}>
-        <div css={profileIconCss}>
-          <div css={[defaultProfileImage]}></div>
-        </div>
-        <div css={profileInfoCss}>
-          <div css={usernameCss}>{mocUser.username}</div>
-          <div css={emailCss}>{mocUser.userEmail}</div>
-        </div>
+      {/* 프로필 영역 (클릭 시 설정 모드 열림) */}
+      <div css={hoverProfile} onClick={() => setIsProfileSettingOpen(true)} >
+        <ProfileSection username={mocUser.username} email={mocUser.userEmail} />
       </div>
 
       <hr css={dividerCss} />
 
-      {/* 일정관리/알림 메뉴 섹션 */}
-      <div css={menuSectionCss}>
-        <div css={menuItemCss} onClick={handleSchedule}>
-          <FaCalendarAlt css={iconCss} />
-          <span>일정관리</span>
-        </div>
-        <div css={[menuItemCss, notificationCss]}>
-          <FaBell css={iconCss} />
-          <div css={notificationDotCss}></div>
-          <span>알림</span>
-        </div>
-      </div>
+      {isProfileSettingOpen ? (
+        // 프로필 설정 모드
+        <ProfileSettings 
+          onBack={() => setIsProfileSettingOpen(false)}
+          onChangeProfile={() => navigate("/modal/profilesetting")}
+          onChangePassword={() => navigate("/modal/password")} 
+          onDeleteAccount={() => navigate("/modal/deleteaccount")}/>
+      ) : (
+        // 기본 모드
+        <>
+          <MenuSection
+            unreadCount={unreadCount}
+            onScheduleClick={() => navigate("/modal/schedule")}
+            onNotificationClick={() => navigate("/modal/notification")}
+          />
+          <hr css={dividerCss} />
 
-      <hr css={dividerCss} />
+          <TodaySchedule items={items} setItems={setItems} />
+          <hr css={dividerCss} />
 
       {/* 오늘 일정 섹션 */}
       <div css={todayScheduleSectionCss}>
@@ -297,15 +258,8 @@ export default function RightLogined({
       <hr css={dividerCss} />
 
       {/* 하단 버튼들 */}
-      <div css={buttonSectionCss}>
-        <button css={baseButton} onClick={handleLogout}>
-          로그아웃
-        </button>
-        <button css={[baseButton]} onClick={goToPremium}>
-          <FaCrown css={crownIconCss} />
-          프리미엄
-        </button>
-      </div>
+      <BottomButtons onLogout={handleLogout} onPremium={goToPremium}/>
+      
     </div>
   );
 }

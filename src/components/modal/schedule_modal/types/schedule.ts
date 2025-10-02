@@ -34,5 +34,4 @@ export interface ScheduleAPI {
   createSchedule: (scheduleData: ScheduleFormData) => Promise<ApiResponse<Schedule>>;
   updateSchedule: (id: number, scheduleData: ScheduleFormData) => Promise<ApiResponse<Schedule>>;
   deleteSchedule: (id: number) => Promise<ApiResponse<null>>;
-  toggleComplete: (id: number, completed: boolean) => Promise<ApiResponse<{ completed: boolean }>>;
 }

@@ -1,7 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { useEffect, useState } from "react";
 import { GlassmorphismDesign } from "../../../styles/baseDesign/GlassmorphismDesign";
-import { sideBarMixin } from "../../../styles/mixins";
 import { RightbarPosition } from "./RightbarPosition";
 import RightLogined from "./RightLogined";
 import RightLogouted from "./RightLogouted";
@@ -54,13 +53,11 @@ export function Rightbar() {
   return (
     <RightbarPosition>
       <GlassmorphismDesign>
-        <div css={[sideBarMixin]}>
           {isLogin ? (
             <RightLogined setIsLogin={setIsLogin} />
           ) : (
             <RightLogouted />
           )}
-        </div>
       </GlassmorphismDesign>
     </RightbarPosition>
   );
