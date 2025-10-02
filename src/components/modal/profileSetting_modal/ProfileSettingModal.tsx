@@ -8,6 +8,7 @@ import AccountInfo from './AccountInfo';
 import ProfileImage from './ProfileImage';
 import Nickname from './Nickname';
 import { FiUser } from "react-icons/fi";
+import { toast } from 'react-toastify';
 
 // 테스트용 더미 훅 (실제 API 대신 사용)
 const useProfile = () => {
@@ -71,7 +72,7 @@ const ProfileSettingsModal = () => {
       setNickname(data.nickname);
     } catch (error) {
       console.error('프로필 로드 실패:', error);
-      alert('프로필 정보를 불러오는데 실패했습니다.');
+      toast.error('프로필 정보를 불러오는데 실패했습니다.');
       navigate(-1);
     } finally {
       setLoading(false);

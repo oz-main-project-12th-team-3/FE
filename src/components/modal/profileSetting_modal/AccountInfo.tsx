@@ -105,7 +105,6 @@ const AccountInfo = ({ nickname, email, profileImageUrl }: AccountInfoSectionPro
           <div css={emailStyle}>{email}</div>
         </div>
       </div>
-      <p css={noteStyle}>* 이메일 변경은 고객센터에 문의해주세요.</p>
     </div>
   );
 };

@@ -3,6 +3,7 @@ import { css } from '@emotion/react';
 import { useRef } from 'react';
 import { MdUpload } from 'react-icons/md';
 import { useThemeColors } from '../../../hooks/useThemeColors';
+import { toast } from 'react-toastify';
 
 interface ProfileImageProps {
   previewImage: string | null;
@@ -105,12 +106,13 @@ const ProfileImage = ({
     if (!file) return;
 
     if (!file.type.startsWith('image/')) {
-      alert('이미지 파일만 업로드 가능합니다.');
+      toast.error('이미지 파일만 업로드 가능합니다.');
+
       return;
     }
 
     if (file.size > 5 * 1024 * 1024) {
-      alert('파일 크기는 5MB 이하여야 합니다.');
+      toast.error('파일 크기는 5MB 이하여야 합니다.');
       return;
     }
 

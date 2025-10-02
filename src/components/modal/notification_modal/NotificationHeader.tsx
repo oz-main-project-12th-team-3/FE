@@ -61,7 +61,7 @@ const tab = css`
   border: none;
   cursor: pointer;
   font-size: 14px;
-  color: ${inputBorder};
+  color: ${scheduleTitleColor};
   position: relative;
   display: flex;
   align-items: center;
