@@ -14,7 +14,7 @@
 ## :link: 배포 링크
 
 > ### <a href="https://github.com/oz-main-project-12th-team-3">
-  <img src="https://img.shields.io/badge/TEAM ISIBSAE GIT HUB LINK-181717?style=for-the-badge&logo=github&logoColor=white">
+  <img src="https://img.shields.io/badge/TEAM 20s GIT HUB LINK-181717?style=for-the-badge&logo=github&logoColor=white">
 </a>
 
 ## 🖥️ 서비스 소개
