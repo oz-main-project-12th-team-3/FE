@@ -52,6 +52,23 @@
 </div>
 
 ### BE
+<div align=center>
+  <img src="https://img.shields.io/badge/django-092E20?style=for-the-badge&logo=django&logoColor=white">
+  <img src="https://img.shields.io/badge/python-3776AB?style=for-the-badge&logo=python&logoColor=white">
+  <img src="https://img.shields.io/badge/DRF-697984?style=for-the-badge&logo=DRF&logoColor=white">
+  <img src="https://img.shields.io/badge/postgresql-4169E1?style=for-the-badge&logo=postgresql&logoColor=white">
+  <br>
+
+  <img src="https://img.shields.io/badge/Daphne-103127?style=for-the-badge&logo=Daphne&logoColor=white">
+  <img src="https://img.shields.io/badge/redis-FF4438?style=for-the-badge&logo=redis&logoColor=white">
+  <img src="https://img.shields.io/badge/Simple JWT-2980b9?style=for-the-badge&logo=Simple JWT&logoColor=white">
+  <img src="https://img.shields.io/badge/Djoser-343131?style=for-the-badge&logo=Djoser&logoColor=white">
+  <br>
+
+  <img src="https://img.shields.io/badge/Social Auth-1fa385?style=for-the-badge&logo=Social Auth&logoColor=white">
+  <img src="https://img.shields.io/badge/Google Generative AI-8E75B1?style=for-the-badge&logo=googlegemini&logoColor=white">
+</div> 
+
 
 ## :busts_in_silhouette: 팀 동료
 ### FE
