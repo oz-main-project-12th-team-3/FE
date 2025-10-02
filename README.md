@@ -62,7 +62,6 @@
   <img src="https://img.shields.io/badge/Daphne-103127?style=for-the-badge&logo=Daphne&logoColor=white">
   <img src="https://img.shields.io/badge/redis-FF4438?style=for-the-badge&logo=redis&logoColor=white">
   <img src="https://img.shields.io/badge/Simple JWT-2980b9?style=for-the-badge&logoColor=white">
-  <img src="https://img.shields.io/badge/Djoser-343131?style=for-the-badge&logo=Djoser&logoColor=white">
   <br>
 
   <img src="https://img.shields.io/badge/Social Auth-1fa385?style=for-the-badge&logoColor=white">
