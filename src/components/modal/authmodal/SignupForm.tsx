@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
-import { useState } from "react";
+import {  useState } from "react";
 import { FaUser, FaEnvelope, FaLock } from "react-icons/fa";
 import { InputField } from "../../InputField";
 import { useThemeColors } from "../../../hooks/useThemeColors";
@@ -12,17 +12,12 @@ import {
 } from "../../../utils/validator";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { signupApi, type SignupReq } from "../../../api/auth/signup";
+import { storeSignupForm } from "../../../store/storeSignupForm";
 
 export default function SignupForm() {
   const navigate = useNavigate();
-  const [form, setForm] = useState({
-    name: "",
-    email: "",
-    password: "",
-    confirmPassword: "",
-    agreeTerms: false,
-  });
-
+  const { signupForm, setSignupForm, resetSignupForm } = storeSignupForm();
   // 에러 상태
   const [errors, setErrors] = useState({
     name: "",
@@ -69,15 +64,15 @@ export default function SignupForm() {
     cursor: pointer;
   `;
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    const nameError = validateName(form.name);
-    const emailError = validateEmail(form.email);
-    const passwordError = validatePassword(form.password);
+    const nameError = validateName(signupForm.name);
+    const emailError = validateEmail(signupForm.email);
+    const passwordError = validatePassword(signupForm.password);
     const confirmPasswordError = validateConfirmPassword(
-      form.password,
-      form.confirmPassword
+      signupForm.password,
+      signupForm.confirmPassword
     );
 
     const newErrors = {
@@ -87,19 +82,32 @@ export default function SignupForm() {
       confirmPassword: confirmPasswordError,
     };
 
+    const signupReqForm: SignupReq = {
+      email: signupForm.email,
+      password: signupForm.password,
+      nickname: signupForm.name,
+    };
+
     setErrors(newErrors);
 
     // 에러 없으면 회원가입 로직 진행
     if (!nameError && !emailError && !passwordError && !confirmPasswordError) {
       // 약관 동의 체크
       // 어느 시점에서 해야하면 좋을 지 모르겠음
-      if (!form.agreeTerms) {
-        toast.error("이용약관 및 개인정보 처리방침에 동의해야 회원가입이 가능합니다.");
+      if (!signupForm.agreeTerms) {
+        toast.error(
+          "이용약관 및 개인정보 처리방침에 동의해야 회원가입이 가능합니다."
+        );
         return;
       }
-      toast.success("회원가입 요청을 보냈습니다!");
-      // TODO: 실제 회원가입 API 호출
-  }
+      try {
+        const res = await signupApi.POST.signup(signupReqForm);
+        toast.success(res.detail);
+        resetSignupForm();
+      } catch (e) {
+        toast.error(`회원 가입 중 오류 발생 : ${e}`);
+      }
+    }
   };
 
   return (
@@ -112,8 +120,8 @@ export default function SignupForm() {
           type="text"
           name="signup-name"
           placeholder="홍길동"
-          value={form.name}
-          onChange={(e) => setForm({ ...form, name: e.target.value })}
+          value={signupForm.name}
+          onChange={(e) => setSignupForm({ name: e.target.value })}
           leftIcon={<FaUser />}
           error={errors.name}
         />
@@ -127,8 +135,8 @@ export default function SignupForm() {
           name="signup-email"
           placeholder="your@email.com"
           type="email"
-          value={form.email}
-          onChange={(e) => setForm({ ...form, email: e.target.value })}
+          value={signupForm.email}
+          onChange={(e) => setSignupForm({ email: e.target.value })}
           leftIcon={<FaEnvelope />}
           error={errors.email}
         />
@@ -142,8 +150,8 @@ export default function SignupForm() {
           name="signup-password"
           placeholder="안전한 비밀번호를 입력하세요"
           type="password"
-          value={form.password}
-          onChange={(e) => setForm({ ...form, password: e.target.value })}
+          value={signupForm.password}
+          onChange={(e) => setSignupForm({ password: e.target.value })}
           leftIcon={<FaLock />}
           error={errors.password}
         />
@@ -157,10 +165,8 @@ export default function SignupForm() {
           name="signup-confirm"
           placeholder="비밀번호를 다시 입력하세요"
           type="password"
-          value={form.confirmPassword}
-          onChange={(e) =>
-            setForm({ ...form, confirmPassword: e.target.value })
-          }
+          value={signupForm.confirmPassword}
+          onChange={(e) => setSignupForm({ confirmPassword: e.target.value })}
           leftIcon={<FaLock />}
           error={errors.confirmPassword}
         />
@@ -170,14 +176,19 @@ export default function SignupForm() {
         <input
           id="agreeTerms"
           type="checkbox"
-          checked={form.agreeTerms}
-          onChange={(e) => setForm({ ...form, agreeTerms: e.target.checked })}
+          checked={signupForm.agreeTerms}
+          onChange={(e) => setSignupForm({ agreeTerms: e.target.checked })}
         />
         이용약관 및 개인정보처리방침에 동의합니다
-        <a href="#" onClick={(e) => {
-          e.preventDefault();
-          navigate("/modal/terms"); // 약관 모달로 이동
-        }}>자세히 보기</a>
+        <a
+          href="#"
+          onClick={(e) => {
+            e.preventDefault();
+            navigate("/modal/terms"); // 약관 모달로 이동
+          }}
+        >
+          자세히 보기
+        </a>
       </label>
 
       <button type="button" onClick={handleSubmit} css={submit}>

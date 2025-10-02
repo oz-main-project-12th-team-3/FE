@@ -190,6 +190,7 @@ const msgSendBoxCss = css`
     word-wrap: break-word;
     white-space: pre-wrap;
   }
+  
   svg {
     cursor: pointer;
     flex-shrink:0;

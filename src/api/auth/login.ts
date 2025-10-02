@@ -1,6 +1,6 @@
 import { handleApiCall, TokenManager } from "../apiClient";
 
-interface LoginReq {
+export type LoginReq ={
   email: string;
   password: string;
 }

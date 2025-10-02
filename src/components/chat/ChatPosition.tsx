@@ -7,15 +7,6 @@ import {
 import { motion } from "framer-motion";
 import { css } from "@emotion/react";
 
-const centerPosition = css`
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  .inner_div{
-    transform: translate(-50%, -50%);
-  }
-`;
-
 export function ChatPosition({ children }: { children: React.ReactNode }) {
   const { whereIsMouse } = useMousePositionStore();
 
@@ -41,3 +32,15 @@ export function ChatPosition({ children }: { children: React.ReactNode }) {
     </motion.div>
   );
 }
+
+const centerPosition = css`
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  pointer-events: none;
+  
+  .inner_div{
+    transform: translate(-50%, -50%);
+    pointer-events: auto;
+  }
+`;

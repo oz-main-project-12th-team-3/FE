@@ -26,7 +26,7 @@ export function ChatLogs() {
       baseDate.setDate(baseDate.getDate() + idx);
       return {
         id: 100 + idx,
-        title: `chat Session 길이테스트길이테스트길이테스트길이테스트길이테스트길이테스트길이테스트길이테스트길이테스트길이테스트길이테스트길이테스트길이테스트길이테스트길이테스트${idx}`,
+        title: `chat Session ${idx}`,
         last_message: `last_message ${idx}`,
         updated_at: baseDate.toISOString(),
       };
