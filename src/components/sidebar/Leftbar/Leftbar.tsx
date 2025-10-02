@@ -27,7 +27,7 @@ export function Leftbar() {
         <div css={[sideBarSize, sidebarColor]}>
           <div css={[flexCenter("row"), spaceBetween]}>
             <Logo />
-              <ThemeModeBtn />
+            <ThemeModeBtn />
           </div>
           <hr />
           <div css={[flexCenter("row", "0", "0.5rem")]}>
@@ -43,4 +43,3 @@ export function Leftbar() {
     </LeftbarPosition>
   );
 }
-

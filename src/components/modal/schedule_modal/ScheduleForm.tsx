@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import React, { useState, useEffect } from 'react';
+import  { useState, useEffect } from 'react';
 import type { FormEvent } from 'react';
 import { css } from '@emotion/react';
 import { MdCalendarToday, MdAccessTime, MdDescription, MdCheck, MdDelete } from 'react-icons/md';
