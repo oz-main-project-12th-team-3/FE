@@ -11,8 +11,10 @@ const centerPosition = css`
   position: fixed;
   top: 50%;
   left: 50%;
+  pointer-events: none;
   .inner_div{
     transform: translate(-50%, -50%);
+    pointer-events: "auto";
   }
 `;
 

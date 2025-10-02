@@ -5,7 +5,7 @@ export default function useModal() {
 
   const openModal = useCallback(() => {
     setIsOpen(true);
-  }, []);
+  }, [location.pathname]);
 
   const closeModal = useCallback(() => {
     setIsOpen(false);

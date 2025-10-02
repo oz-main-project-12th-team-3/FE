@@ -143,7 +143,7 @@ class ApiClient {
   }
 }
 
-const BASE_URL = "http://localhost:8080";
+const BASE_URL = "http://oz-digital-human-env.eba-dipavmms.ap-northeast-2.elasticbeanstalk.com/";
 
 const apiClient = new ApiClient(BASE_URL);
 
