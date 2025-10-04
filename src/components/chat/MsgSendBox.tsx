@@ -41,7 +41,7 @@ export function MsgSendBox({ sessionId, setMessages }: MsgSendBoxProps) {
       setMessages((prev) => [...prev, newMsg]);
       setInput("");
     } catch (err) {
-      console.error("메시지 전송 실패:", err);
+      toast.error(`메시지 전송 실패:${err}`, );
     }
   };
 

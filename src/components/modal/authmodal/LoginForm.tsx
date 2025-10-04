@@ -70,7 +70,7 @@ export default function LoginForm() {
 
     setErrors(newErrors);
 
-    console.log(form);
+    // console.log(form);
 
     // 에러 없으면 로그인 로직 진행
     if (!emailError && !passwordError) {

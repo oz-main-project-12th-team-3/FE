@@ -22,9 +22,9 @@ export const formatTime = (isoString: string): string => {
   const date = new Date(isoString);
   const pad = (n: number) => String(n).padStart(2, '0');
   
-  console.log('ISO 문자열:', isoString);
-  console.log('Date 객체:', date);
-  console.log('getHours:', date.getHours(), 'getMinutes:', date.getMinutes());
+  // console.log('ISO 문자열:', isoString);
+  // console.log('Date 객체:', date);
+  // console.log('getHours:', date.getHours(), 'getMinutes:', date.getMinutes());
 
   return `${pad(date.getHours())}:${pad(date.getMinutes())}`;
 };

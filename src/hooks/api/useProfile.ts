@@ -6,7 +6,7 @@ export const useProfile = () => {
    * 프로필 조회
    */
   const getProfile = async (): Promise<GetProfileRes> => {
-    console.log('useProfile.getProfile 호출');
+    // console.log('useProfile.getProfile 호출');
     return await profileApi.GET.profile();
   };
 
@@ -15,7 +15,7 @@ export const useProfile = () => {
    * @param data 수정할 필드 (nickname, profile_image_url)
    */
   const updateProfile = async (data: PutProfileReq): Promise<PutProfileRes> => {
-    console.log('useProfile.updateProfile 호출:', data);
+    // console.log('useProfile.updateProfile 호출:', data);
     
     // 수정할 내용이 없으면 에러
     if (!data.nickname && !data.profile_image_url && data.profile_image_url !== null) {
@@ -30,7 +30,7 @@ export const useProfile = () => {
    * @param imageUrl 이미지 URL (null이면 이미지 삭제)
    */
   const updateProfileImage = async (imageUrl: string | null): Promise<PutProfileRes> => {
-    console.log('useProfile.updateProfileImage 호출:', imageUrl);
+    // console.log('useProfile.updateProfileImage 호출:', imageUrl);
     return await profileApi.PUT.profile({ profile_image_url: imageUrl });
   };
 
@@ -39,7 +39,7 @@ export const useProfile = () => {
    * @param nickname 새 닉네임
    */
   const updateNickname = async (nickname: string): Promise<PutProfileRes> => {
-    console.log('useProfile.updateNickname 호출:', nickname);
+    // console.log('useProfile.updateNickname 호출:', nickname);
     
     if (!nickname || nickname.trim() === '') {
       throw new Error('닉네임을 입력해주세요.');

@@ -13,6 +13,7 @@ import {
 import { scrollCss } from "../../../styles/mixins";
 import { useThemeColors } from "../../../hooks/useThemeColors";
 import { Notifications } from "../../../api/dummyData/notification";
+import { toast } from "react-toastify";
 
 type TabType = "all" | "unread";
 
@@ -46,16 +47,15 @@ const NotificationModal = () => {
   useEffect(() => {
     const fetchNotifications = async () => {
       try {
-        // 👉 API 스펙에 "all"이 없다면 read+unread 합쳐야 합니다.
         const status = activeTab === "all" ? "read" : "unread";
         const res = await notificationApi.GET.notifications(status);
         const mapped = res.map((n) => mapNotification(n));
         setNotifications(mapped);
       } catch (err) {
-        console.error("알림 불러오기 실패:", err);
-      } finally{
+        toast.error(`알림 불러오기 실패:${err}`);
+      } finally {
         const mapped = Notifications.map((n) => mapNotification(n));
-        setNotifications(mapped)
+        setNotifications(mapped);
       }
     };
 
@@ -74,7 +74,7 @@ const NotificationModal = () => {
         )
       );
     } catch (err) {
-      console.error("읽음 처리 실패:", err);
+      toast.error(`읽음 처리 실패:${err}`);
     }
   };
 
@@ -84,7 +84,7 @@ const NotificationModal = () => {
       await notificationApi.DELETE.notificationById(id);
       setNotifications((prev) => prev.filter((item) => item.id !== id));
     } catch (err) {
-      console.error("알림 삭제 실패:", err);
+      toast.error(`알림 삭제 실패:${err}`);
     }
   };
 
@@ -104,7 +104,7 @@ const NotificationModal = () => {
         )
       );
     } catch (err) {
-      console.error("전체 읽음 처리 실패:", err);
+      toast.error(`전체 읽음 처리 실패:${err}`, );
     }
   };
 
