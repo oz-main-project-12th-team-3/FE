@@ -34,7 +34,7 @@ export default function Modal() {
     window.history.length > 1
       ? navigate(prevPath, { replace: true })
       : navigate("/", { replace: true });
-    console.log(prevPath);
+    // console.log(prevPath);
 
     resetSignupForm();
   };

@@ -61,7 +61,7 @@ export const useSchedule = () => {
   };
 
   // 완료 상태 토글 (PUT을 활용)
-  const toggleComplete = async (id: number, completed: boolean): Promise<Schedule> => {
+  const toggleComplete = async (id: number, isCompleted: boolean): Promise<Schedule> => {
     // 1. 기존 일정 정보 조회
     const schedule = await scheduleAPI.GET.scheduleById(id);
     
@@ -71,7 +71,7 @@ export const useSchedule = () => {
       description: schedule.description || '',
       start_time: schedule.start_time,
       end_time: schedule.end_time,
-      is_completed: completed
+      is_completed: isCompleted
     };
     return await scheduleAPI.PUT.scheduleById(id, request);
   };

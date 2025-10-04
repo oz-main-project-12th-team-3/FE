@@ -4,17 +4,14 @@ import { storeColorMode } from "../../store/storeColorMode";
 import { themeKeys } from "../../styles/constColors";
 import { LightBg } from "./LightBg";
 import { DarkThemeBg } from "./DarkBg";
-import { Logo } from "./Logo";
 
 export default function Background({ children }: PropsWithChildren<{}>) {
   const mode = storeColorMode((state) => state.mode);
-  const content = (
-    <>
-      <Logo />
+  const Wrapper = mode === themeKeys[0] ? DarkThemeBg : LightBg;
+  
+  return (
+    <Wrapper>
       {children}
-    </>
+    </Wrapper>
   );
-
-  if (mode === themeKeys[0]) return <DarkThemeBg>{content}</DarkThemeBg>;
-  return <LightBg>{content}</LightBg>;
 }

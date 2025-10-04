@@ -10,6 +10,7 @@ import ScheduleHeader from "./ScheduleHeader";
 import ScheduleCalendar from "./ScheduleCalendar";
 import { getLocalDateString } from "../../../utils/time";
 import { dummySchedules } from "../../../api/dummyData/schedule";
+import { toast } from "react-toastify";
 
 const ScheduleModal = () => {
   const [view, setView] = useState<ViewType>("list");
@@ -26,7 +27,7 @@ const ScheduleModal = () => {
     createSchedule,
     updateSchedule,
     deleteSchedule,
-    toggleComplete
+    toggleComplete,
   } = useSchedule();
 
   const { modalBackground } = useThemeColors();
@@ -65,7 +66,7 @@ const ScheduleModal = () => {
       const data = await getSchedules(dateStr);
       setSchedules(data);
     } catch (error) {
-      console.error("일정 로드 실패:", error);
+      toast.error(`일정 로드 실패:${error}`);
     } finally {
       setSchedules(dummySchedules);
       setLoading(false);
@@ -93,8 +94,7 @@ const ScheduleModal = () => {
       await deleteSchedule(scheduleId);
       setSchedules(schedules.filter((s) => s.id !== scheduleId));
     } catch (error) {
-      console.error("일정 삭제 실패:", error);
-      alert("일정 삭제에 실패했습니다.");
+      toast.error(`일정 삭제 실패:${error}`);
     } finally {
       setLoading(false);
     }
@@ -108,16 +108,13 @@ const ScheduleModal = () => {
       const newStatus = !currentStatus;
       // toggleComplete는 내부적으로 getScheduleById + updateSchedule 사용
       const updatedSchedule = await toggleComplete(scheduleId, newStatus);
-      
+
       // 반환된 Schedule로 상태 업데이트
       setSchedules(
-        schedules.map((s) =>
-          s.id === scheduleId ? updatedSchedule : s
-        )
+        schedules.map((s) => (s.id === scheduleId ? updatedSchedule : s))
       );
     } catch (error) {
-      console.error("일정 완료 토글 실패:", error);
-      alert("상태 변경에 실패했습니다.");
+      toast.error(`일정 완료 토글 실패:${error}`);
     }
   };
 
@@ -136,8 +133,7 @@ const ScheduleModal = () => {
       setView("list");
       setEditingSchedule(null);
     } catch (error) {
-      console.error("일정 저장 실패:", error);
-      alert("일정 저장에 실패했습니다.");
+      toast.error(`일정 저장 실패:${error}`);
     } finally {
       setLoading(false);
     }
@@ -171,7 +167,9 @@ const ScheduleModal = () => {
           ) : (
             <ScheduleForm
               schedule={editingSchedule}
-              selectedDate={selectedDate ? getLocalDateString(selectedDate) : ""}
+              selectedDate={
+                selectedDate ? getLocalDateString(selectedDate) : ""
+              }
               loading={loading}
               onSave={handleSave}
               onDelete={

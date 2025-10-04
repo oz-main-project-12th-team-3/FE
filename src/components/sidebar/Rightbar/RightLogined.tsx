@@ -10,17 +10,14 @@ import { TodaySchedule } from "./TodaySchedule";
 import { BottomButtons } from "./BottomButtons";
 import { ProfileSettings } from "./ProfileSettings";
 import { useThemeColors } from "../../../hooks/useThemeColors";
-import {
-  flexCenter,
-  itemMixin,
-  scrollbarHidden,
-  sideBarMixin,
-} from "../../../styles/mixins";
+import { flexCenter, itemMixin, scrollbarHidden, sideBarMixin } from "../../../styles/mixins";
 import { loginApi } from "../../../api/auth/login";
-import DragAndDrop from "../../dragAndDrop/DragAndDrop";
 import { FaClock } from "react-icons/fa";
-import { formatTime } from "../../../utils/time";
+import DragAndDrop from "../../dragAndDrop/DragAndDrop";
 import { MdAccessTime } from "react-icons/md";
+import { formatTime } from "../../../utils/time";
+import { toast } from "react-toastify";
+
 
 const mocUser = {
   username: "user123",
@@ -44,9 +41,10 @@ export default function RightLogined({
 
   const {
     modalBackground,
+    inputBorder,
     tabBtnText,
     scheduleTitleColor,
-    inputBorder,
+
   } = useThemeColors();
 
   const loginedContainerCss = css`
@@ -127,9 +125,20 @@ export default function RightLogined({
     // 프리미엄 페이지로 이동
   };
 
-  const handleLogout = () => {
-    setIsLogin(false);
-    loginApi.DELETE.logout();
+  const handleRoute = (link: string) => {
+    navigate(`${link}`, {
+      state: { prevPath: location.pathname },
+    });
+  };
+
+  const handleLogout = async () => {
+    try {
+      const res = await loginApi.DELETE.logout();
+      setIsLogin(false);
+      toast.success(res.detail);
+    } catch (error) {
+      toast.error(`로그아웃 실패 : ${error}`);
+    }
   };
 
   return (
@@ -151,19 +160,18 @@ export default function RightLogined({
             onBack={() => setIsProfileSettingOpen(false)}
             onChangeProfile={() => navigate("/modal/profilesetting")}
             onChangePassword={() => navigate("/modal/password")}
-            onDeleteAccount={() => navigate("/modal/deleteaccount")}
+
+            onDeleteAccount={() => handleRoute("/modal/deleteaccount")}
+
           />
         ) : (
           // 기본 모드
           <>
             <MenuSection
               unreadCount={unreadCount}
-              onScheduleClick={() =>
-                navigate("/modal/schedule", {
-                  state: { prevPath: location.pathname },
-                })
-              }
-              onNotificationClick={() => navigate("/modal/notification")}
+
+              onScheduleClick={() => handleRoute("/modal/schedule")}
+              onNotificationClick={() => handleRoute("/modal/notification")}
             />
             <hr css={dividerCss} />
 

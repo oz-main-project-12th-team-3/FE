@@ -8,7 +8,7 @@ const MOBILE_THRESHOLD = 640;
  * 브라우저 너비 계산 및 저장용 기능성 컴포넌트
  * @returns {null}
  */
-export default function WindowSizeProvider() {
+export default function WindowSizeSetter() {
   const setWindowWidth = useWindowWidthStore((s) => s.setWindowWidth);
   const setPlatform = useDeviceTypeStore((s) => s.setPlatform);
 

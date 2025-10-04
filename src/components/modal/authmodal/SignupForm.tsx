@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
-import {  useState } from "react";
+import { useState } from "react";
 import { FaUser, FaEnvelope, FaLock } from "react-icons/fa";
 import { InputField } from "../../InputField";
 import { useThemeColors } from "../../../hooks/useThemeColors";
@@ -14,10 +14,12 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { signupApi, type SignupReq } from "../../../api/auth/signup";
 import { storeSignupForm } from "../../../store/storeSignupForm";
+import { storeUserEmail } from "../../../store/storeUserEmail";
 
 export default function SignupForm() {
   const navigate = useNavigate();
   const { signupForm, setSignupForm, resetSignupForm } = storeSignupForm();
+  const { setUserEmail: setEmail } = storeUserEmail();
   // 에러 상태
   const [errors, setErrors] = useState({
     name: "",
@@ -102,6 +104,7 @@ export default function SignupForm() {
       }
       try {
         const res = await signupApi.POST.signup(signupReqForm);
+        setEmail(res.email);
         toast.success(res.detail);
         resetSignupForm();
       } catch (e) {
@@ -122,7 +125,7 @@ export default function SignupForm() {
           placeholder="홍길동"
           value={signupForm.name}
           onChange={(e) => setSignupForm({ name: e.target.value })}
-          leftIcon={<FaUser color={inputBorder}/>}
+          leftIcon={<FaUser color={inputBorder} />}
           error={errors.name}
         />
       </div>
@@ -137,7 +140,7 @@ export default function SignupForm() {
           type="email"
           value={signupForm.email}
           onChange={(e) => setSignupForm({ email: e.target.value })}
-          leftIcon={<FaEnvelope color={inputBorder}/>}
+          leftIcon={<FaEnvelope color={inputBorder} />}
           error={errors.email}
         />
       </div>
@@ -167,7 +170,7 @@ export default function SignupForm() {
           type="password"
           value={signupForm.confirmPassword}
           onChange={(e) => setSignupForm({ confirmPassword: e.target.value })}
-          leftIcon={<FaLock color={inputBorder}/>}
+          leftIcon={<FaLock color={inputBorder} />}
           error={errors.confirmPassword}
         />
       </div>

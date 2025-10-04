@@ -7,9 +7,11 @@ import { useThemeColors } from "../../../hooks/useThemeColors";
 import { validateEmail, validatePassword } from "../../../utils/validator";
 import { loginApi, type LoginReq } from "../../../api/auth/login";
 import { toast } from "react-toastify";
+import { storeUserEmail } from "../../../store/storeUserEmail";
 
 export default function LoginForm() {
   const [form, setForm] = useState<LoginReq>({ email: "", password: "" });
+  const { setUserEmail: setEmail } = storeUserEmail();
 
   const [errors, setErrors] = useState({
     email: "",
@@ -70,12 +72,14 @@ export default function LoginForm() {
 
     setErrors(newErrors);
 
-    console.log(form);
+    // console.log(form);
 
     // 에러 없으면 로그인 로직 진행
     if (!emailError && !passwordError) {
       try {
         const res = await loginApi.POST.login(form);
+        setEmail(res.email);
+
         toast.success(res.detail);
       } catch (e) {
         toast.error(`로그인 에러 발생 : ${e}`);
