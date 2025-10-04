@@ -3,13 +3,13 @@ import { css } from "@emotion/react";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useThemeColors } from "../../../hooks/useThemeColors";
-// import { useProfile } from '../../../hooks/api/useProfile'; // 실제 api
 import AccountInfo from "./AccountInfo";
 import ProfileImage from "./ProfileImage";
 import Nickname from "./Nickname";
 import { FiUser } from "react-icons/fi";
 import { toast } from "react-toastify";
 import { apiProfile } from "../../../api/auth/profile";
+import { storeUserEmail } from "../../../store/storeUserEmail";
 
 // 실제 api 콜로 수정
 const useProfile = () => {
@@ -31,6 +31,7 @@ const ProfileSettingsModal = () => {
   const navigate = useNavigate();
   const { getProfile, updateProfile } = useProfile();
   const { modalBackground, inputBorder, scheduleTitleColor } = useThemeColors();
+  const {userEmail} = storeUserEmail();
 
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
@@ -55,7 +56,7 @@ const ProfileSettingsModal = () => {
 
       setInitialImageUrl(data.profile_image_url);
       setInitialNickname(data.nickname);
-      setEmail("test@example.com"); // TODO: 실제 이메일 정보 연동 필요
+      setEmail(userEmail); 
 
       setPreviewImage(data.profile_image_url);
       setNickname(data.nickname);
