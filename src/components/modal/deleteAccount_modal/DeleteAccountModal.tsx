@@ -2,6 +2,9 @@
 import { css } from "@emotion/react";
 import { IoPersonRemoveOutline, IoWarningOutline } from "react-icons/io5";
 import { useThemeColors } from "../../../hooks/useThemeColors";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import { apiWithDraw } from "../../../api/auth/withdraw";
 
 const DeleteAccountModal = () => {
   const {
@@ -17,6 +20,7 @@ const DeleteAccountModal = () => {
     headerBorder,
     scheduleTitleColor,
   } = useThemeColors();
+  const navi = useNavigate();
 
   const modalContainerStyle = css`
     background: ${modalBackground};
@@ -129,11 +133,24 @@ const DeleteAccountModal = () => {
   `;
 
   const handleCancel = (): void => {
-    // 회원 탈퇴 취소
+    try {
+      navi(-1);
+    } catch (e) {
+      toast.error(`뒤로가기 중 오류가 발생했습니다 : ${e}`)
+      navi("/")
+    }
   };
 
-  const handleConfirm = (): void => {
-    // 회원 탈퇴 진행
+  // 패스워드 값 필요함!!!!
+  const payload = {password:""};
+
+  const handleConfirm = async() => {
+    try {
+      const res = await apiWithDraw.DELETE.withDraw(payload);
+      toast.success(`${res.detail}`)
+    } catch (error) {
+      
+    }
   };
 
   return (
