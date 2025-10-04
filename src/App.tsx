@@ -9,6 +9,7 @@ import { ToastContainer } from "react-toastify";
 
 // Home은 즉시 로드
 import Home from "./components/Home";
+import { SearchModal } from "./components/modal/search/SearchModal";
 
 const Modal = React.lazy(() => import("./components/modal/Modal"));
 const AuthModal = React.lazy(() => import("./components/modal/authmodal/AuthModal"));
@@ -43,6 +44,7 @@ export default function AppDesktop() {
                 <Route path="password" element={<PasswordChangeModal />} />
                 <Route path="deleteaccount" element={<DeleteAccountModal />} />
                 <Route path="profilesetting" element={<ProfileSettingModal/>} />
+                <Route path="search/:search_params" element={<SearchModal/>} />
               </Route>
             </Routes>
         </Background>
