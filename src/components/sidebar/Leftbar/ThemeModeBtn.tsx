@@ -15,29 +15,30 @@ export function ThemeModeBtn() {
   const { whereIsMouse } = useMousePositionStore();
 
   return (
-    <motion.div
-      initial={{
-        x:
-          whereIsMouse === "left"
-            ? SIDEBAR_MARGIN
-            : -SIDEBAR_WIDTH - SIDEBAR_MARGIN,
-      }}
-      animate={{
-        x:
-          whereIsMouse === "left"
-            ? SIDEBAR_MARGIN
-            : -SIDEBAR_WIDTH - SIDEBAR_MARGIN,
-      }}
-      transition={{ type: "spring", stiffness: 300, damping: 30 }}
-    >
-      <div css={positionCss} className="mode_btn">
+    <div css={positionCss} className="mode_btn">
+      <motion.div
+        initial={{
+          x:
+            whereIsMouse === "left"
+              ? SIDEBAR_MARGIN
+              : -SIDEBAR_WIDTH - SIDEBAR_MARGIN,
+        }}
+        animate={{
+          x:
+            whereIsMouse === "left"
+              ? SIDEBAR_MARGIN
+              : -SIDEBAR_WIDTH - SIDEBAR_MARGIN,
+        }}
+        transition={{ type: "spring", stiffness: 300, damping: 30 }}
+      >
         <ToggleBtn bool={mode === themeKeys[0]} toggle={toggle} />
-      </div>
-    </motion.div>
+      </motion.div>
+    </div>
   );
 }
 
 const positionCss = css`
-  position: absolute;
-
-`
+  position: fixed;
+  top: 20px;
+  left: 20px;
+`;
