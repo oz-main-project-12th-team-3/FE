@@ -28,3 +28,15 @@ export const formatTime = (isoString: string): string => {
 
   return `${pad(date.getHours())}:${pad(date.getMinutes())}`;
 };
+
+// 알림 "~~ 분 전" 포맷팅용 함수
+export const formatRelativeTime = (isoDate: string): string => {
+  const now = new Date();
+  const target = new Date(isoDate);
+  const diff = Math.floor((now.getTime() - target.getTime()) / 1000);
+
+  if (diff < 60) return `${diff}초 전`;
+  if (diff < 3600) return `${Math.floor(diff / 60)}분 전`;
+  if (diff < 86400) return `${Math.floor(diff / 3600)}시간 전`;
+  return `${Math.floor(diff / 86400)}일 전`;
+};

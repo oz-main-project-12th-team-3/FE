@@ -1,6 +1,6 @@
 import { handleApiCall } from "../apiClient";
 
-type NotificationType = {
+export type NotificationType = {
   id: number;
   code: string;
   description: string;
@@ -34,47 +34,7 @@ interface DeleteNotificationByIdApiRes {
   detail: string;
 }
 
-// ---- 타입 정의 (API Response → UI 변환용) ----
-export interface NotificationUI {
-  id: number;
-  type: "ai" | "system"; // notification_type_id 매핑, 일단 임시로 ai | sistem으로 지정
-  title: string;
-  content: string;
-  link?: string;
-  isRead: boolean;
-  readAt?: string | null;
-  createdAt: string;
-  updatedAt: string;
-  time: string; // "xx분 전" 형식
-}
-
-// ---- 유틸 함수 ----
-export const formatRelativeTime = (isoDate: string): string => {
-  const now = new Date();
-  const target = new Date(isoDate);
-  const diff = Math.floor((now.getTime() - target.getTime()) / 1000);
-
-  if (diff < 60) return `${diff}초 전`;
-  if (diff < 3600) return `${Math.floor(diff / 60)}분 전`;
-  if (diff < 86400) return `${Math.floor(diff / 3600)}시간 전`;
-  return `${Math.floor(diff / 86400)}일 전`;
-};
-
-export const mapNotification = (apiData: Notification): NotificationUI => ({
-  id: apiData.id,
-  type: apiData.notification_type_id === 1 ? "ai" : "system",
-  title: apiData.title,
-  content: apiData.message,
-  link: apiData.link,
-  isRead: apiData.is_read,
-  readAt: apiData.read_at,
-  createdAt: apiData.created_at,
-  updatedAt: apiData.updated_at,
-  time: formatRelativeTime(apiData.created_at),
-});
-
-//후
-export const notificationApi = {
+export const apiNoti = {
   GET: {
     /**
      * 알림 타입을 받아오는 GET메서드

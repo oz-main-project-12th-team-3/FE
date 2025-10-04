@@ -2,13 +2,14 @@ import React, { useEffect } from "react";
 import "./App.css";
 import Background from "./components/background/Background";
 import { Route, Routes } from "react-router-dom";
-import WindowSizeProvider from "./components/utilComponents/WindowSizeProvider";
+import WindowSizeSetter from "./components/utilComponents/WindowSizeProvider";
 import { MousePositonSetter } from "./components/utilComponents/MousePositionSetter";
 import { ToastContainer } from "react-toastify";
 
 // Home은 즉시 로드
 import Home from "./components/Home";
 import { ThemeModeBtn } from "./components/sidebar/Leftbar/ThemeModeBtn";
+import { NotiTypesSetter } from "./components/utilComponents/GetNotiTypes";
 
 const Modal = React.lazy(() => import("./components/modal/Modal"));
 const AuthModal = React.lazy(
@@ -40,9 +41,12 @@ export default function AppDesktop() {
 
   return (
     <>
+    {/* ui없는 기능성 컴포넌트 */}
+      <WindowSizeSetter />
+      <MousePositonSetter />
+      <NotiTypesSetter/>
+
       <Background>
-        <WindowSizeProvider />
-        <MousePositonSetter />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/chat/:session_id" element={<Home />} />
@@ -59,7 +63,8 @@ export default function AppDesktop() {
           </Route>
         </Routes>
       </Background>
-      <ThemeModeBtn/>
+      {/* 배경 바뀔때 리랜더링 방지용으로 버튼을 따로 빼놓음 */}
+      <ThemeModeBtn />
 
       <ToastContainer
         position="top-center"

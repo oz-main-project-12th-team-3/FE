@@ -2,8 +2,8 @@
 import { IoNotifications } from "react-icons/io5";
 import { css } from "@emotion/react";
 import { useThemeColors } from "../../../hooks/useThemeColors";
+import type { TabType } from "./NotificationModal";
 
-type TabType = "all" | "unread";
 
 interface NotificationHeaderProps {
   activeTab: TabType;
@@ -140,8 +140,8 @@ const markAllReadButton = css`
       {/* 탭 */}
       <div css={tabContainer}>
         <button
-          css={[tab, activeTab === "all" && activeTabStyle]}
-          onClick={() => setActiveTab("all")}
+          css={[tab, activeTab === "read" && activeTabStyle]}
+          onClick={() => setActiveTab("read")}
         >
           전체
         </button>
