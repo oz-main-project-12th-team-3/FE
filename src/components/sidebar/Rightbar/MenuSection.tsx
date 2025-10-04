@@ -12,7 +12,7 @@ export function MenuSection({
   onScheduleClick: () => void;
   onNotificationClick: () => void;
 }) {
-  const { modalBackground, deleteBtnBg, menuItemBg } = useThemeColors()
+  const { modalBackground, deleteBtnBg } = useThemeColors()
 
   const menuSectionCss = css`
     display: flex;

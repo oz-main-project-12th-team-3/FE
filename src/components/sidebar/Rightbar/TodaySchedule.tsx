@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import { css, useTheme } from "@emotion/react";
+import { css } from "@emotion/react";
 import { FaClock } from "react-icons/fa";
 import { MdAccessTime } from "react-icons/md";
 import { flexCenter, itemMixin, scrollbarHidden } from "../../../styles/mixins";

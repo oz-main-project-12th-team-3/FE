@@ -18,6 +18,7 @@ import { MdAccessTime } from "react-icons/md";
 import { formatTime } from "../../../utils/time";
 import { toast } from "react-toastify";
 
+
 const mocUser = {
   username: "user123",
   userEmail: "user123@email.com",
@@ -43,6 +44,7 @@ export default function RightLogined({
     inputBorder,
     tabBtnText,
     scheduleTitleColor,
+
   } = useThemeColors();
 
   const loginedContainerCss = css`
@@ -158,13 +160,16 @@ export default function RightLogined({
             onBack={() => setIsProfileSettingOpen(false)}
             onChangeProfile={() => navigate("/modal/profilesetting")}
             onChangePassword={() => navigate("/modal/password")}
+
             onDeleteAccount={() => handleRoute("/modal/deleteaccount")}
+
           />
         ) : (
           // 기본 모드
           <>
             <MenuSection
               unreadCount={unreadCount}
+
               onScheduleClick={() => handleRoute("/modal/schedule")}
               onNotificationClick={() => handleRoute("/modal/notification")}
             />
