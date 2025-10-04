@@ -1,4 +1,4 @@
-import { profileApi } from '../../api/auth/profile';
+import { apiProfile } from '../../api/auth/profile';
 import type { GetProfileRes, PutProfileReq, PutProfileRes } from '../../api/auth/profile';
 
 export const useProfile = () => {
@@ -7,7 +7,7 @@ export const useProfile = () => {
    */
   const getProfile = async (): Promise<GetProfileRes> => {
     // console.log('useProfile.getProfile 호출');
-    return await profileApi.GET.profile();
+    return await apiProfile.GET.profile();
   };
 
   /**
@@ -22,7 +22,7 @@ export const useProfile = () => {
       throw new Error('수정할 내용이 없습니다.');
     }
     
-    return await profileApi.PUT.profile(data);
+    return await apiProfile.PUT.profile(data);
   };
 
   /**
@@ -31,7 +31,7 @@ export const useProfile = () => {
    */
   const updateProfileImage = async (imageUrl: string | null): Promise<PutProfileRes> => {
     // console.log('useProfile.updateProfileImage 호출:', imageUrl);
-    return await profileApi.PUT.profile({ profile_image_url: imageUrl });
+    return await apiProfile.PUT.profile({ profile_image_url: imageUrl });
   };
 
   /**
@@ -45,7 +45,7 @@ export const useProfile = () => {
       throw new Error('닉네임을 입력해주세요.');
     }
     
-    return await profileApi.PUT.profile({ nickname: nickname.trim() });
+    return await apiProfile.PUT.profile({ nickname: nickname.trim() });
   };
 
   return {

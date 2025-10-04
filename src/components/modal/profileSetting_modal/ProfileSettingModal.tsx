@@ -9,34 +9,19 @@ import ProfileImage from "./ProfileImage";
 import Nickname from "./Nickname";
 import { FiUser } from "react-icons/fi";
 import { toast } from "react-toastify";
+import { apiProfile } from "../../../api/auth/profile";
 
-// 테스트용 더미 훅 (실제 API 대신 사용)
+// 실제 api 콜로 수정
 const useProfile = () => {
   const getProfile = async () => {
-    return new Promise<{ profile_image_url: string; nickname: string }>(
-      (resolve) => {
-        setTimeout(() => {
-          resolve({
-            profile_image_url: "https://i.pravatar.cc/150?img=37",
-            nickname: "테스트 유저",
-          });
-        }, 500);
-      }
-    );
+    return await apiProfile.GET.profile();
   };
 
   const updateProfile = async (data: {
     profile_image_url?: string | null;
     nickname?: string;
   }) => {
-    // console.log("프로필 업데이트 시도:", data);
-    // 실제 API 대신 콘솔 출력
-    return new Promise<void>((resolve) => {
-      setTimeout(() => {
-        // console.log("업데이트 성공 (더미)", data);
-        resolve();
-      }, 500);
-    });
+    return await apiProfile.PUT.profile(data);
   };
 
   return { getProfile, updateProfile };

@@ -21,7 +21,7 @@ export interface PutProfileRes {
   updated_at: string;
 }
 
-export const profileApi = {
+export const apiProfile = {
   GET: {
     /**
      * 현재 로그인한 사용자의 프로필 정보 조회
