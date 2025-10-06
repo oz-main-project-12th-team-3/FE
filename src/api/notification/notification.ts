@@ -11,7 +11,6 @@ export type NotificationType = {
 
 export type Notification = {
   id: number;
-  notification_type_id: number;
   title: string;
   message: string;
   link?: string;
@@ -19,7 +18,24 @@ export type Notification = {
   read_at?: string | null;
   created_at: string;
   updated_at: string;
+  recipient: number;
+  sender: number;
+  notification_type_id: number;
 };
+
+type PostNotiReq = {
+  title: string;
+  message: string;
+  link: string;
+  is_read: boolean;
+  read_at: string;
+  recipient: number;
+  sender: number;
+  notification_type: number;
+};
+
+type PutNotiReq = PostNotiReq;
+type PostNotiMarkAsReadReq = PostNotiReq;
 
 type NotificationStatusType = "read" | "unread";
 
@@ -69,7 +85,7 @@ export const apiNoti = {
     /**
      * 사용자의 알림 목록 조회하는 GET메서드
      * @param {NotificationStatusType} status "read"|"unread"
-     * @returns {Promise<Notification[]>} 응답 데이터
+     * @returns {Promise<Notification[]>} 알림 목록 배열
      * @example
      * ```tsx
      * const res = await notificationApi.GET.notifications("unread")
@@ -78,7 +94,7 @@ export const apiNoti = {
     notifications: async (
       status: NotificationStatusType
     ): Promise<Notification[]> => {
-      const url = `/notifications?&status=${status}/`;
+      const url = `notifications?&status=${status}/`;
       return await handleApiCall({ method: "GET", url: url });
     },
     /**
@@ -87,7 +103,7 @@ export const apiNoti = {
      * @returns {Promise<Notification>} 응답 데이터
      */
     notificationById: async (notiId: number): Promise<Notification> => {
-      const url = `/notifications/${notiId}/`;
+      const url = `notifications/${notiId}/`;
       return await handleApiCall({ method: "GET", url: url });
     },
   },
@@ -99,6 +115,28 @@ export const apiNoti = {
      */
     type: async (payload: PostNotiTypeReq): Promise<NotificationType> => {
       const url = `notification-types/`;
+      return await handleApiCall({ method: "POST", url: url, data: payload });
+    },
+    /**
+     * 알림 생성 POST 메서드
+     * @param {PostNotiReq} payload 요청 바디 <PostNotiReq>
+     * @returns {Promise<Notification>} 생성된 알림
+     */
+    noti: async (payload: PostNotiReq): Promise<Notification> => {
+      const url = `notifications/`;
+      return await handleApiCall({ method: "POST", url: url, data: payload });
+    },
+    /**
+     * 알림 읽음 상태로 변경
+     * @param {number} notiId 변경할 알림 id
+     * @param {PostNotiMarkAsReadReq} payload 변경할 알림의 내용
+     * @returns {Promise<Notification>} 수정된 알림
+     */
+    notiMarkAsReadById: async (
+      notiId: number,
+      payload: PostNotiMarkAsReadReq
+    ): Promise<Notification> => {
+      const url = `notifications/${notiId}/mark_as_read/`;
       return await handleApiCall({ method: "POST", url: url, data: payload });
     },
   },
@@ -114,6 +152,19 @@ export const apiNoti = {
       payload: PutNotiTypeReq
     ): Promise<NotificationType> => {
       const url = `notification-types/${typeId}/`;
+      return await handleApiCall({ method: "PUT", url: url, data: payload });
+    },
+    /**
+     * 알림 수정 PUT메서드
+     * @param {number} notiId 수정할 알림 id
+     * @param {PutNotiReq} payload 수정할 내용
+     * @returns {Promise<Notification>} 수정된 알림
+     */
+    notiById: async (
+      notiId: number,
+      payload: PutNotiReq
+    ): Promise<Notification> => {
+      const url = `notifications/${notiId}/`;
       return await handleApiCall({ method: "PUT", url: url, data: payload });
     },
   },
@@ -147,7 +198,7 @@ export const apiNoti = {
      * @param {number} typeId 삭제할 알림 타입의 id
      * @returns {Promise<ResDetail>} .detail에 설명 받아옴
      */
-    notiTypeById: async (typeId: number):Promise<ResDetail> => {
+    notiTypeById: async (typeId: number): Promise<ResDetail> => {
       const url = `notification-types/${typeId}/`;
       return await handleApiCall({ method: "DELETE", url: url });
     },
