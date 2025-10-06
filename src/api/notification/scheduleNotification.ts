@@ -4,22 +4,23 @@ type ScheduleNotificationStatus = "pending" | "sent";
 
 type ScheduleNotification = {
   id: number;
-  user_id: number;
-  notification_id: number;
   scheduled_time: string;
   sent_at: string | null;
   status: ScheduleNotificationStatus;
   created_at: string;
   updated_at: string;
+  user_id: number;
+  notification_id: number;
 };
 
 type GetUserScheduleNotificationsApiRes = ScheduleNotification[];
 
 interface postScheduleNotificationsApiReq {
+  scheduled_time: string;
+  // sent_at: string;
+  status: ScheduleNotificationStatus;
   user_id: number;
   notification_id: number;
-  scheduled_time: string;
-  status: ScheduleNotificationStatus;
 }
 
 interface putScheduleNotificationsByIdApiReq {
@@ -36,30 +37,25 @@ interface putScheduleNotificationsByIdApiRes {
   updated_at: string;
 }
 
-interface DeleteScheduleNotificationsByIdApiRes {
-  detail: string;
-}
 
 export const scheduleNotificationApi = {
   GET: {
     /**
-     * 특정 사용자의 예약 알림 목록을 조회
-     * @param {number} user_id 사용자의 id
+     * 사용자의 예약 알림 목록을 조회
      * @returns {Promise<GetUserScheduleNotificationsApiRes>} 응답 데이터
      */
-    userScheduleNotis: async (
-      user_id: number
-    ): Promise<GetUserScheduleNotificationsApiRes> => {
-      const url = `/schedule-notifications/${user_id}/`;
-      return await handleApiCall({ method: "GET", url: url });
-    },
+    userScheduleNotis:
+      async (): Promise<GetUserScheduleNotificationsApiRes> => {
+        const url = `schedule-notifications/`;
+        return await handleApiCall({ method: "GET", url: url });
+      },
     /**
      * 특정 예약 알림의 상세 정보를 조회
-     * @param {number} id 조회할 예약 알림의 id
+     * @param {number} scheduleId 조회할 예약 알림의 id
      * @returns {Promise<ScheduleNotification>} 응답 데이터
      */
-    userScheduleNotiById: async (id: number): Promise<ScheduleNotification> => {
-      const url = `/schedule-notifications/${id}/`;
+    userScheduleNotiById: async (scheduleId: number): Promise<ScheduleNotification> => {
+      const url = `schedule-notifications/${scheduleId}/`;
       return await handleApiCall({ method: "GET", url: url });
     },
   },
@@ -72,7 +68,7 @@ export const scheduleNotificationApi = {
     scheduleNoti: async (
       payload: postScheduleNotificationsApiReq
     ): Promise<ScheduleNotification> => {
-      const url = `/schedule-notifications/`;
+      const url = `schedule-notifications/`;
       return await handleApiCall({ method: "POST", url: url, data: payload });
     },
   },
@@ -87,7 +83,7 @@ export const scheduleNotificationApi = {
       id: number,
       payload: putScheduleNotificationsByIdApiReq
     ): Promise<putScheduleNotificationsByIdApiRes> => {
-      const url = `/schedule-notifications/${id}/`;
+      const url = `schedule-notifications/${id}/`;
       return await handleApiCall({ method: "PUT", url: url, data: payload });
     },
   },
@@ -95,11 +91,11 @@ export const scheduleNotificationApi = {
     /**
      * 예약 알림을 삭제합니다.
      * @param {number} id 삭제할 예약 알림의 id
-     * @returns {Promise<DeleteScheduleNotificationsByIdApiRes>} 응답 데이터
+     * @returns {Promise<ResDetail>} .detail에 완료 안내 메시지
      */
     scheduleNotiById: async (
       id: number
-    ): Promise<DeleteScheduleNotificationsByIdApiRes> => {
+    ): Promise<ResDetail> => {
       const url = `/schedule-notifications/${id}/`;
       return await handleApiCall({ method: "DELETE", url: url });
     },
