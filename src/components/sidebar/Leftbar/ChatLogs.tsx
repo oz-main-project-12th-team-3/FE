@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import _ from "lodash";
 import { useEffect, useState } from "react";
-import { chatSessionApi, type Session } from "../../../api/chat/chatSession";
+import { chatApi, type Session } from "../../../api/chat/chatSession";
 import DragAndDrop from "../../dragAndDrop/DragAndDrop";
 import { BasicBtnSt } from "../../../styles/baseDesign/basicBtnSt";
 import { toast } from "react-toastify";
@@ -41,7 +41,7 @@ export function ChatLogs() {
   const [isAsc, setIsAsc] = useState<boolean>(true);
 
   async function getSessions() {
-    return await chatSessionApi.GET.sessions();
+    return await chatApi.GET.sessions();
   }
 
   useEffect(() => {
@@ -75,7 +75,7 @@ export function ChatLogs() {
 
   const handleDel = async (id: number) => {
     try {
-      const res = await chatSessionApi.DELETE.sessionById(id);
+      const res = await chatApi.DELETE.sessionById(id);
       toast.info(`${res.detail}`);
       setItems(items.filter((el) => el.id !== id));
     } catch (e) {

@@ -21,7 +21,7 @@ export const signupApi = {
      * @returns {Promise<SignupRes>} .detail에 "회원가입이 성공적으로 완료되었습니다." 반환됨
      */
     signup: async (payload: SignupReq): Promise<SignupRes> => {
-      const url = `/api/v1/auth/signup/`;
+      const url = `auth/signup/`;
       return await handleApiCall({ method: "POST", url: url, data: payload });
     },
   },

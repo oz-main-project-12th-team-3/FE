@@ -31,7 +31,7 @@ export const apiProfile = {
     profile: async (): Promise<GetProfileRes> => {
       // Authorization: Bearer <access_token> (필수)
       // src\api\token.ts 에서 이미 인터셉터로 토큰을 자동 추가하므로 별도 헤더 설정 불필요
-      const url = `/users/profile/`;
+      const url = `users/profile/`;
       return await handleApiCall({ method: "GET", url: url });
     },
   },
@@ -48,7 +48,7 @@ export const apiProfile = {
         throw new Error('수정할 필드가 없습니다.');
       }
       
-      const url = `/users/profile/`;
+      const url = `users/profile/`;
       return await handleApiCall({ method: "PUT", url: url, data: payload });
     },
   },

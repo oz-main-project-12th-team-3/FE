@@ -143,8 +143,7 @@ class ApiClient {
   }
 }
 
-const BASE_URL = "http://oz-digital-human-env.eba-dipavmms.ap-northeast-2.elasticbeanstalk.com/";
-
+const BASE_URL = import.meta.env.BASE_URL;
 const apiClient = new ApiClient(BASE_URL);
 
 export async function handleApiCall<T>(

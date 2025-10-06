@@ -12,7 +12,7 @@ export const apiWithDraw = {
      * @returns {Promise<ResDetail>} .detail에 메시지
      */
     withDraw: async (payload: WithDrawReq): Promise<ResDetail> => {
-      const url = `/users/delete/`;
+      const url = `users/delete/`;
       return await handleApiCall({ method: "DELETE", url: url, data: payload });
     },
   },

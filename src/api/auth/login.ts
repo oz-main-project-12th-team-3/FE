@@ -33,7 +33,7 @@ export const loginApi = {
      * @returns {Promise<LoginRes>} .detail에 "로그인 성공" 반환됨
      */
     login: async (payload: LoginReq): Promise<LoginRes> => {
-      const url = `/api/v1/auth/login/`;
+      const url = `auth/login/`;
       const res = await handleApiCall<LoginRes>({
         method: "POST",
         url: url,
@@ -54,7 +54,7 @@ export const loginApi = {
     checkEmailDuplicate: async (
       payload: EmailCheckReq
     ): Promise<EmailCheckRes> => {
-      const url = `/api/v1/auth/email-check/`;
+      const url = `auth/email-check/`;
       return await handleApiCall({ method: "POST", url: url, data: payload });
     },
   },
@@ -64,7 +64,7 @@ export const loginApi = {
      * @returns {Promise<ResDetail>}
      */
     logout: async (): Promise<ResDetail> => {
-      const url = `/api/v1/auth/logout/`;
+      const url = `auth/logout/`;
       try {
         return await handleApiCall({ method: "DELETE", url: url });
       } finally {
