@@ -72,6 +72,8 @@ interface PostChatMessageApiRes {
 
 type GetChatMessagesBySessionApiRes = Message[];
 
+type SearchRes = {};
+
 export const chatApi = {
   GET: {
     /**
@@ -96,6 +98,15 @@ export const chatApi = {
         url: url,
       });
     },
+    /**
+     * 채팅 검색
+     * @param {string} keyword
+     * @returns {SearchRes}
+     */
+    searchByKeyword: async (keyword: string): Promise<SearchRes> => {
+      const url = `chat/messages/search/${keyword}/`;
+      return await handleApiCall({ method: "GET", url: url });
+    },
   },
   POST: {
     /**
@@ -109,7 +120,7 @@ export const chatApi = {
       const url = `chat-sessions/`;
       return await handleApiCall({ method: "POST", url: url, data: payload });
     },
-        /**
+    /**
      * 메시지 생성(사용자 → AI)
      * @param {number} sessionId
      * @param {PostChatMessageApiReq} payload - 요청 데이터
@@ -145,7 +156,9 @@ export const chatApi = {
      * @param {number} sessionId
      * @returns {Promise<DeleteChatSessionApiRes>} 응답 데이터
      */
-    sessionById: async (sessionId: number): Promise<DeleteChatSessionApiRes> => {
+    sessionById: async (
+      sessionId: number
+    ): Promise<DeleteChatSessionApiRes> => {
       const url = `chat-sessions/${sessionId}/`;
       return await handleApiCall({ method: "DELETE", url: url });
     },
