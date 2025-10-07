@@ -13,7 +13,6 @@ import { RxCountdownTimer } from "react-icons/rx";
 import { BiSortDown, BiSortUp } from "react-icons/bi";
 import {
   useNavigate,
-  // useParams
 } from "react-router-dom";
 // import { voiceLogApi } from "../../../api/voice/voiceLog";
 
@@ -43,25 +42,19 @@ export function ChatLogs() {
   const [page, setPage] = useState(1);
 
   const navi = useNavigate();
-  // const { session_id } = useParams<{ session_id: string }>();
-  // const sessionId = Number(session_id);
   const [isSort, setIsSort] = useState<boolean>(true);
   const [isAsc, setIsAsc] = useState<boolean>(true);
-
-  async function getSessions() {
-  // page: number
-    return await chatApi.GET
-      .sessions
-      // { page }
-      ();
-  }
 
   useEffect(() => {
     (async () => {
       try {
         setIsLoading(true);
-        const res = await getSessions();
-        // page
+        const res = await chatApi.GET
+          .sessions
+          // { page }
+          ();
+        console.log("res", res);
+
         setItems((prev) => sorting(true, [...prev, ...res.sessions]));
         setHasNext(
           // res.next_page !== null
