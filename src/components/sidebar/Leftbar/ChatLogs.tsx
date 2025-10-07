@@ -20,19 +20,22 @@ import {
 export function ChatLogs() {
   const { text, scrollColor } = useThemeColors();
   // 더미데이터
-  const [items, setItems] = useState<Session[]>(() => {
-    const mocData = Array.from({ length: 20 }, (_, idx) => {
-      const baseDate = new Date("2025-10-01T00:00:00Z");
-      baseDate.setDate(baseDate.getDate() + idx);
-      return {
-        id: 100 + idx,
-        title: `chat Session ${idx}`,
-        last_message: `last_message ${idx}`,
-        updated_at: baseDate.toISOString(),
-      };
-    });
-    return sorting(true, mocData);
-  });
+  const [items, setItems] = useState<Session[]>(
+  //   () => {
+  //   const mocData = Array.from({ length: 20 }, (_, idx) => {
+  //     const baseDate = new Date("2025-10-01T00:00:00Z");
+  //     baseDate.setDate(baseDate.getDate() + idx);
+  //     return {
+  //       id: 100 + idx,
+  //       title: `chat Session ${idx}`,
+  //       last_message: `last_message ${idx}`,
+  //       updated_at: baseDate.toISOString(),
+  //     };
+  //   });
+  //   return sorting(true, mocData);
+  // }
+  []
+);
 
   const navi = useNavigate();
   // const { session_id } = useParams<{ session_id: string }>();
