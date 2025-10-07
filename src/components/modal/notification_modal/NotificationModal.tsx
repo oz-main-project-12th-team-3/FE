@@ -8,12 +8,12 @@ import NotificationUnreadTab from "./NotificationUnreadTab";
 import { apiNoti } from "../../../api/notification/notification";
 import { scrollCss } from "../../../styles/mixins";
 import { useThemeColors } from "../../../hooks/useThemeColors";
-import { Notifications } from "../../../api/dummyData/notification";
 import { toast } from "react-toastify";
 import { type Notification } from "../../../api/notification/notification";
 import { formatRelativeTime } from "../../../utils/time";
 import { storeNotiTypes } from "../../../store/storeNotiTypes";
 import _ from "lodash";
+// Notification의 타입 변경에 따라 더미 데이터 제거함
 
 export type TabType = "read" | "unread";
 // all 기능 없음
@@ -32,6 +32,9 @@ type NotificationUI = {
   created_at: string;
   updated_at: string;
   time: string; // "xx분 전" 형식
+  recipient: number;
+  sender: number;
+  notification_type_id: number;
 };
 
 const NotificationModal = () => {
@@ -81,9 +84,6 @@ const NotificationModal = () => {
         setNotifications(mapped);
       } catch (err) {
         toast.error(`알림 불러오기 실패:${err}`);
-      } finally {
-        const mapped = Notifications.map((n) => mapNotification(n));
-        setNotifications(mapped);
       }
     };
 
@@ -131,8 +131,6 @@ const NotificationModal = () => {
         )
       );
 
-      // zip+reduce는 한번 순회
-      // map+filter는 두번 순회
       const zipped = _.zip(res, unreadNotifications);
 
       const { failedCalls, successfulIds } = zipped.reduce(
