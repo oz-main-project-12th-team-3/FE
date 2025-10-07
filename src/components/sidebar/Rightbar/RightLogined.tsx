@@ -26,7 +26,7 @@ export default function RightLogined({
   const today = new Date().toISOString().split("T")[0];
   const [todaySchedules, setTodaySchedules] = useState<Schedule[]>([]);
   const [isProfileSettingOpen, setIsProfileSettingOpen] = useState(false);
-  const [unreadCount,setUnreadCount] = useState<number>(0);
+  const [unreadCount, setUnreadCount] = useState<number>(0);
   const { userEmail } = storeUserEmail();
 
   const { modalBackground } = useThemeColors();
@@ -35,7 +35,9 @@ export default function RightLogined({
     (async () => {
       try {
         const res = await scheduleAPI.GET.allSchedules();
-        setTodaySchedules(res.filter(s=>s.start_time.split("T")[0] === today))
+        setTodaySchedules(
+          res.filter((s) => s.start_time.split("T")[0] === today)
+        );
       } catch (error) {
         toast.error(`일정 불러오기 중 에러 발생:${error}`);
       }
@@ -46,7 +48,7 @@ export default function RightLogined({
     (async () => {
       try {
         const res = await apiNoti.GET.notifications("unread");
-        setUnreadCount(res.length)
+        setUnreadCount(res.length);
       } catch (error) {
         toast.error(`알림 불러오기 중 에러 발생:${error}`);
       }
@@ -79,11 +81,13 @@ export default function RightLogined({
 
   const handleLogout = async () => {
     try {
-      const res = await loginApi.DELETE.logout();
-      setIsLogin(false);
+      const res = await loginApi.POST.logout();
       toast.success(res.detail);
     } catch (error) {
       toast.error(`로그아웃 실패 : ${error}`);
+    } finally {
+      setIsLogin(false);
+      // 토큰 클리어는 loginApi쪽에 있음
     }
   };
 
@@ -119,7 +123,10 @@ export default function RightLogined({
             />
             <hr css={dividerCss} />
 
-            <TodaySchedule items={todaySchedules} setItems={setTodaySchedules} />
+            <TodaySchedule
+              items={todaySchedules}
+              setItems={setTodaySchedules}
+            />
             <hr css={dividerCss} />
 
             {/* 하단 버튼들 */}

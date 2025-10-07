@@ -1,9 +1,9 @@
 import { handleApiCall, TokenManager } from "../apiClient";
 
-export type LoginReq ={
+export type LoginReq = {
   email: string;
   password: string;
-}
+};
 
 interface LoginRes {
   detail: string;
@@ -54,19 +54,17 @@ export const loginApi = {
     checkEmailDuplicate: async (
       payload: EmailCheckReq
     ): Promise<EmailCheckRes> => {
-      const url = `auth/email-check/`;
+      const url = `v1/auth/email-check/`;
       return await handleApiCall({ method: "POST", url: url, data: payload });
     },
-  },
-  DELETE: {
     /**
      * 로그아웃
      * @returns {Promise<ResDetail>}
      */
     logout: async (): Promise<ResDetail> => {
-      const url = `auth/logout/`;
+      const url = `v1/auth/logout/`;
       try {
-        return await handleApiCall({ method: "DELETE", url: url });
+        return await handleApiCall({ method: "POST", url: url });
       } finally {
         TokenManager.clearTokens();
       }
