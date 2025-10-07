@@ -80,7 +80,9 @@ class ApiClient {
       const isNoAuthUrl = NO_AUTH_URLS.some((url) =>
         config.url?.startsWith(url)
       );
+      console.log(config);
       if (isNoAuthUrl) return config;
+      
 
       const token = TokenManager.getAccessToken();
       if (token) config.headers["Authorization"] = `Bearer ${token}`;
@@ -95,6 +97,10 @@ class ApiClient {
           _retry?: boolean;
         };
 
+        // 비로그인 상태일시 스킵
+        const hasToken = !!TokenManager.getAccessToken();
+        if (!hasToken) return Promise.reject(error);
+
         if (error.response?.status === 401 && !originalRequest._retry) {
           originalRequest._retry = true;
 
@@ -105,7 +111,7 @@ class ApiClient {
             }
 
             const res = await axios.post(
-              `${this.baseUrl}/api/v1/auth/token/refresh/`,
+              `${this.baseUrl}v1/auth/token/refresh/`,
               {},
               { withCredentials: true }
             );
@@ -126,10 +132,11 @@ class ApiClient {
             return this.api(originalRequest);
           } catch (refreshError) {
             TokenManager.clearTokens();
-            if (typeof window !== "undefined") {
-              toast.error("세션이 만료되었습니다. 다시 로그인해주세요.");
-              // window.location.href = "/login";
-              // 모달창 구조에 적합한 방법인가? 로그인 모달창 이동에 적절한 방식 찾기
+            if (hasToken) {
+              TokenManager.clearTokens();
+              if (typeof window !== "undefined") {
+                toast.error("세션이 만료되었습니다. 다시 로그인해주세요.");
+              }
             }
             return Promise.reject(refreshError);
           }

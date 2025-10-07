@@ -11,9 +11,8 @@ import { useThemeColors } from "../../../hooks/useThemeColors";
 import { IoTrashSharp } from "react-icons/io5";
 import { RxCountdownTimer } from "react-icons/rx";
 import { BiSortDown, BiSortUp } from "react-icons/bi";
-import {
-  useNavigate,
-} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { TokenManager } from "../../../api/apiClient";
 // import { voiceLogApi } from "../../../api/voice/voiceLog";
 
 export function ChatLogs() {
@@ -48,6 +47,8 @@ export function ChatLogs() {
   useEffect(() => {
     (async () => {
       try {
+        const accessToken = TokenManager.getAccessToken();
+        if (!accessToken) return;
         setIsLoading(true);
         const res = await chatApi.GET
           .sessions
