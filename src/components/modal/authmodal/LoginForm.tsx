@@ -8,10 +8,12 @@ import { validateEmail, validatePassword } from "../../../utils/validator";
 import { loginApi, type LoginReq } from "../../../api/auth/login";
 import { toast } from "react-toastify";
 import { storeUserEmail } from "../../../store/storeUserEmail";
+import { useNavigate } from "react-router-dom";
 
 export default function LoginForm() {
   const [form, setForm] = useState<LoginReq>({ email: "", password: "" });
-  const { setUserEmail: setEmail } = storeUserEmail();
+  const { setUserEmail } = storeUserEmail();
+  const navi = useNavigate();
 
   const [errors, setErrors] = useState({
     email: "",
@@ -78,9 +80,12 @@ export default function LoginForm() {
     if (!emailError && !passwordError) {
       try {
         const res = await loginApi.POST.login(form);
-        setEmail(res.email);
+        console.log(res);
+        
+        setUserEmail(res.email);
 
         toast.success(res.detail);
+        navi("/");
       } catch (e) {
         toast.error(`로그인 에러 발생 : ${e}`);
       }

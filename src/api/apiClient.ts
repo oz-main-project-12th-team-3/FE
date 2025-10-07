@@ -80,7 +80,7 @@ class ApiClient {
       const isNoAuthUrl = NO_AUTH_URLS.some((url) =>
         config.url?.startsWith(url)
       );
-      console.log(config);
+      // console.log(config);
       if (isNoAuthUrl) return config;
       
 
@@ -115,6 +115,8 @@ class ApiClient {
               {},
               { withCredentials: true }
             );
+            console.log("refresh",res);
+            
 
             const { access_token, user_id, detail, expires_in } = res.data;
             TokenManager.setTokens(

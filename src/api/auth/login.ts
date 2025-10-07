@@ -33,7 +33,7 @@ export const loginApi = {
      * @returns {Promise<LoginRes>} .detail에 "로그인 성공" 반환됨
      */
     login: async (payload: LoginReq): Promise<LoginRes> => {
-      const url = `auth/login/`;
+      const url = `v1/auth/login/`;
       const res = await handleApiCall<LoginRes>({
         method: "POST",
         url: url,

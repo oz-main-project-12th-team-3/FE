@@ -1,6 +1,6 @@
 import { handleApiCall } from "../apiClient";
 
-type Schedule = {
+export type Schedule = {
   id: number;
   title: string;
   description: string;
@@ -38,7 +38,7 @@ export const scheduleAPI = {
      * @returns {Promise<Schedule[]>} 일정 배열
      */
     allSchedules: async (): Promise<Schedule[]> => {
-      const url = `/schedules/`;
+      const url = `schedules/`;
       return await handleApiCall({ method: "GET", url: url });
     },
     /**
@@ -47,7 +47,7 @@ export const scheduleAPI = {
      * @returns {Promise<Schedule>} 일정 객체
      */
     scheduleById: async (id: number): Promise<Schedule> => {
-      const url = `/schedules/${id}/`;
+      const url = `schedules/${id}/`;
       return await handleApiCall({ method: "GET", url: url });
     },
   },
@@ -58,7 +58,7 @@ export const scheduleAPI = {
      * @returns {Promise<Schedule>} 생성된 일정 객체
      */
     schedule: async (payload: PostScheduleReq): Promise<Schedule> => {
-      const url = `/schedules/`;
+      const url = `schedules/`;
       return await handleApiCall({ method: "POST", url: url, data: payload });
     },
   },
@@ -73,7 +73,7 @@ export const scheduleAPI = {
       id: number,
       payload: PutScheduleReq
     ): Promise<Schedule> => {
-      const url = `/schedules/${id}/`;
+      const url = `schedules/${id}/`;
       return await handleApiCall({ method: "PUT", url: url, data: payload });
     },
   },
@@ -84,11 +84,11 @@ export const scheduleAPI = {
      * @returns {Promise<DeleteScheduleRes>} .detail에 삭제 성공 메시지 출력됨
      */
     scheduleById: async (id: number): Promise<DeleteScheduleRes> => {
-      const url = `/schedules/${id}/`;
+      const url = `schedules/${id}/`;
       return await handleApiCall({ method: "DELETE", url: url });
     },
   },
 };
 
 // 타입 export
-export type { Schedule, PostScheduleReq, PutScheduleReq, DeleteScheduleRes };
+export type { PostScheduleReq, PutScheduleReq, DeleteScheduleRes };

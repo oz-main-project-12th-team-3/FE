@@ -3,9 +3,16 @@ import { css } from "@emotion/react";
 import { defaultProfileImage } from "../../../styles/mixins";
 import { useThemeColors } from "../../../hooks/useThemeColors";
 
-export function ProfileSection({ username, email }: { username: string; email: string }) {
+export function ProfileSection({
+  //  username, 
+   email 
+  }: {
+    //  username: string; 
+     email: string }) {
   
-  const { modalBackground, completedText} = useThemeColors()
+  const { 
+    // modalBackground, 
+    completedText} = useThemeColors()
   
   const profileSectionCss = css`
     display: flex;
@@ -19,11 +26,11 @@ export function ProfileSection({ username, email }: { username: string; email: s
     flex-direction: column;
     align-items: flex-start;
   `;
-  const usernameCss = css`
-    font-size: 1rem;
-    font-weight: 600;
-    color: ${modalBackground};
-  `;
+  // const usernameCss = css`
+  //   font-size: 1rem;
+  //   font-weight: 600;
+  //   color: ${modalBackground};
+  // `;
   const emailCss = css`
     font-size: 0.75rem;
     color: ${completedText};
@@ -35,7 +42,7 @@ export function ProfileSection({ username, email }: { username: string; email: s
         <div css={defaultProfileImage}></div>
       </div>
       <div css={profileInfoCss}>
-        <div css={usernameCss}>{username}</div>
+        {/* <div css={usernameCss}>{username}</div> */}
         <div css={emailCss}>{email}</div>
       </div>
     </div>

@@ -46,7 +46,7 @@ export default function DragAndDrop<T>({
   items,
   onItemsChange,
   children,
-  dragTitle,
+  dragTitle
 }: DragAndDropProps<T>) {
   const [isDragging, setIsDragging] = useState<boolean>(false);
   const [dragText, setDragText] = useState<string>(""); // dragTitle로 지정된 키에 할당된 값을 사용
