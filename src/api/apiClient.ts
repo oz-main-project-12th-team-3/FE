@@ -10,11 +10,12 @@ import type {
 import { toast } from "react-toastify";
 
 const NO_AUTH_URLS = [
-  "/api/v1/auth/signup/",
-  "/api/v1/auth/login/",
-  "/api/v1/auth/password-reset/",
-  "/api/v1/auth/email-check/",
-  "/plans/",
+  "auth/signup/",
+  "auth/login/",
+  "auth/password-reset/",
+  "auth/email-check/",
+  "plans/",
+  "notification-types/",
 ];
 
 export class TokenManager {

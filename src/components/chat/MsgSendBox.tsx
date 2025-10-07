@@ -1,7 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { useRef, useState } from "react";
 import type { Message } from "./ChatContent";
-import { chatLogApi } from "../../api/chat/chatLog";
 import { TbMessageCircle } from "react-icons/tb";
 import { css } from "@emotion/react";
 import { useThemeColors } from "../../hooks/useThemeColors";
@@ -12,6 +11,7 @@ import { IoMdMic, IoMdMicOff } from "react-icons/io";
 import { voiceLogApi } from "../../api/voice/voiceLog";
 import { toast } from "react-toastify";
 import { TokenManager } from "../../api/apiClient";
+import { chatApi, type PostChatMessageApiReq } from "../../api/chat/chatSession";
 
 interface MsgSendBoxProps {
   sessionId: number;
@@ -29,19 +29,21 @@ export function MsgSendBox({ sessionId, setMessages }: MsgSendBoxProps) {
 
   // 메시지 전송
   const handleSend = async () => {
-    if (!input.trim()) return;
-    try {
-      const newMsg = await chatLogApi.POST.message({
+    const payload: PostChatMessageApiReq = {
         session_id: sessionId,
         message: input,
         sender: "user",
         is_important: false,
         timestamp: new Date().toISOString(),
-      });
+      }
+
+    if (!input.trim()) return;
+    try {
+      const newMsg = await chatApi.POST.message(sessionId, payload);
       setMessages((prev) => [...prev, newMsg]);
       setInput("");
     } catch (err) {
-      toast.error(`메시지 전송 실패:${err}`, );
+      toast.error(`메시지 전송 실패:${err}`);
     }
   };
 
@@ -190,10 +192,10 @@ const msgSendBoxCss = css`
     word-wrap: break-word;
     white-space: pre-wrap;
   }
-  
+
   svg {
     cursor: pointer;
-    flex-shrink:0;
+    flex-shrink: 0;
     font-size: 2rem;
   }
 `;

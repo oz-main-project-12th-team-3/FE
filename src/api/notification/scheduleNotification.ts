@@ -96,7 +96,7 @@ export const scheduleNotificationApi = {
     scheduleNotiById: async (
       id: number
     ): Promise<ResDetail> => {
-      const url = `/schedule-notifications/${id}/`;
+      const url = `schedule-notifications/${id}/`;
       return await handleApiCall({ method: "DELETE", url: url });
     },
   },

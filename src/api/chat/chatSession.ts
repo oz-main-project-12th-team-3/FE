@@ -4,7 +4,7 @@ interface PostChatSessionsApiReq {
   title: string;
 }
 
-interface PostChatSessionsApiRes {
+export interface PostChatSessionsApiRes {
   id: number;
   user_id: number;
   title: string;
@@ -52,7 +52,7 @@ type Message = {
   updated_at: string;
 };
 
-interface PostChatMessageApiReq {
+export interface PostChatMessageApiReq {
   session_id: number;
   message: string;
   sender: Sender;
