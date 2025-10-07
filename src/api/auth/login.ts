@@ -5,7 +5,7 @@ export type LoginReq = {
   password: string;
 };
 
-interface LoginRes {
+export interface LoginRes {
   detail: string;
   user_id: number;
   email: string;
@@ -15,7 +15,7 @@ interface LoginRes {
   tfa_step: string;
   temporary_access_token: string;
   temporary_refresh_token: string;
-  // 유저 프로필 이미지 url 필요
+  profile_image_url: string;
 }
 
 type EmailCheckReq = {

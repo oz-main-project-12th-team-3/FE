@@ -19,7 +19,7 @@ import { storeUserEmail } from "../../../store/storeUserEmail";
 export default function SignupForm() {
   const navigate = useNavigate();
   const { signupForm, setSignupForm, resetSignupForm } = storeSignupForm();
-  const { setUserEmail: setEmail } = storeUserEmail();
+  const { setUser: setEmail } = storeUserEmail();
   // 에러 상태
   const [errors, setErrors] = useState({
     name: "",

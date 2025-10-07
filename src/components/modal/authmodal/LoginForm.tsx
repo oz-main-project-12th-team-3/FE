@@ -12,7 +12,7 @@ import { useNavigate } from "react-router-dom";
 
 export default function LoginForm() {
   const [form, setForm] = useState<LoginReq>({ email: "", password: "" });
-  const { setUserEmail } = storeUserEmail();
+  const { setUser } = storeUserEmail();
   const navi = useNavigate();
 
   const [errors, setErrors] = useState({
@@ -82,7 +82,7 @@ export default function LoginForm() {
         const res = await loginApi.POST.login(form);
         console.log(res);
         
-        setUserEmail(res.email);
+        setUser(res);
 
         toast.success(res.detail);
         navi("/");

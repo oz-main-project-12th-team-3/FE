@@ -27,7 +27,7 @@ export default function RightLogined({
   const [todaySchedules, setTodaySchedules] = useState<Schedule[]>([]);
   const [isProfileSettingOpen, setIsProfileSettingOpen] = useState(false);
   const [unreadCount, setUnreadCount] = useState<number>(0);
-  const { userEmail } = storeUserEmail();
+  const { userEmail, userProfileImg } = storeUserEmail();
 
   const { modalBackground } = useThemeColors();
 
@@ -100,6 +100,7 @@ export default function RightLogined({
             // username={}
             // login res 에서 username을 안줌
             email={userEmail}
+            userProfileImg={userProfileImg}
           />
         </div>
 
