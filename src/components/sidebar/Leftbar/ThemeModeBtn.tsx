@@ -39,6 +39,9 @@ export function ThemeModeBtn() {
 
 const positionCss = css`
   position: fixed;
-  top: 10rem;
-  left: 12rem;
+  top:50%;
+  div{
+    bottom:19rem;
+    left:12rem;
+  }
 `;
