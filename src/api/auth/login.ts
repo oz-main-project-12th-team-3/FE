@@ -15,6 +15,7 @@ interface LoginRes {
   tfa_step: string;
   temporary_access_token: string;
   temporary_refresh_token: string;
+  // 유저 프로필 이미지 url 필요
 }
 
 type EmailCheckReq = {
