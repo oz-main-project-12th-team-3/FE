@@ -9,9 +9,12 @@ export function NotiTypesSetter() {
     (async () => {
       try {
         const res = await apiNoti.GET.types();
+        console.log(res);
+        
         setNotiTypes(res);
       } catch (error) {
-        toast.error(`알림 타입 불러오기 실패:${error}`)
+        toast.error(`알림 타입 불러오기 실패:${error}`);
+        console.log(error);
       }
     })();
   }, []);

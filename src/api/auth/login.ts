@@ -1,9 +1,9 @@
 import { handleApiCall, TokenManager } from "../apiClient";
 
-export type LoginReq ={
+export type LoginReq = {
   email: string;
   password: string;
-}
+};
 
 interface LoginRes {
   detail: string;
@@ -15,6 +15,7 @@ interface LoginRes {
   tfa_step: string;
   temporary_access_token: string;
   temporary_refresh_token: string;
+  // 유저 프로필 이미지 url 필요
 }
 
 type EmailCheckReq = {
@@ -33,7 +34,7 @@ export const loginApi = {
      * @returns {Promise<LoginRes>} .detail에 "로그인 성공" 반환됨
      */
     login: async (payload: LoginReq): Promise<LoginRes> => {
-      const url = `auth/login/`;
+      const url = `v1/auth/login/`;
       const res = await handleApiCall<LoginRes>({
         method: "POST",
         url: url,
@@ -54,19 +55,17 @@ export const loginApi = {
     checkEmailDuplicate: async (
       payload: EmailCheckReq
     ): Promise<EmailCheckRes> => {
-      const url = `auth/email-check/`;
+      const url = `v1/auth/email-check/`;
       return await handleApiCall({ method: "POST", url: url, data: payload });
     },
-  },
-  DELETE: {
     /**
      * 로그아웃
      * @returns {Promise<ResDetail>}
      */
     logout: async (): Promise<ResDetail> => {
-      const url = `auth/logout/`;
+      const url = `v1/auth/logout/`;
       try {
-        return await handleApiCall({ method: "DELETE", url: url });
+        return await handleApiCall({ method: "POST", url: url });
       } finally {
         TokenManager.clearTokens();
       }

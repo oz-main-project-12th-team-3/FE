@@ -1,6 +1,5 @@
 /** @jsxImportSource @emotion/react */
 import { useEffect, useState } from "react";
-import { chatLogApi } from "../../api/chat/chatLog";
 import { toast, type ToastOptions } from "react-toastify";
 import { useParams } from "react-router-dom";
 import { AIChatBox } from "./AIChatBox";
@@ -12,6 +11,7 @@ import { SIDEBAR_WIDTH } from "../../store/useMousePositionStore";
 import { dummyMessages } from "../../api/dummyData/dummyChat";
 import { scrollCss } from "../../styles/mixins";
 import { AnimatePresence, motion } from "framer-motion";
+import { chatApi } from "../../api/chat/chatSession";
 
 type Sender = "user" | "ai";
 
@@ -34,7 +34,8 @@ export function ChatContent() {
   useEffect(() => {
     const fetchMessages = async () => {
       try {
-        const res = await chatLogApi.GET.messagesBySessionId(sessionId);
+        // const res = await chatLogApi.GET.messagesBySessionId(sessionId);
+        const res = await chatApi.GET.messagesBySessionId(sessionId);
         setMessages(res);
       } catch (err: unknown) {
         toast.error("메시지 불러오기 실패:", err as ToastOptions<unknown>);

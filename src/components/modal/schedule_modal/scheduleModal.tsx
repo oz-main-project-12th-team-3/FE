@@ -9,16 +9,22 @@ import { useThemeColors } from "../../../hooks/useThemeColors";
 import ScheduleHeader from "./ScheduleHeader";
 import ScheduleCalendar from "./ScheduleCalendar";
 import { getLocalDateString } from "../../../utils/time";
-import { dummySchedules } from "../../../api/dummyData/schedule";
+// import { dummySchedules } from "../../../api/dummyData/schedule";
 import { toast } from "react-toastify";
+import { useLocation } from "react-router-dom";
 
 const ScheduleModal = () => {
-  const [view, setView] = useState<ViewType>("list");
+  const location = useLocation();
+  const { initialSchedule, initialView } = location.state || {};
+
+  const [view, setView] = useState<ViewType>(initialView||"list");
   const [schedules, setSchedules] = useState<Schedule[]>([]);
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(
     new Date()
   );
-  const [editingSchedule, setEditingSchedule] = useState<Schedule | null>(null);
+  const [editingSchedule, setEditingSchedule] = useState<Schedule | null>(
+    initialSchedule || null
+  );
   const [loading, setLoading] = useState<boolean>(false);
 
   // 커스텀 훅 사용
@@ -68,7 +74,6 @@ const ScheduleModal = () => {
     } catch (error) {
       toast.error(`일정 로드 실패:${error}`);
     } finally {
-      setSchedules(dummySchedules);
       setLoading(false);
     }
   };

@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import _ from "lodash";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { chatApi, type Session } from "../../../api/chat/chatSession";
 import DragAndDrop from "../../dragAndDrop/DragAndDrop";
 import { BasicBtnSt } from "../../../styles/baseDesign/basicBtnSt";
@@ -11,49 +11,65 @@ import { useThemeColors } from "../../../hooks/useThemeColors";
 import { IoTrashSharp } from "react-icons/io5";
 import { RxCountdownTimer } from "react-icons/rx";
 import { BiSortDown, BiSortUp } from "react-icons/bi";
-import {
-  useNavigate,
-  // useParams
-} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { TokenManager } from "../../../api/apiClient";
 // import { voiceLogApi } from "../../../api/voice/voiceLog";
 
 export function ChatLogs() {
   const { text, scrollColor } = useThemeColors();
   // 더미데이터
-  const [items, setItems] = useState<Session[]>(() => {
-    const mocData = Array.from({ length: 20 }, (_, idx) => {
-      const baseDate = new Date("2025-10-01T00:00:00Z");
-      baseDate.setDate(baseDate.getDate() + idx);
-      return {
-        id: 100 + idx,
-        title: `chat Session ${idx}`,
-        last_message: `last_message ${idx}`,
-        updated_at: baseDate.toISOString(),
-      };
-    });
-    return sorting(true, mocData);
-  });
+  const [items, setItems] = useState<Session[]>(
+    //   () => {
+    //   const mocData = Array.from({ length: 20 }, (_, idx) => {
+    //     const baseDate = new Date("2025-10-01T00:00:00Z");
+    //     baseDate.setDate(baseDate.getDate() + idx);
+    //     return {
+    //       id: 100 + idx,
+    //       title: `chat Session ${idx}`,
+    //       last_message: `last_message ${idx}`,
+    //       updated_at: baseDate.toISOString(),
+    //     };
+    //   });
+    //   return sorting(true, mocData);
+    // }
+    []
+  );
+  // 무한 스크롤
+  const [hasNext, setHasNext] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const [page, setPage] = useState(1);
 
   const navi = useNavigate();
-  // const { session_id } = useParams<{ session_id: string }>();
-  // const sessionId = Number(session_id);
   const [isSort, setIsSort] = useState<boolean>(true);
   const [isAsc, setIsAsc] = useState<boolean>(true);
-
-  async function getSessions() {
-    return await chatApi.GET.sessions();
-  }
 
   useEffect(() => {
     (async () => {
       try {
-        const res = await getSessions();
-        setItems(sorting(true, res.sessions));
+        const accessToken = TokenManager.getAccessToken();
+        if (!accessToken) return;
+        setIsLoading(true);
+        const res = await chatApi.GET
+          .sessions
+          // { page }
+          ();
+        console.log("res", res);
+
+        setItems((prev) => sorting(true, [...prev, ...res.sessions]));
+        setHasNext(
+          // res.next_page !== null
+          true
+          // 일단 계속 실행하도록 작성
+          // 백엔드 코드에 따라 다시 작성 필요
+        );
       } catch (e) {
         toast.error(`세션 불러오기 오류 발생:${e}`);
+      } finally {
+        setIsLoading(false);
       }
     })();
-  }, []);
+  }, [page]);
 
   const handleSort = () => {
     setIsSort(true);
@@ -71,6 +87,15 @@ export function ChatLogs() {
     // 타입 지정 => ?
     // title 대신에 무엇을 표시?
     // updated_at 있으니 그대로 재활용은 가능할듯
+  };
+
+  // 스크롤 감지
+  const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
+    const { scrollTop, scrollHeight, clientHeight } = e.currentTarget;
+
+    if (!isLoading && hasNext && scrollTop + clientHeight >= scrollHeight - 5) {
+      setPage((prev) => prev + 1);
+    }
   };
 
   const handleDel = async (id: number) => {
@@ -126,7 +151,11 @@ export function ChatLogs() {
           음성채팅기록
         </span>
       </div>
-      <div css={[dndCss, scrollCss(scrollColor)]}>
+      <div
+        ref={scrollRef}
+        css={[dndCss, scrollCss(scrollColor)]}
+        onScroll={handleScroll}
+      >
         <DragAndDrop
           items={items}
           onItemsChange={handleItemDnD}
@@ -203,8 +232,8 @@ const btnCss = css`
     margin-right: 0.5rem;
     margin-left: 0.5rem;
     border-radius: 0.3rem;
-    padding: 0.3rem ;
-    padding-right:0.8rem;
+    padding: 0.3rem;
+    padding-right: 0.8rem;
 
     ${bgTransition}
   }
@@ -214,7 +243,7 @@ const btnCss = css`
     cursor: pointer;
     border-radius: 0.3rem;
     flex-shrink: 0;
-    margin-right:0.3rem;
+    margin-right: 0.3rem;
 
     ${bgTransition}
   }

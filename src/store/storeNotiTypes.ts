@@ -8,11 +8,11 @@ type NotiType = {
 
 interface storeNotiTypes {
   notiTypes: NotiType[];
-  setNotiTypes: (val: NotificationType[]) => void;
+  setNotiTypes: (GETNotiTypesRes: NotificationType[]) => void;
 }
 
 export const storeNotiTypes = create<storeNotiTypes>((set) => ({
   notiTypes: [],
-  setNotiTypes: (val) =>
-    set(() => ({ notiTypes: val.map(({ id, code }) => ({ id, code })) })),
+  setNotiTypes: (GETNotiTypesRes) =>
+    set(() => ({ notiTypes: GETNotiTypesRes.map(({ id, code }) => ({ id, code })) })),
 }));
