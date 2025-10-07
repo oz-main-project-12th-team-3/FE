@@ -9,7 +9,7 @@ import { useThemeColors } from "../../../hooks/useThemeColors";
 import ScheduleHeader from "./ScheduleHeader";
 import ScheduleCalendar from "./ScheduleCalendar";
 import { getLocalDateString } from "../../../utils/time";
-import { dummySchedules } from "../../../api/dummyData/schedule";
+// import { dummySchedules } from "../../../api/dummyData/schedule";
 import { toast } from "react-toastify";
 import { useLocation } from "react-router-dom";
 
@@ -74,7 +74,6 @@ const ScheduleModal = () => {
     } catch (error) {
       toast.error(`일정 로드 실패:${error}`);
     } finally {
-      setSchedules(dummySchedules);
       setLoading(false);
     }
   };
