@@ -3,7 +3,7 @@ import { css } from "@emotion/react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { dummySchedules } from "../../../api/dummyData/schedule";
-import { Notifications } from "../../../api/dummyData/notification";
+import { dummyNotifications } from "../../../api/dummyData/notification";
 import { ProfileSection } from "./ProfileSection";
 import { MenuSection } from "./MenuSection";
 import { TodaySchedule } from "./TodaySchedule";
@@ -35,7 +35,7 @@ export default function RightLogined({
     (schedule) => schedule.start_time.split("T")[0] === today
   );
   const [items, setItems] = useState(todaySchedules);
-  const unreadCount = Notifications.filter((n) => !n.is_read).length;
+  const unreadCount = dummyNotifications.filter((n) => !n.is_read).length;
 
   const [isProfileSettingOpen, setIsProfileSettingOpen] = useState(false);
 

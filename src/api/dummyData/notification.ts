@@ -1,5 +1,6 @@
 // 더미데이터 (API 응답 형식 맞춤)
-export const Notifications = [
+// 더미 데이터는 반드시 dummy~~로 작성
+export const dummyNotifications = [
   {
     id: 101,
     notification_type_id: 1,
