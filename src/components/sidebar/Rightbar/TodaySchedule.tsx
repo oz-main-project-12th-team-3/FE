@@ -80,11 +80,11 @@ export function TodaySchedule({
     <div css={todayScheduleSectionCss}>
       <div css={todayScheduleHeaderCss}>
         <FaClock size={16} color={modalBackground} />
-        <span>오늘 일정 ({items.length})</span>
+        <span>오늘 일정 ({items?.length})</span>
       </div>
 
       <div css={[flexCenter(), scheduleContentCss]}>
-        {items.length >= 0 && !!items ? (
+        {items && items.length > 0? (
           <DragAndDrop
             items={items}
             onItemsChange={setItems}

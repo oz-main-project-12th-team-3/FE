@@ -2,8 +2,8 @@
 import { css } from "@emotion/react";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { dummySchedules } from "../../../api/dummyData/schedule";
-import { dummyNotifications } from "../../../api/dummyData/notification";
+// import { dummySchedules } from "../../../api/dummyData/schedule";
+// import { dummyNotifications } from "../../../api/dummyData/notification";
 import { ProfileSection } from "./ProfileSection";
 import { MenuSection } from "./MenuSection";
 import { TodaySchedule } from "./TodaySchedule";
@@ -14,7 +14,8 @@ import { sideBarMixin } from "../../../styles/mixins";
 import { loginApi } from "../../../api/auth/login";
 import { toast } from "react-toastify";
 import { storeUserEmail } from "../../../store/storeUserEmail";
-import { scheduleAPI } from "../../../api/schedule/schdule";
+import { type Schedule, scheduleAPI } from "../../../api/schedule/schdule";
+import { apiNoti } from "../../../api/notification/notification";
 
 export default function RightLogined({
   setIsLogin,
@@ -23,26 +24,34 @@ export default function RightLogined({
 }) {
   const navigate = useNavigate();
   const today = new Date().toISOString().split("T")[0];
-  const todaySchedules = dummySchedules.filter(
-    (schedule) => schedule.start_time.split("T")[0] === today
-  );
-  const [items, setItems] = useState(todaySchedules);
+  const [todaySchedules, setTodaySchedules] = useState<Schedule[]>([]);
   const [isProfileSettingOpen, setIsProfileSettingOpen] = useState(false);
-  const unreadCount = dummyNotifications.filter((n) => !n.is_read).length;
+  const [unreadCount,setUnreadCount] = useState<number>(0);
   const { userEmail } = storeUserEmail();
 
   const { modalBackground } = useThemeColors();
 
   useEffect(() => {
-    (async()=>{
+    (async () => {
       try {
         const res = await scheduleAPI.GET.allSchedules();
-        setItems(res);
+        setTodaySchedules(res.filter(s=>s.start_time.split("T")[0] === today))
       } catch (error) {
-        toast.error(`일정 불러오기 중 에러 발생:${error}`)
+        toast.error(`일정 불러오기 중 에러 발생:${error}`);
       }
     })();
-  }, [items]);
+  }, [todaySchedules]);
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const res = await apiNoti.GET.notifications("unread");
+        setUnreadCount(res.length)
+      } catch (error) {
+        toast.error(`알림 불러오기 중 에러 발생:${error}`);
+      }
+    })();
+  }, [unreadCount]);
 
   const loginedContainerCss = css`
     display: flex;
@@ -110,7 +119,7 @@ export default function RightLogined({
             />
             <hr css={dividerCss} />
 
-            <TodaySchedule items={items} setItems={setItems} />
+            <TodaySchedule items={todaySchedules} setItems={setTodaySchedules} />
             <hr css={dividerCss} />
 
             {/* 하단 버튼들 */}
