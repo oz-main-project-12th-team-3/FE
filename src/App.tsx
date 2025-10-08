@@ -11,28 +11,16 @@ import Home from "./components/Home";
 import { ThemeModeBtn } from "./components/sidebar/Leftbar/ThemeModeBtn";
 import { NotiTypesSetter } from "./components/utilComponents/GetNotiTypes";
 
-const Modal = React.lazy(() => import("./components/modal/Modal"));
-const AuthModal = React.lazy(
-  () => import("./components/modal/authmodal/AuthModal")
-);
-const ScheduleModal = React.lazy(
-  () => import("./components/modal/schedule_modal/scheduleModal")
-);
-const NotificationModal = React.lazy(
-  () => import("./components/modal/notification_modal/NotificationModal")
-);
-const TermsModal = React.lazy(
-  () => import("./components/modal/authmodal/TermsModal")
-);
-const PasswordChangeModal = React.lazy(
-  () => import("./components/modal/passwordChang/PasswordChangeModal")
-);
-const DeleteAccountModal = React.lazy(
-  () => import("./components/modal/deleteAccount_modal/DeleteAccountModal")
-);
-const ProfileSettingModal = React.lazy(
-  () => import("./components/modal/profileSetting_modal/ProfileSettingModal")
-);
+const lazyModal = (path: string) => React.lazy(() => import(`./components/modal/${path}`));
+
+const Modal = lazyModal("Modal");
+const AuthModal = lazyModal("authmodal/AuthModal");
+const ScheduleModal = lazyModal("schedule_modal/scheduleModal");
+const NotificationModal = lazyModal("notification_modal/NotificationModal");
+const TermsModal = lazyModal("authmodal/TermsModal");
+const PasswordChangeModal = lazyModal("passwordChang/PasswordChangeModal");
+const DeleteAccountModal = lazyModal("deleteAccount_modal/DeleteAccountModal");
+const ProfileSettingModal = lazyModal("profileSetting_modal/ProfileSettingModal");
 
 export default function AppDesktop() {
   useEffect(() => {
