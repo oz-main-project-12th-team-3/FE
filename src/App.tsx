@@ -1,6 +1,6 @@
+/** @jsxImportSource @emotion/react */
 import React from "react";
 import "./App.css";
-import ContentRerender from "./components/background/Background";
 import { Route, Routes } from "react-router-dom";
 import WindowSizeSetter from "./components/utilComponents/WindowSizeProvider";
 import { MousePositonSetter } from "./components/utilComponents/MousePositionSetter";
@@ -11,6 +11,7 @@ import Home from "./components/Home";
 import { ThemeModeBtn } from "./components/sidebar/Leftbar/ThemeModeBtn";
 import { NotiTypesSetter } from "./components/utilComponents/GetNotiTypes";
 import { RiveBackGround } from "./components/background/RiveBackground";
+import { fitScreen } from "./styles/mixins";
 
 const lazyModal = (path: string) =>
   React.lazy(() => import(`./components/modal/${path}`));
@@ -36,8 +37,8 @@ export default function AppDesktop() {
 
       {/* 배경 */}
       <RiveBackGround />
-      
-      <ContentRerender>
+
+      <div css={fitScreen}>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/chat/:session_id" element={<Home />} />
@@ -53,7 +54,7 @@ export default function AppDesktop() {
             <Route path="profilesetting" element={<ProfileSettingModal />} />
           </Route>
         </Routes>
-      </ContentRerender>
+      </div>
       {/* 배경 바뀔때 리랜더링 방지용으로 버튼을 따로 빼놓음 */}
       <ThemeModeBtn />
 

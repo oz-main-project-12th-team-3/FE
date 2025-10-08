@@ -99,7 +99,6 @@ export const sideBarSize = css`
   gap: 1rem;
 `;
 
-
 export const itemMixin = css`
   cursor: pointer;
   background-color: white;
@@ -147,10 +146,7 @@ export const blurFilter = css`
   backdrop-filter: blur(6px);
 `;
 
-
-// const Card = styled.div`
-//   ${flexCenter};
-//   background: #f5f5f5;
-// `;
-// or
-// <div css={[flexCenter('column'), myStyle]}>
+export const fitScreen = css`
+  position: fixed;
+  inset: 0;
+`;

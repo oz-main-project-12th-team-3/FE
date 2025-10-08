@@ -8,7 +8,7 @@ import {
 } from "@rive-app/react-canvas";
 import { useEffect } from "react";
 import { storeColorMode } from "../../store/storeColorMode";
-import { css } from "@emotion/react";
+import { fitScreen } from "../../styles/mixins";
 
 const STATE_MACHINE_NAME = "State Machine 1";
 const INPUT_NAME = "Theme toggled";
@@ -36,13 +36,8 @@ export function RiveBackGround() {
   }, [isDark, themeToggleInput]);
 
   return (
-    <div css={RiveComponentWrapper}>
+    <div css={fitScreen}>
       <RiveComponent />
     </div>
   );
 }
-const RiveComponentWrapper = css`
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-`;
