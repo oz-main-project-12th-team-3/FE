@@ -82,7 +82,7 @@ export default function LoginForm() {
         const res = await loginApi.POST.login(form);
         console.log(res);
         
-        setUser(res);
+        setUser(res.email, res.profile_image_url);
 
         toast.success(res.detail);
         navi("/");

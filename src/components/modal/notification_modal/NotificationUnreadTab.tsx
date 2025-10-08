@@ -1,5 +1,5 @@
 import NotificationList from "./NotificationList";
-import type { NotificationUI } from "../../../api/notification/notification";
+import type { NotificationUI } from "./NotificationModal";
 
 interface Props {
   notifications: NotificationUI[];
@@ -8,7 +8,7 @@ interface Props {
 }
 
 const NotificationUnreadTab = ({ notifications, onMarkAsRead, onDelete }: Props) => {
-  const unreadNotifications = notifications.filter((n) => !n.isRead);
+  const unreadNotifications = notifications.filter((n) => !n.is_read);
 
   return (
     <NotificationList

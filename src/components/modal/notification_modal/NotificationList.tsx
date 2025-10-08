@@ -3,8 +3,8 @@ import { motion } from "framer-motion";
 import { IoNotifications, IoSettings, IoTrash } from "react-icons/io5";
 import { FaCheck } from "react-icons/fa6";
 import { css } from "@emotion/react";
-import type { NotificationUI } from "../../../api/notification/notification";
 import { useThemeColors } from "../../../hooks/useThemeColors";
+import type { NotificationUI } from "./NotificationModal";
 
 interface Props {
   notifications: NotificationUI[];
@@ -146,7 +146,7 @@ const emptyIcon = css`
           css={[
             notificationItem,
             notificationItemWrapper,
-            !notification.isRead && unreadItem, // 읽지 않은 알림은 다른 배경색
+            !notification.is_read && unreadItem, // 읽지 않은 알림은 다른 배경색
           ]}
           initial={{ opacity: 0, x: -10 }}
           animate={{ opacity: 1, x: 0 }}
@@ -169,11 +169,11 @@ const emptyIcon = css`
           </div>
           <div css={notificationContent}>
             <h4 css={notificationTitle}>{notification.title}</h4>
-            <p css={notificationText}>{notification.content}</p>
+            <p css={notificationText}>{notification.message}</p>
             <div css={timeAndAction}>
               <span css={timeText}>{notification.time}</span>
               <div className="notification-actions" css={notificationActions}>
-                {!notification.isRead && (
+                {!notification.is_read && (
                   <motion.button
                     css={readButton}
                     onClick={() => onMarkAsRead(notification.id)}

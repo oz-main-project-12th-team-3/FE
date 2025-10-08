@@ -21,7 +21,7 @@ export type TabType = "read" | "unread";
 // 백 코드에 맞게 read, unread로 통일
 // all 을 할거면 백 코드에 all 요청 추가 혹은 api 콜 두번 보내야 함
 
-type NotificationUI = {
+export type NotificationUI = {
   id: number;
   type: string;
   title: string;

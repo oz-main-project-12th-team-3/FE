@@ -19,7 +19,7 @@ import { storeUserEmail } from "../../../store/storeUserEmail";
 export default function SignupForm() {
   const navigate = useNavigate();
   const { signupForm, setSignupForm, resetSignupForm } = storeSignupForm();
-  const { setUser: setEmail } = storeUserEmail();
+  const { setUser } = storeUserEmail();
   // 에러 상태
   const [errors, setErrors] = useState({
     name: "",
@@ -104,7 +104,8 @@ export default function SignupForm() {
       }
       try {
         const res = await signupApi.POST.signup(signupReqForm);
-        setEmail(res.email);
+        setUser(res.email, "");
+        // 프로필 이미지 res에 없음
         toast.success(res.detail);
         resetSignupForm();
       } catch (e) {

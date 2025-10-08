@@ -1,5 +1,6 @@
 import NotificationList from "./NotificationList";
-import type { NotificationUI } from "../../../api/notification/notification";
+import type { NotificationUI } from "./NotificationModal";
+
 
 interface Props {
   notifications: NotificationUI[];
