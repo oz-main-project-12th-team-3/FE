@@ -1,6 +1,6 @@
-import React, { useEffect } from "react";
+import React from "react";
 import "./App.css";
-import Background from "./components/background/Background";
+import ContentRerender from "./components/background/Background";
 import { Route, Routes } from "react-router-dom";
 import WindowSizeSetter from "./components/utilComponents/WindowSizeProvider";
 import { MousePositonSetter } from "./components/utilComponents/MousePositionSetter";
@@ -10,8 +10,10 @@ import { ToastContainer } from "react-toastify";
 import Home from "./components/Home";
 import { ThemeModeBtn } from "./components/sidebar/Leftbar/ThemeModeBtn";
 import { NotiTypesSetter } from "./components/utilComponents/GetNotiTypes";
+import { RiveBackGround } from "./components/background/RiveBackground";
 
-const lazyModal = (path: string) => React.lazy(() => import(`./components/modal/${path}`));
+const lazyModal = (path: string) =>
+  React.lazy(() => import(`./components/modal/${path}`));
 
 const Modal = lazyModal("Modal");
 const AuthModal = lazyModal("authmodal/AuthModal");
@@ -20,21 +22,22 @@ const NotificationModal = lazyModal("notification_modal/NotificationModal");
 const TermsModal = lazyModal("authmodal/TermsModal");
 const PasswordChangeModal = lazyModal("passwordChang/PasswordChangeModal");
 const DeleteAccountModal = lazyModal("deleteAccount_modal/DeleteAccountModal");
-const ProfileSettingModal = lazyModal("profileSetting_modal/ProfileSettingModal");
+const ProfileSettingModal = lazyModal(
+  "profileSetting_modal/ProfileSettingModal"
+);
 
 export default function AppDesktop() {
-  useEffect(() => {
-    // testLogin();
-  });
-
   return (
     <>
-    {/* ui없는 기능성 컴포넌트 */}
+      {/* ui없는 기능성 컴포넌트 */}
       <WindowSizeSetter />
       <MousePositonSetter />
-      <NotiTypesSetter/>
+      <NotiTypesSetter />
 
-      <Background>
+      {/* 배경 */}
+      <RiveBackGround />
+      
+      <ContentRerender>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/chat/:session_id" element={<Home />} />
@@ -50,7 +53,7 @@ export default function AppDesktop() {
             <Route path="profilesetting" element={<ProfileSettingModal />} />
           </Route>
         </Routes>
-      </Background>
+      </ContentRerender>
       {/* 배경 바뀔때 리랜더링 방지용으로 버튼을 따로 빼놓음 */}
       <ThemeModeBtn />
 

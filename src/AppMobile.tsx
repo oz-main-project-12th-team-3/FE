@@ -1,6 +1,6 @@
 import React from "react";
 import "./App.css";
-import Background from "./components/background/Background";
+import ContentRerender from "./components/background/Background";
 import { Route, Routes } from "react-router-dom";
 import Home from "./components/Home";
 
@@ -12,7 +12,7 @@ const Login = React.lazy(() => import("./components/modal/authmodal/LoginForm"))
 
 export default function AppMobile() {
   return (
-    <Background>
+    <ContentRerender>
       <Routes>
         <Route path="/" element={<Home />} />
 
@@ -20,6 +20,6 @@ export default function AppMobile() {
           <Route path="login" element={<Login />} />
         </Route>
       </Routes>
-    </Background>
+    </ContentRerender>
   );
 }
