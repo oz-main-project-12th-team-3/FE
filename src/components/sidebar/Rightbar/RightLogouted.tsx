@@ -20,6 +20,10 @@ export default function RightLogouted() {
   state: { prevPath: location.pathname } 
 });
   };
+  const goToPremium = () => {
+    // 프리미엄 페이지로 이동
+    navi("/premium")
+  };
 
   const premiumButtonCss = css`
   padding: 0.75rem 1rem;
@@ -80,7 +84,7 @@ const logoutButtonSectionCss = css`
         <button css={[baseButton, loginBtnCss]} onClick={openLoginModal}>
           로그인
         </button>
-        <button css={premiumButtonCss} onClick={openLoginModal}>
+        <button css={premiumButtonCss} onClick={goToPremium}>
           <FaCrown css={crownIconCss} />
           프리미엄
         </button>
