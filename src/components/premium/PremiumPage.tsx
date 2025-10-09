@@ -1,18 +1,21 @@
 /** @jsxImportSource @emotion/react */
-import { css } from '@emotion/react';
-import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import PricingCard from './PricingCard';
-import { usePlans } from '../../hooks/api/usePlans';
-import type { Plan } from '../../api/plan/plan';
-import { useThemeColors } from '../../hooks/useThemeColors';
+import { css } from "@emotion/react";
+import { useState, useEffect } from "react";
+import PricingCard from "./PricingCard";
+import { usePlans } from "../../hooks/api/usePlans";
+import type { Plan } from "../../api/plan/plan";
+import { useThemeColors } from "../../hooks/useThemeColors";
+import { toast } from "react-toastify";
+import { fitScreen } from "../../styles/mixins";
+import { useNavigate } from "react-router-dom";
+import { IoArrowBack } from "react-icons/io5";
 
-const PremiumPage = () => {
-  const navigate = useNavigate();
-  const { getAllPlans, getPlanFeatures} = usePlans();
+export default function PremiumPage() {
+  const navi = useNavigate();
+  const { getAllPlans, getPlanFeatures } = usePlans();
   const [plans, setPlans] = useState<Plan[]>([]);
 
-  const { premiumTitle, premiumSubtitle } = useThemeColors();
+  const { premiumTitle, premiumSubtitle, text } = useThemeColors();
 
   useEffect(() => {
     loadPlans();
@@ -23,14 +26,13 @@ const PremiumPage = () => {
       const data = await getAllPlans();
       setPlans(data.filter((plan) => plan.is_active));
     } catch (error) {
-      console.error('요금제 로드 실패:', error);
+      console.error("요금제 로드 실패:", error);
     } finally {
     }
   };
 
- const containerStyle = css`
-    position: relative;
-    min-height: 100vh;
+  const containerStyle = css`
+    ${fitScreen}
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -40,6 +42,7 @@ const PremiumPage = () => {
   `;
 
   const headerStyle = css`
+    position: relative;
     text-align: center;
     margin-bottom: 60px;
     max-width: 800px;
@@ -82,42 +85,61 @@ const PremiumPage = () => {
   `;
 
   const formatPrice = (price: number): string => {
-    if (price === 0) return '무료';
+    if (price === 0) return "무료";
     return `${price.toLocaleString()}원`;
   };
 
   const handleGetStarted = (plan: Plan) => {
     if (plan.price === 0) {
-      alert('You are already on the Free plan!');
+      toast.info("You are already on the Free plan!");
     } else {
-      alert(`Redirecting to payment for ${plan.name}...`);
+      toast.info(`Redirecting to payment for ${plan.name}...`);
       // TODO: 결제 페이지로 이동
-      // navigate(`/payment/${plan.id}`);
+      // navi(`/payment/${plan.id}`);
     }
   };
 
+  const backBtnColor = css`
+    color: ${text};
+  `;
+
+  const handleClose = () => {
+    navi("/");
+  };
+
   return (
-      <div css={containerStyle}>
-        <div css={headerStyle}>
-          <h1 css={titleStyle}>요금제</h1>
-          <p css={subtitleStyle}>
-            나에게 맞는 요금제를 선택하세요. 언제든 업그레이드할 수 있습니다.
-          </p>
-        </div>
-
-          <div css={cardsContainerStyle}>
-            {plans.map((plan) => (
-              <PricingCard
-                key={plan.id}
-                planName={plan.name}
-                price={formatPrice(plan.price)}
-                features={getPlanFeatures(plan)}
-                onGetStarted={() => handleGetStarted(plan)}
-              />
-            ))}
-          </div>
+    <div css={containerStyle}>
+      <div css={headerStyle}>
+        <IoArrowBack
+          className="IoArrowBack"
+          css={[closeButtonStyle, backBtnColor]}
+          onClick={handleClose}
+        />
+        <h1 css={titleStyle}>요금제</h1>
+        <p css={subtitleStyle}>
+          나에게 맞는 요금제를 선택하세요. 언제든 업그레이드할 수 있습니다.
+        </p>
       </div>
-  );
-};
 
-export default PremiumPage;
+      <div css={cardsContainerStyle}>
+        {plans.map((plan) => (
+          <PricingCard
+            key={plan.id}
+            planName={plan.name}
+            price={formatPrice(plan.price)}
+            features={getPlanFeatures(plan)}
+            onGetStarted={() => handleGetStarted(plan)}
+          />
+        ))}
+      </div>
+    </div>
+  );
+}
+
+const closeButtonStyle = css`
+  position: absolute;
+  left: -10rem;
+  top:1rem;
+  cursor: pointer;
+  font-size: 2.5rem;
+`;

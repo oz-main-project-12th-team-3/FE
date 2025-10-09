@@ -4,11 +4,14 @@ import { motion } from "framer-motion";
 import { FiCpu, FiMessageCircle, FiZap, FiShield } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
 import { useThemeColors } from "../../hooks/useThemeColors";
+import { chatApi } from "../../api/chat/chatSession";
+import { toast } from "react-toastify";
+import { fitScreen } from "../../styles/mixins";
 
 export default function Welcome() {
-    const navigate = useNavigate()
+  const navi = useNavigate();
 
-   const {
+  const {
     welcomeText,
     welcomeSubtitle,
     welcomeDescription,
@@ -49,7 +52,7 @@ export default function Welcome() {
   ];
 
   const container = css`
-    min-height: 100vh;
+    ${fitScreen}
     display: flex;
     align-items: center;
     justify-content: center;
@@ -166,9 +169,16 @@ export default function Welcome() {
     margin-top: 0.75rem;
   `;
 
+  const newChat = { title: "new chat" };
 
-  const handleStart = () => {
-    navigate("/home"); 
+  // 시작하기 버튼 누를시 즉시 새 채팅 화면으로 이동
+  const handleStart = async () => {
+    try {
+      const res = await chatApi.POST.chatSession(newChat);
+      navi(`/chat/${res.id}`);
+    } catch (e) {
+      toast.error(e instanceof Error ? e.message : "새 채팅 생성 실패");
+    }
   };
 
   return (
@@ -188,7 +198,8 @@ export default function Welcome() {
 
         {/* 설명 */}
         <p css={description}>
-          혁신적인 AI 가상비서를 만나보세요.<br/>
+          혁신적인 AI 가상비서를 만나보세요.
+          <br />
           자연스러운 대화와 똑똑한 서비스로 새로운 경험을 선사합니다.
         </p>
 
@@ -200,11 +211,7 @@ export default function Welcome() {
         {/* 특징 카드 */}
         <div css={cardGrid}>
           {features.map((f, i) => (
-            <motion.div
-              key={i}
-              whileHover={{ y: -5 }}
-              css={card}
-            >
+            <motion.div key={i} whileHover={{ y: -5 }} css={card}>
               <div css={cardIcon}>{f.icon}</div>
               <h3 css={cardTitle}>{f.title}</h3>
               <p css={cardDesc}>{f.desc}</p>
@@ -213,7 +220,11 @@ export default function Welcome() {
         </div>
 
         {/* 버튼 */}
-        <motion.button whileHover={{ scale: 1.05 }} css={startButton} onClick={handleStart}>
+        <motion.button
+          whileHover={{ scale: 1.05 }}
+          css={startButton}
+          onClick={handleStart}
+        >
           시작하기 →
         </motion.button>
 
@@ -222,5 +233,3 @@ export default function Welcome() {
     </div>
   );
 }
-
-

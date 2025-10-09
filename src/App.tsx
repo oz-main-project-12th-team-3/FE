@@ -3,17 +3,15 @@ import React from "react";
 import "./App.css";
 import { Route, Routes } from "react-router-dom";
 import WindowSizeSetter from "./components/utilComponents/WindowSizeProvider";
-import { MousePositonSetter } from "./components/utilComponents/MousePositionSetter";
 import { ToastContainer } from "react-toastify";
+import { fitScreen } from "./styles/mixins";
+import { MousePositonSetter } from "./components/utilComponents/MousePositionSetter";
+import { NotiTypesSetter } from "./components/utilComponents/GetNotiTypes";
 
 // Home은 즉시 로드
 import Home from "./components/Home";
-import WelcomePage from "./components/welcome/WelcomePage"
-import PremiumPage from "./components/premium/PremiumPage";
 import { ThemeModeBtn } from "./components/sidebar/Leftbar/ThemeModeBtn";
-import { NotiTypesSetter } from "./components/utilComponents/GetNotiTypes";
 import { RiveBackGround } from "./components/background/RiveBackground";
-import { fitScreen } from "./styles/mixins";
 
 const lazyModal = (path: string) =>
   React.lazy(() => import(`./components/modal/${path}`));
@@ -27,7 +25,8 @@ const PasswordChangeModal = lazyModal("passwordChang/PasswordChangeModal");
 const DeleteAccountModal = lazyModal("deleteAccount_modal/DeleteAccountModal");
 const ProfileSettingModal = lazyModal(
   "profileSetting_modal/ProfileSettingModal"
-);
+)
+
 
 export default function AppDesktop() {
   return (
@@ -42,11 +41,9 @@ export default function AppDesktop() {
 
       <div css={fitScreen}>
         <Routes>
-          <Route path="/" element={<WelcomePage />} />
-          <Route path="/home" element={<Home />} />
+          <Route path="/" element={<Home />} />
           <Route path="/chat/:session_id" element={<Home />} />
-          <Route path="/chat/new" element={<Home />} />
-          <Route path="/premium" element={<PremiumPage />} />
+          <Route path="/premium" element={<Home />} />
 
           <Route path="modal" element={<Modal />}>
             <Route path="auth" element={<AuthModal />} />
