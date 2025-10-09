@@ -22,3 +22,13 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# 환경 변수 파일
+.env
+.env.*
+
+# 빌드 캐시
+.cache
+.next
+out
+coverage
