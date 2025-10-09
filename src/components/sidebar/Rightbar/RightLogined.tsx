@@ -71,6 +71,7 @@ export default function RightLogined({
 
   const goToPremium = () => {
     // 프리미엄 페이지로 이동
+    navigate("/premium")
   };
 
   const handleRoute = (link: string) => {

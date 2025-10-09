@@ -1,6 +1,6 @@
 import { handleApiCall } from "../apiClient";
 
-type Plan = {
+export type Plan = {
   id: number;
   name: string;
   description: string;
@@ -8,8 +8,6 @@ type Plan = {
   billing_cycle: string;
   included_units: number | null;
   is_active: boolean;
-  created_at: string;
-  updated_at: string;
 };
 
 export const apiPlan = {
