@@ -8,6 +8,8 @@ import { ToastContainer } from "react-toastify";
 
 // Home은 즉시 로드
 import Home from "./components/Home";
+import WelcomePage from "./components/welcome/WelcomePage"
+import PremiumPage from "./components/premium/PremiumPage";
 import { ThemeModeBtn } from "./components/sidebar/Leftbar/ThemeModeBtn";
 import { NotiTypesSetter } from "./components/utilComponents/GetNotiTypes";
 import { RiveBackGround } from "./components/background/RiveBackground";
@@ -40,9 +42,11 @@ export default function AppDesktop() {
 
       <div css={fitScreen}>
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route path="/" element={<WelcomePage />} />
+          <Route path="/home" element={<Home />} />
           <Route path="/chat/:session_id" element={<Home />} />
           <Route path="/chat/new" element={<Home />} />
+          <Route path="/premium" element={<PremiumPage />} />
 
           <Route path="modal" element={<Modal />}>
             <Route path="auth" element={<AuthModal />} />
