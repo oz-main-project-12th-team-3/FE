@@ -35,7 +35,7 @@ declare global {
       last_message: string;
       updated_at: string;
     };
-    type PatchedChatSession = {
+    type PatchSession = {
       id: number;
       user_id: number;
       title: string;
@@ -45,7 +45,7 @@ declare global {
   }
 
   // ============ Notification ============
-  namespace Notification {
+  namespace Noti {
     // 알림 타입
     type Type = {
       id: number;
@@ -67,6 +67,20 @@ declare global {
       updated_at: string;
       recipient: number;
       // 알림 생성자(채팅 생성자와는 다름)
+      sender: number;
+      notification_type: NotificationType;
+    };
+    // nullable도 안줄거면 patch 타입은 왜 분리?
+    type Patch = {
+      id: number;
+      title: string;
+      message: string;
+      link: string;
+      is_read: boolean;
+      read_at: string;
+      created_at: string;
+      updated_at: string;
+      recipient: number;
       sender: number;
       notification_type: NotificationType;
     };
@@ -185,12 +199,20 @@ declare global {
 
   // ============ API Response ============
   namespace API {
-    type Detail = {
-      detail?: string | null;
-      description?: string | null;
-    };
+    // type Detail = {
+    //   detail?: string | null;
+    //   description?: string | null;
+    // };
     // Detail, Description => ?
+    
+    // 어떤건 Description 이 res 바디로 오고
+    // 어떤건 Description 이 주석처럼 쓰이고
+    // 혼란하다 진짜...
     // 용어 통일이 안되어 있음 일단 detail로 진행
+
+    // 그냥 Description은 전부 주석 처리.
+    // detail도 마찬가지.
+    // 프론트 쪽에서 응답 코드만 보고 처리하는게 안전함
 
     type Paginated<T> = {
       count: number;
