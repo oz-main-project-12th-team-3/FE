@@ -35,6 +35,13 @@ declare global {
       last_message: string;
       updated_at: string;
     };
+    type PatchedChatSession = {
+      id: number;
+      user_id: number;
+      title: string;
+      last_message: string;
+      updated_at: string;
+    };
   }
 
   // ============ Notification ============
@@ -100,9 +107,15 @@ declare global {
       new_password: string;
       new_password_confirm: String;
     };
+    // 여기는 또 왜 api명세상 유저네임 세팅 네이밍에
+    // 현재비밀번호, 새로운 이메일이 들어가나?
     type SetUsername = {
       current_password: string;
       new_email: string;
+    };
+    type SetPassword = {
+      new_password: string;
+      current_password: string;
     };
   }
 
@@ -184,6 +197,11 @@ declare global {
       next: string | null;
       previous: string | null;
       results: T[];
+    };
+
+    type PageReq = {
+      page: number;
+      page_size: number;
     };
   }
 }

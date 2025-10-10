@@ -11,7 +11,7 @@ import { SIDEBAR_WIDTH } from "../../store/useMousePositionStore";
 import { dummyMessages } from "../../api/dummyData/dummyChat";
 import { scrollCss } from "../../styles/mixins";
 import { AnimatePresence, motion } from "framer-motion";
-import { chatApi } from "../../api/chat/chatSession";
+import { apiChat } from "../../api/chat/chatSession";
 
 type Sender = "user" | "ai";
 
@@ -35,7 +35,7 @@ export function ChatContent() {
     const fetchMessages = async () => {
       try {
         // const res = await chatLogApi.GET.messagesBySessionId(sessionId);
-        const res = await chatApi.GET.messagesBySessionId(sessionId);
+        const res = await apiChat.GET.messagesBySessionId(sessionId);
         setMessages(res);
       } catch (err: unknown) {
         toast.error("메시지 불러오기 실패:", err as ToastOptions<unknown>);

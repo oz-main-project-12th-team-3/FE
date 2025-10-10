@@ -4,7 +4,7 @@ import { TbEdit } from "react-icons/tb";
 import { useNavigate } from "react-router-dom";
 import { flexCenter } from "../../../styles/mixins";
 import { useThemeColors } from "../../../hooks/useThemeColors";
-import { chatApi } from "../../../api/chat/chatSession";
+import { apiChat } from "../../../api/chat/chatSession";
 import { toast } from "react-toastify";
 
 export function NewChat() {
@@ -21,7 +21,7 @@ export function NewChat() {
 
   const handleNewChat = async () => {
     try {
-      const res = await chatApi.POST.chatSession(newChat);
+      const res = await apiChat.POST.chatSession(newChat);
       navi(`/chat/${res.id}`);
     } catch (e) {
       toast.error(e instanceof Error ? e.message : "새 채팅 생성 실패");

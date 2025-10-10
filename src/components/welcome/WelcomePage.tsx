@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { FiCpu, FiMessageCircle, FiZap, FiShield } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
 import { useThemeColors } from "../../hooks/useThemeColors";
-import { chatApi } from "../../api/chat/chatSession";
+import { apiChat } from "../../api/chat/chatSession";
 import { toast } from "react-toastify";
 import { fitScreen } from "../../styles/mixins";
 
@@ -174,7 +174,7 @@ export default function Welcome() {
   // 시작하기 버튼 누를시 즉시 새 채팅 화면으로 이동
   const handleStart = async () => {
     try {
-      const res = await chatApi.POST.chatSession(newChat);
+      const res = await apiChat.POST.chatSession(newChat);
       navi(`/chat/${res.id}`);
     } catch (e) {
       toast.error(e instanceof Error ? e.message : "새 채팅 생성 실패");

@@ -11,7 +11,7 @@ import { IoMdMic, IoMdMicOff } from "react-icons/io";
 import { voiceLogApi } from "../../api/voice/voiceLog";
 import { toast } from "react-toastify";
 import { TokenManager } from "../../api/apiClient";
-import { chatApi, type PostChatMessageApiReq } from "../../api/chat/chatSession";
+import { apiChat, type PostChatMessageApiReq } from "../../api/chat/chatSession";
 
 interface MsgSendBoxProps {
   sessionId: number;
@@ -39,7 +39,7 @@ export function MsgSendBox({ sessionId, setMessages }: MsgSendBoxProps) {
 
     if (!input.trim()) return;
     try {
-      const newMsg = await chatApi.POST.message(sessionId, payload);
+      const newMsg = await apiChat.POST.messageBySessionId(sessionId, payload);
       setMessages((prev) => [...prev, newMsg]);
       setInput("");
     } catch (err) {
