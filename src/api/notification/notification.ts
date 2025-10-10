@@ -124,8 +124,10 @@ export const apiNoti = {
     // 모르겠다 진짜...
     notificationStatusById: async (
       notiId: number,
-      payload: Noti.Patch
-    ): Promise<Noti.Patch> => {
+      payload: Partial<Noti.Item>
+    ) => {
+      // : Promise<Noti.Item>
+
       // const url = `notifications/${notiId}/read/`;
       const url = `/api/notifications/${notiId}/`;
       return await handleApiCall({ method: "PATCH", url: url, data: payload });

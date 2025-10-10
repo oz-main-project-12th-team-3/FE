@@ -71,19 +71,21 @@ declare global {
       notification_type: NotificationType;
     };
     // nullable도 안줄거면 patch 타입은 왜 분리?
-    type Patch = {
-      id: number;
-      title: string;
-      message: string;
-      link: string;
-      is_read: boolean;
-      read_at: string;
-      created_at: string;
-      updated_at: string;
-      recipient: number;
-      sender: number;
-      notification_type: NotificationType;
-    };
+    // 그냥 Partial<Item>으로 사용
+    // type Patch = {
+    //   id: number;
+    //   title: string;
+    //   message: string;
+    //   link: string;
+    //   is_read: boolean;
+    //   read_at: string;
+    //   created_at: string;
+    //   updated_at: string;
+    //   recipient: number;
+    //   sender: number;
+    //   notification_type: NotificationType;
+    // };
+
   }
 
   // ============ User ============
