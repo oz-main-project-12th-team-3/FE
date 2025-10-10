@@ -1,9 +1,8 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 import { useThemeColors } from "../../hooks/useThemeColors";
-import type { Message } from "./ChatContent";
 
-export function UserChatBox({ msg }: { msg: Message }) {
+export function UserChatBox({ msg }: { msg: Chat.Log }) {
   const { text } = useThemeColors();
   const UserChatBoxCss = css`
     width: fit-content;

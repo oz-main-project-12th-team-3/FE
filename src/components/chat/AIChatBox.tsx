@@ -1,10 +1,9 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
-import type { Message } from "./ChatContent";
 import { useThemeColors } from "../../hooks/useThemeColors";
 import { wordBreak } from "../../styles/mixins";
 
-export function AIChatBox({ msg }: { msg: Message }) {
+export function AIChatBox({ msg }: { msg: Chat.Log }) {
   const { text } = useThemeColors();
   const AIChatBoxCss = css`
     width: 100%;

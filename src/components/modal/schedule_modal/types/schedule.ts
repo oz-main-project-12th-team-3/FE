@@ -1,14 +1,14 @@
 // 서버 응답 그대로
-export interface Schedule {
-  id: number;
-  title: string;
-  description: string;
-  start_time: string;   // ISO string (e.g. "2025-09-20T10:00:00Z")
-  end_time: string;
-  is_completed: boolean;
-  created_at: string;
-  updated_at: string;
-}
+// export interface Schedule {
+//   id: number;
+//   title: string;
+//   description: string;
+//   start_time: string;   // ISO string (e.g. "2025-09-20T10:00:00Z")
+//   end_time: string;
+//   is_completed: boolean;
+//   created_at: string;
+//   updated_at: string;
+// }
 
 // 프론트엔드 폼용
 export interface ScheduleFormData {
@@ -30,8 +30,8 @@ export interface ApiResponse<T> {
 export type ViewType = 'list' | 'form';
 
 export interface ScheduleAPI {
-  getSchedules: (date: string) => Promise<Schedule[]>;
-  createSchedule: (scheduleData: ScheduleFormData) => Promise<ApiResponse<Schedule>>;
-  updateSchedule: (id: number, scheduleData: ScheduleFormData) => Promise<ApiResponse<Schedule>>;
+  getSchedules: (date: string) => Promise<Schedule.Item[]>;
+  createSchedule: (scheduleData: ScheduleFormData) => Promise<ApiResponse<Schedule.Item>>;
+  updateSchedule: (id: number, scheduleData: ScheduleFormData) => Promise<ApiResponse<Schedule.Item>>;
   deleteSchedule: (id: number) => Promise<ApiResponse<null>>;
 }

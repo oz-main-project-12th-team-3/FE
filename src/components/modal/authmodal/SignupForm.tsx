@@ -14,12 +14,12 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { signupApi, type SignupReq } from "../../../api/auth/signup";
 import { storeSignupForm } from "../../../store/storeSignupForm";
-import { storeUserEmail } from "../../../store/storeUserEmail";
+import { storeUser } from "../../../store/storeUserEmail";
 
 export default function SignupForm() {
   const navigate = useNavigate();
   const { signupForm, setSignupForm, resetSignupForm } = storeSignupForm();
-  const { setUser } = storeUserEmail();
+  const { setUser } = storeUser();
   // 에러 상태
   const [errors, setErrors] = useState({
     name: "",
@@ -84,10 +84,12 @@ export default function SignupForm() {
       confirmPassword: confirmPasswordError,
     };
 
+    // enable_2fa 일단 false로 진행
     const signupReqForm: SignupReq = {
       email: signupForm.email,
       password: signupForm.password,
       nickname: signupForm.name,
+      enable_2fa: false,
     };
 
     setErrors(newErrors);

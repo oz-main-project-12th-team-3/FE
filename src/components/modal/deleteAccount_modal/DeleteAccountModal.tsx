@@ -4,7 +4,8 @@ import { IoPersonRemoveOutline, IoWarningOutline } from "react-icons/io5";
 import { useThemeColors } from "../../../hooks/useThemeColors";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { apiWithDraw } from "../../../api/auth/withdraw";
+import { apiUser } from "../../../api/auth/users";
+
 
 const DeleteAccountModal = () => {
   const {
@@ -146,8 +147,8 @@ const DeleteAccountModal = () => {
 
   const handleConfirm = async() => {
     try {
-      const res = await apiWithDraw.DELETE.withDraw(payload);
-      toast.success(`${res.detail}`)
+      await apiUser.DELETE.user(payload);
+      toast.success(`회원 탈퇴 성공`)
     } catch (error) {
       
     }

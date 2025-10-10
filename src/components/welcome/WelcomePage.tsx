@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { FiCpu, FiMessageCircle, FiZap, FiShield } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
 import { useThemeColors } from "../../hooks/useThemeColors";
-import { chatApi } from "../../api/chat/chatSession";
+import { apiChat } from "../../api/chat/chatSession";
 import { toast } from "react-toastify";
 import { fitScreen } from "../../styles/mixins";
 
@@ -92,19 +92,6 @@ export default function Welcome() {
     font-size: 0.9rem;
   `;
 
-  const imageWrapper = css`
-    width: 240px;
-    height: 240px;
-    overflow: hidden;
-    margin: 0 auto 2.5rem auto;
-  `;
-
-  const image = css`
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  `;
-
   const cardGrid = css`
     display: flex;
     gap: 16px;
@@ -174,7 +161,7 @@ export default function Welcome() {
   // 시작하기 버튼 누를시 즉시 새 채팅 화면으로 이동
   const handleStart = async () => {
     try {
-      const res = await chatApi.POST.chatSession(newChat);
+      const res = await apiChat.POST.chatSession(newChat);
       navi(`/chat/${res.id}`);
     } catch (e) {
       toast.error(e instanceof Error ? e.message : "새 채팅 생성 실패");
@@ -203,10 +190,7 @@ export default function Welcome() {
           자연스러운 대화와 똑똑한 서비스로 새로운 경험을 선사합니다.
         </p>
 
-        {/* 이미지 */}
-        <div css={imageWrapper}>
-          <img src="/aiImage/ai.png" alt="AI Human" css={image} />
-        </div>
+
 
         {/* 특징 카드 */}
         <div css={cardGrid}>

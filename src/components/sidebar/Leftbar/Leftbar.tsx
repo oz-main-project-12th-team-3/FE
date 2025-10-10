@@ -26,7 +26,7 @@ export function Leftbar() {
         <div css={[sideBarSize, sidebarColor]}>
           <div css={[flexCenter("row"), spaceBetween]}>
             <Logo />
-            <div className="ThemeModeBtn_space_empty_div"/>
+            <div aria-label="ThemeModeBtn_space_empty_div"/>
           </div>
           <hr />
           <div css={[flexCenter("row", "0", "0.5rem")]}>

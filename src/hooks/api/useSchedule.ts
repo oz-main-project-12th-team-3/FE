@@ -1,13 +1,12 @@
 // hooks/useSchedule.ts
 import { scheduleAPI } from '../../api/schedule/schdule';
-import type { Schedule, PostScheduleReq, PutScheduleReq } from '../../api/schedule/schdule';
 import type { ScheduleFormData } from '../../components/modal/schedule_modal/types/schedule';
 import { combineDateAndTime } from '../../utils/time';
 
 export const useSchedule = () => {
   // ScheduleFormData를 PostScheduleReq로 변환
-  const createRequestFromForm = (formData: ScheduleFormData): PostScheduleReq => {
-    const request: PostScheduleReq = {
+  const createRequestFromForm = (formData: ScheduleFormData): Partial<Schedule.Item> => {
+    const request: Partial<Schedule.Item> = {
       title: formData.title,
       description: formData.description || '',
       start_time: combineDateAndTime(formData.date, formData.start_time),
@@ -18,8 +17,8 @@ export const useSchedule = () => {
   };
 
   // ScheduleFormData를 PutScheduleReq로 변환
-  const updateRequestFromForm = (formData: ScheduleFormData): PutScheduleReq => {    
-    const request: PutScheduleReq = {
+  const updateRequestFromForm = (formData: ScheduleFormData): Partial<Schedule.Item> => {    
+    const request = {
       title: formData.title,
       description: formData.description || '',
       start_time: combineDateAndTime(formData.date, formData.start_time),
@@ -30,7 +29,7 @@ export const useSchedule = () => {
   };
 
   // 전체 일정 조회 후 날짜별 필터링
-  const getSchedules = async (date: string): Promise<Schedule[]> => {
+  const getSchedules = async (date: string): Promise<Schedule.Item[]> => {
     const allSchedules = await scheduleAPI.GET.allSchedules();
     
     // 프론트엔드에서 날짜별 필터링
@@ -43,30 +42,33 @@ export const useSchedule = () => {
     return filtered;
   };
 
+  // res 타입 전부 다 제대로 지정 안되어 있음
   // 일정 생성
-  const createSchedule = async (formData: ScheduleFormData): Promise<Schedule> => {
+  const createSchedule = async (formData: ScheduleFormData): Promise<Schedule.Item> => {
     const request = createRequestFromForm(formData);
     return await scheduleAPI.POST.schedule(request);
   };
 
   // 일정 수정
-  const updateSchedule = async (id: number, formData: ScheduleFormData): Promise<Schedule> => {
+  const updateSchedule = async (id: number, formData: ScheduleFormData): Promise<Schedule.Item> => {
     const request = updateRequestFromForm(formData);
     return await scheduleAPI.PUT.scheduleById(id, request);
   };
 
+  // res 없어짐
   // 일정 삭제
-  const deleteSchedule = async (id: number): Promise<{ detail: string }> => {
-    return await scheduleAPI.DELETE.scheduleById(id);
+  const deleteSchedule = async (id: number) => {
+    await scheduleAPI.DELETE.scheduleById(id);
+    return;
   };
 
   // 완료 상태 토글 (PUT을 활용)
-  const toggleComplete = async (id: number, isCompleted: boolean): Promise<Schedule> => {
+  const toggleComplete = async (id: number, isCompleted: boolean): Promise<Schedule.Item> => {
     // 1. 기존 일정 정보 조회
     const schedule = await scheduleAPI.GET.scheduleById(id);
     
     // 2. is_completed만 변경하여 전체 업데이트
-    const request: PutScheduleReq = {
+    const request: Partial<Schedule.Item> = {
       title: schedule.title,
       description: schedule.description || '',
       start_time: schedule.start_time,

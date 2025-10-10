@@ -12,6 +12,7 @@ import { NotiTypesSetter } from "./components/utilComponents/GetNotiTypes";
 import Home from "./components/Home";
 import { ThemeModeBtn } from "./components/sidebar/Leftbar/ThemeModeBtn";
 import { RiveBackGround } from "./components/background/RiveBackground";
+import { RiveRobot } from "./components/RiveRobot";
 
 const lazyModal = (path: string) =>
   React.lazy(() => import(`./components/modal/${path}`));
@@ -38,6 +39,7 @@ export default function AppDesktop() {
 
       {/* 배경 */}
       <RiveBackGround />
+      <RiveRobot/>
 
       <div css={fitScreen}>
         <Routes>

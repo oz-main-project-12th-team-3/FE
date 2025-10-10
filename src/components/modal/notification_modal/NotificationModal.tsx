@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { css } from "@emotion/react";
 import { motion } from "framer-motion";
 import NotificationHeader from "./NotificationHeader";
@@ -9,7 +9,6 @@ import { apiNoti } from "../../../api/notification/notification";
 import { scrollCss } from "../../../styles/mixins";
 import { useThemeColors } from "../../../hooks/useThemeColors";
 import { toast } from "react-toastify";
-import { type Notification } from "../../../api/notification/notification";
 import { formatRelativeTime } from "../../../utils/time";
 import { storeNotiTypes } from "../../../store/storeNotiTypes";
 import _ from "lodash";
@@ -34,12 +33,19 @@ export type NotificationUI = {
   time: string; // "xx분 전" 형식
   recipient: number;
   sender: number;
-  notification_type_id: number;
+  notification_type: number;
 };
 
 const NotificationModal = () => {
   const [activeTab, setActiveTab] = useState<TabType>("unread");
   const [notifications, setNotifications] = useState<NotificationUI[]>([]);
+
+  // 무한스크롤
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [hasMore, setHasMore] = useState<boolean>(true);
+  const contentRef = useRef<HTMLDivElement>(null);
+  const [page, setPage] = useState<number>(1);
+  const PAGE_SIZE = 20;
 
   const { inputBorder, modalBackground } = useThemeColors();
   const { notiTypes } = storeNotiTypes();
@@ -48,10 +54,9 @@ const NotificationModal = () => {
   // 기존에 원본 타입과 키값이 달라 같은 밸류를 다른 키값으로 반복적으로 매핑되던것을 원본 타입에 맞춰 수정함
   // notiTypes가 서버측에서 타입들을 뽑아오는것이어서 undefined 가능
   // undefined일땐 unknown으로 지정함
-  const mapNotification = (n: Notification): NotificationUI => {
+  const mapNotification = (n: Noti.Item): NotificationUI => {
     const typeCode =
-      notiTypes.find((el) => el.id === n.notification_type_id)?.code ||
-      "unknown";
+      notiTypes.find((el) => el.id === n.notification_type)?.code || "unknown";
     return { ...n, type: typeCode, time: formatRelativeTime(n.created_at) };
   };
 
@@ -75,29 +80,68 @@ const NotificationModal = () => {
     padding-bottom: 8px;
   `;
 
-  // 🔹 탭 변경 시 알림 목록 불러오기
+  // 탭 변경 시 페이지 초기화
+  useEffect(() => {
+    setPage(1);
+    setNotifications([]);
+    setHasMore(true);
+  }, [activeTab]);
+
+  // 페이지 또는 탭 변경 시 알림 목록 불러오기
   useEffect(() => {
     const fetchNotifications = async () => {
+      if (isLoading || !hasMore) return;
+      setIsLoading(true);
       try {
-        const res = await apiNoti.GET.notifications(activeTab);
+        const res = await apiNoti.GET.notifications({ page, page_size: PAGE_SIZE });
         const mapped = res.map((n) => mapNotification(n));
-        setNotifications(mapped);
+        setNotifications((prev) => [...prev, ...mapped]);
+        if (mapped.length < PAGE_SIZE) {
+          setHasMore(false);
+        }
       } catch (err) {
         toast.error(`알림 불러오기 실패:${err}`);
+      } finally {
+        setIsLoading(false);
       }
     };
 
     fetchNotifications();
-  }, [activeTab]);
+  }, [activeTab, page]);
 
-  // 🔹 알림 단건 읽음 처리
+  // 스크롤 이벤트 핸들러
+  useEffect(() => {
+    const handleScroll = () => {
+      if (contentRef.current && !isLoading && hasMore) {
+        const { scrollTop, scrollHeight, clientHeight } = contentRef.current;
+        if (scrollTop + clientHeight >= scrollHeight - 20) { // threshold for near-bottom
+          setPage((prev) => prev + 1);
+        }
+      }
+    };
+
+    const ref = contentRef.current;
+    if (ref) {
+      ref.addEventListener("scroll", handleScroll);
+    }
+
+    return () => {
+      if (ref) {
+        ref.removeEventListener("scroll", handleScroll);
+      }
+    };
+  }, [isLoading, hasMore]);
+
+  // 알림 단건 읽음 처리
   const handleMarkAsRead = async (id: number) => {
     try {
-      const res = await apiNoti.PATCH.notificationStatusById(id);
+      await apiNoti.PATCH.notificationStatusById(id, {is_read:true});
       setNotifications((prev) =>
         prev.map((item) =>
           item.id === id
-            ? { ...item, is_read: res.is_read, read_at: res.updated_at }
+            // ? { ...item, is_read: res.is_read, read_at: res.updated_at }
+            // 현재 res 타입 지정 안되어 있음
+            ? { ...item, is_read: true, read_at: new Date().toISOString() }
             : item
         )
       );
@@ -106,12 +150,12 @@ const NotificationModal = () => {
     }
   };
 
-  // 🔹 알림 삭제
+  // 알림 삭제
   const handleDeleteNotification = async (id: number) => {
     try {
-      const res = await apiNoti.DELETE.notificationById(id);
+      await apiNoti.DELETE.notificationById(id);
       setNotifications((prev) => prev.filter((item) => item.id !== id));
-      toast.info(`${res.detail}`);
+      toast.info(`알림이 삭제되었습니다`);
     } catch (err) {
       toast.error(`알림 삭제 실패:${err}`);
     }
@@ -127,7 +171,7 @@ const NotificationModal = () => {
       // Promise.allSettled로 중간에 실패 나와도 처리 시도하도록 변경
       const res = await Promise.allSettled(
         unreadNotifications.map((n) =>
-          apiNoti.PATCH.notificationStatusById(n.id)
+          apiNoti.PATCH.notificationStatusById(n.id, {is_read:true})
         )
       );
 
@@ -191,7 +235,7 @@ const NotificationModal = () => {
         onMarkAllRead={handleMarkAllAsRead}
       />
 
-      <div css={[content, scrollCss(inputBorder)]}>
+      <div ref={contentRef} css={[content, scrollCss(inputBorder)]}>
         {activeTab === "read" ? (
           <NotificationAllTab
             notifications={notifications}

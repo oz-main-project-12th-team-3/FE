@@ -1,15 +1,1 @@
-import { useState, useCallback } from "react";
-
-export default function useModal() {
-  const [isOpen, setIsOpen] = useState(false);
-
-  const openModal = useCallback(() => {
-    setIsOpen(true);
-  }, [location.pathname]);
-
-  const closeModal = useCallback(() => {
-    setIsOpen(false);
-  }, []);
-
-  return { isOpen, openModal, closeModal };
-}
+// 모달 스토어로 이전

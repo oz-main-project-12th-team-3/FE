@@ -3,20 +3,9 @@ import { handleApiCall, TokenManager } from "../apiClient";
 export type LoginReq = {
   email: string;
   password: string;
+  tfa_code?:string;
 };
 
-export interface LoginRes {
-  detail: string;
-  user_id: number;
-  email: string;
-  expires_in: number;
-  access_token: string;
-  tfa_required: boolean;
-  tfa_step: string;
-  temporary_access_token: string;
-  temporary_refresh_token: string;
-  profile_image_url: string;
-}
 
 type EmailCheckReq = {
   email: string;
@@ -31,11 +20,11 @@ export const loginApi = {
     /**
      * 로그인 메서드
      * @param {LoginReq} payload 이메일, 비번
-     * @returns {Promise<LoginRes>} .detail에 "로그인 성공" 반환됨
+     * @returns {} .detail에 "로그인 성공" 반환됨
      */
-    login: async (payload: LoginReq): Promise<LoginRes> => {
-      const url = `v1/auth/login/`;
-      const res = await handleApiCall<LoginRes>({
+    login: async (payload: LoginReq): Promise<Auth.loginResponse> => {
+      const url = `/api/auth/login/`;
+      const res = await handleApiCall<Auth.loginResponse>({
         method: "POST",
         url: url,
         data: payload,
@@ -55,15 +44,15 @@ export const loginApi = {
     checkEmailDuplicate: async (
       payload: EmailCheckReq
     ): Promise<EmailCheckRes> => {
-      const url = `v1/auth/email-check/`;
+      const url = `/api/auth/email-check/`;
       return await handleApiCall({ method: "POST", url: url, data: payload });
     },
     /**
      * 로그아웃
      * @returns {Promise<ResDetail>}
      */
-    logout: async (): Promise<ResDetail> => {
-      const url = `v1/auth/logout/`;
+    logout: async () => {
+      const url = `/api/auth/logout/`;
       try {
         return await handleApiCall({ method: "POST", url: url });
       } finally {
