@@ -8,10 +8,10 @@ interface ColorModeState {
   toggle: () => void;
 }
 export const storeColorMode = create<ColorModeState>((set) => ({
-  mode: themeKeys[0],
+  mode: themeKeys[1],
   setMode: (mode: ColorTheme) => set(() => ({ mode: mode })),
 
-  isDark: true,
+  isDark: false,
   
   toggle: () =>
     set((state) => ({

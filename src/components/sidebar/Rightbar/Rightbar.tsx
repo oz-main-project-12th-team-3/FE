@@ -52,13 +52,13 @@ export function Rightbar() {
 
   return (
     <RightbarPosition>
-      <GlassmorphismDesign>
+        <GlassmorphismDesign>
           {isLogin ? (
             <RightLogined setIsLogin={setIsLogin} />
           ) : (
             <RightLogouted />
           )}
-      </GlassmorphismDesign>
+        </GlassmorphismDesign>
     </RightbarPosition>
   );
 }

@@ -92,19 +92,6 @@ export default function Welcome() {
     font-size: 0.9rem;
   `;
 
-  const imageWrapper = css`
-    width: 240px;
-    height: 240px;
-    overflow: hidden;
-    margin: 0 auto 2.5rem auto;
-  `;
-
-  const image = css`
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  `;
-
   const cardGrid = css`
     display: flex;
     gap: 16px;
@@ -203,10 +190,7 @@ export default function Welcome() {
           자연스러운 대화와 똑똑한 서비스로 새로운 경험을 선사합니다.
         </p>
 
-        {/* 이미지 */}
-        <div css={imageWrapper}>
-          <img src="/aiImage/ai.png" alt="AI Human" css={image} />
-        </div>
+
 
         {/* 특징 카드 */}
         <div css={cardGrid}>
