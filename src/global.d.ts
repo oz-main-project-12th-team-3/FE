@@ -195,7 +195,18 @@ declare global {
     };
   }
 
-  // 플랜
+  // ============ Plan ============
+  namespace Plan {
+    type item = {
+      id: number;
+      name: string;
+      description: string;
+      price: string;
+      billing_cycle: string;
+      included_units: number;
+      is_active: boolean;
+    };
+  }
 
   // ============ API Response ============
   namespace API {
@@ -204,7 +215,7 @@ declare global {
     //   description?: string | null;
     // };
     // Detail, Description => ?
-    
+
     // 어떤건 Description 이 res 바디로 오고
     // 어떤건 Description 이 주석처럼 쓰이고
     // 혼란하다 진짜...
