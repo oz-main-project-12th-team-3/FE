@@ -57,7 +57,7 @@ declare global {
       updated_at: string;
     };
   }
-  
+
   // ============ Notification ============
   namespace Noti {
     // 알림 타입
@@ -99,6 +99,14 @@ declare global {
     //   sender: number;
     //   notification_type: NotificationType;
     // };
+    type UserNotiPreference = {
+      id: number;
+      is_enabled: boolean;
+      created_at: string;
+      updated_at: string;
+      user: number;
+      notification_type: number;
+    };
   }
 
   // ============ User ============
