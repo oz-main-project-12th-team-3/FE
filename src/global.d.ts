@@ -44,6 +44,20 @@ declare global {
     };
   }
 
+  // ============ Search ============
+  namespace Search {
+    type Log = {
+      id: number;
+      user: number;
+      keyword: string;
+      search_type: string;
+      result_count: number;
+      clicked_result_id: number;
+      created_at: string;
+      updated_at: string;
+    };
+  }
+  
   // ============ Notification ============
   namespace Noti {
     // 알림 타입
@@ -85,7 +99,6 @@ declare global {
     //   sender: number;
     //   notification_type: NotificationType;
     // };
-
   }
 
   // ============ User ============
