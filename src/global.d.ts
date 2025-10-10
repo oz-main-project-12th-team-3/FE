@@ -6,7 +6,7 @@ declare global {
       user_id: number;
       email: string;
       expires_in: number;
-      access_token: string | null;
+      access_token: string;
       tfa_required: boolean;
       tfa_step: string;
       temporary_access_token: string | null;
@@ -82,6 +82,28 @@ declare global {
       password: string;
       re_password: string;
     };
+    type Patched = {
+      email: string;
+      profile: UserProfile;
+    };
+    type Activation = {
+      uid: string;
+      token: string;
+    };
+
+    type SendEmailReset = { email: string };
+
+    type UsernameResetConfirm = {
+      new_email: string;
+    };
+    type PasswordResetConfirm = {
+      new_password: string;
+      new_password_confirm: String;
+    };
+    type SetUsername = {
+      current_password: string;
+      new_email: string;
+    };
   }
 
   // ============ Schedule ============
@@ -151,8 +173,11 @@ declare global {
   // ============ API Response ============
   namespace API {
     type Detail = {
-      detail: string;
+      detail?: string | null;
+      description?: string | null;
     };
+    // Detail, Description => ?
+    // 용어 통일이 안되어 있음 일단 detail로 진행
 
     type Paginated<T> = {
       count: number;
