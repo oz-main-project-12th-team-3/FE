@@ -17,10 +17,13 @@ export function NewChat() {
     }
   `;
 
-  const newChat = { title: "new chat" };
+  const newChat: Partial<Chat.Session> = {
+    title: "새 채팅",
+  };
 
   const handleNewChat = async () => {
     try {
+      // partial로 받는지 확인 필요함
       const res = await apiChat.POST.chatSession(newChat);
       navi(`/chat/${res.id}`);
     } catch (e) {
@@ -30,7 +33,7 @@ export function NewChat() {
 
   return (
     <div css={[NewChatCss, colorCss]} onClick={handleNewChat}>
-      <TbEdit title="새 채팅"/>
+      <TbEdit title="새 채팅" />
     </div>
   );
 }

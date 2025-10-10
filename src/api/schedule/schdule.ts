@@ -26,7 +26,7 @@ export const scheduleAPI = {
      * @param {} payload 생성할 일정의 내용
      * @returns {} 생성된 일정 객체
      */
-    schedule: async (payload: Schedule.Item) => {
+    schedule: async (payload: Partial<Schedule.Item>):Promise<Schedule.Item> => {
       const url = `/api/schedules/`;
       return await handleApiCall({ method: "POST", url: url, data: payload });
     },
@@ -40,8 +40,8 @@ export const scheduleAPI = {
      */
     scheduleById: async (
       id: number,
-      payload: Schedule.Item
-    ) => {
+      payload: Partial<Schedule.Item>
+    ):Promise<Schedule.Item> => {
       const url = `/api/schedules/${id}/`;
       return await handleApiCall({ method: "PUT", url: url, data: payload });
     },
@@ -56,7 +56,7 @@ export const scheduleAPI = {
     scheduleById: async (
       id: number,
       payload: Partial<Schedule.Item>
-    ) => {
+    ) :Promise<Schedule.Item>=> {
       const url = `/api/schedules/${id}/`;
       return await handleApiCall({ method: "PATCH", url: url, data: payload });
     },

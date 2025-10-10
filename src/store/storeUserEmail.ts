@@ -1,16 +1,22 @@
 import { create } from "zustand";
 
-interface storeUserEmail {
+interface storeUser {
+  nickName: string;
   userEmail: string;
   userProfileImg: string;
-  setUser: (email:string, profileImg:string) => void;
+  setUser: (nickName?: string, email?: string, profileImg?: string) => void;
+  clearUser: () => void;
 }
-export const storeUserEmail = create<storeUserEmail>((set) => ({
+export const storeUser = create<storeUser>((set) => ({
+  nickName: "",
   userEmail: "",
   userProfileImg: "",
-  setUser: (email, profileImg) =>
+  setUser: (nickName, email, profileImg) =>
     set(() => ({
+      nickName: nickName,
       userEmail: email,
       userProfileImg: profileImg,
     })),
+  clearUser: () =>
+    set(() => ({ nickName: "", userEmail: "", userProfileImg: "" })),
 }));

@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import type { NotificationType } from "../api/notification/notification";
+
 
 type NotiType = {
   id: number;
@@ -8,7 +8,7 @@ type NotiType = {
 
 interface storeNotiTypes {
   notiTypes: NotiType[];
-  setNotiTypes: (GETNotiTypesRes: NotificationType[]) => void;
+  setNotiTypes: (GETNotiTypesRes: Noti.Type[]) => void;
 }
 
 export const storeNotiTypes = create<storeNotiTypes>((set) => ({

@@ -9,7 +9,7 @@ import Nickname from "./Nickname";
 import { FiUser } from "react-icons/fi";
 import { toast } from "react-toastify";
 import { apiProfile } from "../../../api/auth/profile";
-import { storeUserEmail } from "../../../store/storeUserEmail";
+import { storeUser } from "../../../store/storeUserEmail";
 
 // 실제 api 콜로 수정
 const useProfile = () => {
@@ -31,7 +31,7 @@ const ProfileSettingsModal = () => {
   const navigate = useNavigate();
   const { getProfile, updateProfile } = useProfile();
   const { modalBackground, inputBorder, scheduleTitleColor } = useThemeColors();
-  const {userEmail} = storeUserEmail();
+  const {userEmail} = storeUser();
 
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);

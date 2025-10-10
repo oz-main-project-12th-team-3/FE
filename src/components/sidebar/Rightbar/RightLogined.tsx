@@ -13,8 +13,8 @@ import { useThemeColors } from "../../../hooks/useThemeColors";
 import { sideBarMixin } from "../../../styles/mixins";
 import { loginApi } from "../../../api/auth/login";
 import { toast } from "react-toastify";
-import { storeUserEmail } from "../../../store/storeUserEmail";
-import { type Schedule, scheduleAPI } from "../../../api/schedule/schdule";
+import { storeUser } from "../../../store/storeUserEmail";
+import { scheduleAPI } from "../../../api/schedule/schdule";
 import { apiNoti } from "../../../api/notification/notification";
 
 export default function RightLogined({
@@ -24,10 +24,10 @@ export default function RightLogined({
 }) {
   const navigate = useNavigate();
   const today = new Date().toISOString().split("T")[0];
-  const [todaySchedules, setTodaySchedules] = useState<Schedule[]>([]);
+  const [todaySchedules, setTodaySchedules] = useState<Schedule.Item[]>([]);
   const [isProfileSettingOpen, setIsProfileSettingOpen] = useState(false);
   const [unreadCount, setUnreadCount] = useState<number>(0);
-  const { userEmail, userProfileImg } = storeUserEmail();
+  const { userEmail, userProfileImg } = storeUser();
 
   const { modalBackground } = useThemeColors();
 
@@ -47,7 +47,9 @@ export default function RightLogined({
   useEffect(() => {
     (async () => {
       try {
-        const res = await apiNoti.GET.notifications("unread");
+        // 일단 하드하게 설정
+        // 여긴 사이드바라 크기가 작음
+        const res = await apiNoti.GET.notifications({ page: 1, page_size: 20 });
         setUnreadCount(res.length);
       } catch (error) {
         toast.error(`알림 불러오기 중 에러 발생:${error}`);
@@ -71,7 +73,7 @@ export default function RightLogined({
 
   const goToPremium = () => {
     // 프리미엄 페이지로 이동
-    navigate("/premium")
+    navigate("/premium");
   };
 
   const handleRoute = (link: string) => {
@@ -82,8 +84,7 @@ export default function RightLogined({
 
   const handleLogout = async () => {
     try {
-      const res = await loginApi.POST.logout();
-      toast.success(res.detail);
+      await loginApi.POST.logout().then(() => toast.success("로그아웃 성공"));
     } catch (error) {
       toast.error(`로그아웃 실패 : ${error}`);
     } finally {

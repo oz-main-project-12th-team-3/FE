@@ -3,7 +3,7 @@ import { handleApiCall, TokenManager } from "../apiClient";
 export type LoginReq = {
   email: string;
   password: string;
-  tfa_code:string;
+  tfa_code?:string;
 };
 
 
@@ -20,7 +20,7 @@ export const loginApi = {
     /**
      * 로그인 메서드
      * @param {LoginReq} payload 이메일, 비번
-     * @returns {Promise<LoginRes>} .detail에 "로그인 성공" 반환됨
+     * @returns {} .detail에 "로그인 성공" 반환됨
      */
     login: async (payload: LoginReq): Promise<Auth.loginResponse> => {
       const url = `/api/auth/login/`;
@@ -51,7 +51,7 @@ export const loginApi = {
      * 로그아웃
      * @returns {Promise<ResDetail>}
      */
-    logout: async (): Promise<API.Detail> => {
+    logout: async () => {
       const url = `/api/auth/logout/`;
       try {
         return await handleApiCall({ method: "POST", url: url });

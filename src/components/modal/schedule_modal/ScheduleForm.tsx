@@ -3,12 +3,12 @@ import { useState, useEffect } from 'react';
 import type { FormEvent } from 'react';
 import { css } from '@emotion/react';
 import { MdCalendarToday, MdAccessTime, MdDescription, MdCheck, MdDelete } from 'react-icons/md';
-import type { Schedule, ScheduleFormData } from './types/schedule';
+import type { ScheduleFormData } from './types/schedule';
 import { useThemeColors } from '../../../hooks/useThemeColors';
 
 // props 타입
 interface ScheduleFormProps {
-  schedule?: Schedule | null;
+  schedule?: Schedule.Item | null;
   selectedDate: string;
   loading: boolean;
   onSave: (formData: ScheduleFormData) => Promise<void>;

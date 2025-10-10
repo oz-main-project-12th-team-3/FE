@@ -55,7 +55,7 @@ export const apiChat = {
      * @param {}
      * @returns {}
      */
-    chatSession: async (payload: Chat.Session): Promise<Chat.Session> => {
+    chatSession: async (payload: Partial<Chat.Session>): Promise<Chat.Session> => {
       const url = `/api/chat-sessions/`;
       return await handleApiCall({ method: "POST", url: url, data: payload });
     },
@@ -85,7 +85,7 @@ export const apiChat = {
     sessionById: async (
       session_id: number,
       payload: Chat.Session
-    ): Promise<API.Detail> => {
+    ) => {
       const url = `/api/chat-sessions/${session_id}/`;
       return await handleApiCall({ method: "PUT", url: url, data: payload });
     },
@@ -105,7 +105,7 @@ export const apiChat = {
      * @param {number} session_id
      * @returns {Promise<API.Detail>} 응답 데이터
      */
-    sessionById: async (session_id: number): Promise<API.Detail> => {
+    sessionById: async (session_id: number) => {
       const url = `/api/chat-sessions/${session_id}/`;
       return await handleApiCall({ method: "DELETE", url: url });
     },

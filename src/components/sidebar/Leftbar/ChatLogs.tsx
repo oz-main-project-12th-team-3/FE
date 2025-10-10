@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import _ from "lodash";
 import { useEffect, useRef, useState } from "react";
-import { apiChat, type Session } from "../../../api/chat/chatSession";
+import { apiChat} from "../../../api/chat/chatSession";
 import DragAndDrop from "../../dragAndDrop/DragAndDrop";
 import { BasicBtnSt } from "../../../styles/baseDesign/basicBtnSt";
 import { toast } from "react-toastify";
@@ -18,7 +18,7 @@ import { TokenManager } from "../../../api/apiClient";
 export function ChatLogs() {
   const { text, scrollColor } = useThemeColors();
   // 더미데이터
-  const [items, setItems] = useState<Session[]>(
+  const [items, setItems] = useState<Chat.Session[]>(
     //   () => {
     //   const mocData = Array.from({ length: 20 }, (_, idx) => {
     //     const baseDate = new Date("2025-10-01T00:00:00Z");
@@ -39,6 +39,7 @@ export function ChatLogs() {
   const [isLoading, setIsLoading] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
   const [page, setPage] = useState(1);
+  const PAGE_SIZE = 20;
 
   const navi = useNavigate();
   const [isSort, setIsSort] = useState<boolean>(true);
@@ -52,11 +53,10 @@ export function ChatLogs() {
         setIsLoading(true);
         const res = await apiChat.GET
           .sessions
-          // { page }
-          ();
+          ({page:page, page_size:PAGE_SIZE});
         console.log("res", res);
 
-        setItems((prev) => sorting(true, [...prev, ...res.sessions]));
+        setItems((prev) => sorting(true, [...prev, ...res.results]));
         setHasNext(
           // res.next_page !== null
           true
@@ -100,15 +100,15 @@ export function ChatLogs() {
 
   const handleDel = async (id: number) => {
     try {
-      const res = await apiChat.DELETE.sessionById(id);
-      toast.info(`${res.detail}`);
+      await apiChat.DELETE.sessionById(id);
+      toast.info(`세션제거 완료`);
       setItems(items.filter((el) => el.id !== id));
     } catch (e) {
       toast.error(`세션 제거 중 에러 발생 : ${e}`);
     }
   };
 
-  const handleItemDnD = (newItems: Session[]) => {
+  const handleItemDnD = (newItems: Chat.Session[]) => {
     setItems(newItems);
     setIsSort(false);
   };

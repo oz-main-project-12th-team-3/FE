@@ -3,7 +3,7 @@ import { css } from "@emotion/react";
 import { useState, useEffect } from "react";
 import { ScheduleList } from "./ScheduleList";
 import { ScheduleForm } from "./ScheduleForm";
-import type { Schedule, ScheduleFormData, ViewType } from "./types/schedule";
+import type {  ScheduleFormData, ViewType } from "./types/schedule";
 import { useSchedule } from "../../../hooks/api/useSchedule";
 import { useThemeColors } from "../../../hooks/useThemeColors";
 import ScheduleHeader from "./ScheduleHeader";
@@ -18,11 +18,11 @@ const ScheduleModal = () => {
   const { initialSchedule, initialView } = location.state || {};
 
   const [view, setView] = useState<ViewType>(initialView||"list");
-  const [schedules, setSchedules] = useState<Schedule[]>([]);
+  const [schedules, setSchedules] = useState<Schedule.Item[]>([]);
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(
     new Date()
   );
-  const [editingSchedule, setEditingSchedule] = useState<Schedule | null>(
+  const [editingSchedule, setEditingSchedule] = useState<Schedule.Item | null>(
     initialSchedule || null
   );
   const [loading, setLoading] = useState<boolean>(false);
@@ -87,7 +87,7 @@ const ScheduleModal = () => {
     setView("form");
   };
 
-  const handleEdit = (schedule: Schedule): void => {
+  const handleEdit = (schedule: Schedule.Item): void => {
     setEditingSchedule(schedule);
     setView("form");
   };

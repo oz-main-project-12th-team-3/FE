@@ -8,15 +8,15 @@ import {
   MdCheckBox,
   MdCheckBoxOutlineBlank 
 } from 'react-icons/md';
-import type { Schedule } from './types/schedule';
+
 import { useThemeColors } from '../../../hooks/useThemeColors';
 import { formatTime } from '../../../utils/time';
 
 interface ScheduleListProps {
-  schedules: Schedule[];
+  schedules: Schedule.Item[];
   loading: boolean;
   onAddNew: () => void
-  onEdit: (schedule: Schedule) => void;
+  onEdit: (schedule: Schedule.Item) => void;
   onDelete: (scheduleId: number) => void;
   onToggleComplete: (scheduleId: number, currentStatus: boolean) => void;
 }
