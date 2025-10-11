@@ -111,7 +111,7 @@ class ApiClient {
             }
 
             const res = await axios.post(
-              `${this.baseUrl}v1/auth/token/refresh/`,
+              `${this.baseUrl}/api/auth/jwt/refresh/`,
               {},
               { withCredentials: true }
             );

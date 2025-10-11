@@ -1,8 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import ReactDOM from "react-dom";
-import useModal from "../../hooks/useModal";
-import { useEffect } from "react";
 import { flexCenter, overlay } from "../../styles/mixins";
 import { motion, AnimatePresence } from "framer-motion";
 import { modalVariants } from "../../styles/modal/modalVariants";
@@ -10,6 +8,8 @@ import { IoArrowBack } from "react-icons/io5";
 import { css } from "@emotion/react";
 import { useThemeColors } from "../../hooks/useThemeColors";
 import { storeSignupForm } from "../../store/storeSignupForm";
+import { storeIsModalOpen } from "../../store/storeisModalOpen";
+import { useEffect } from "react";
 
 export default function Modal() {
   const navigate = useNavigate();
@@ -21,16 +21,19 @@ export default function Modal() {
   // });
   const prevPath = location.state?.prevPath || "/";
   const { resetSignupForm } = storeSignupForm();
-  const { isOpen, openModal, closeModal } = useModal();
+
+  const { isModalOpen, SetModalOpen } = storeIsModalOpen();
 
   useEffect(() => {
-    openModal();
-    return () => closeModal();
-  }, [openModal, closeModal]);
+    SetModalOpen(true)
+    return () => {
+      SetModalOpen(false)
+    };
+  }, []);
 
   // TODO : 모달창 띄우고 뒤로가기 누를시 이전 화면이 제대로 표시되지 않는 문제가 있음
   const handleClose = () => {
-    closeModal();
+    SetModalOpen(false);
     window.history.length > 1
       ? navigate(prevPath, { replace: true })
       : navigate("/", { replace: true });
@@ -46,7 +49,7 @@ export default function Modal() {
 
   return ReactDOM.createPortal(
     <AnimatePresence>
-      {isOpen && (
+      {isModalOpen && (
         <motion.div
           key="overlay"
           css={[overlay, flexCenter()]}

@@ -1,4 +1,5 @@
 import { handleApiCall } from "../apiClient";
+// 결제 일단 스킵
 
 type PaymentStatus = "active" | "refunded";
 

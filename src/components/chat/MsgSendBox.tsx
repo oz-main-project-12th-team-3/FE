@@ -1,45 +1,47 @@
 /** @jsxImportSource @emotion/react */
-import { useRef, useState } from "react";
-import type { Message } from "./ChatContent";
+// import { useRef, useState } from "react";
+import { useState } from "react";
 import { TbMessageCircle } from "react-icons/tb";
 import { css } from "@emotion/react";
 import { useThemeColors } from "../../hooks/useThemeColors";
 import { SIDEBAR_WIDTH } from "../../store/useMousePositionStore";
 import { scrollCss } from "../../styles/mixins";
-import { storeVoiceChat } from "../../store/storeVoiceChat";
-import { IoMdMic, IoMdMicOff } from "react-icons/io";
-import { voiceLogApi } from "../../api/voice/voiceLog";
+// import { storeVoiceChat } from "../../store/storeVoiceChat";
+// import { IoMdMic, IoMdMicOff } from "react-icons/io";
+// import { voiceLogApi } from "../../api/voice/voiceLog";
 import { toast } from "react-toastify";
-import { TokenManager } from "../../api/apiClient";
-import { chatApi, type PostChatMessageApiReq } from "../../api/chat/chatSession";
+// import { TokenManager } from "../../api/apiClient";
+import { apiChat } from "../../api/chat/chatSession";
+import { generateUniqueId } from "../../hooks/generateUniqueId";
 
 interface MsgSendBoxProps {
   sessionId: number;
-  setMessages: React.Dispatch<React.SetStateAction<Message[]>>;
+  setMessages: React.Dispatch<React.SetStateAction<Chat.Log[]>>;
 }
 
 export function MsgSendBox({ sessionId, setMessages }: MsgSendBoxProps) {
   const [input, setInput] = useState("");
   const { text, scrollColor, background } = useThemeColors();
-  const { isVoiceOn } = storeVoiceChat();
-  const userId = TokenManager.getUserId();
-  const [isRecording, setIsRecording] = useState(false);
-  const mediaRecorderRef = useRef<MediaRecorder | null>(null);
-  const audioChunksRef = useRef<Blob[]>([]);
+  // const { isVoiceOn } = storeVoiceChat();
+  // const userId = TokenManager.getUserId();
+  // const [isRecording, setIsRecording] = useState(false);
+  // const mediaRecorderRef = useRef<MediaRecorder | null>(null);
+  // const audioChunksRef = useRef<Blob[]>([]);
 
   // 메시지 전송
   const handleSend = async () => {
-    const payload: PostChatMessageApiReq = {
-        session_id: sessionId,
-        message: input,
-        sender: "user",
-        is_important: false,
-        timestamp: new Date().toISOString(),
-      }
+    const payload: Chat.Log = {
+      // req 바디에 반드시 id를 포함하도록 되어있음....
+      id: Number(generateUniqueId()),
+      session: sessionId,
+      message: input,
+      sender: "user",
+      timestamp: new Date().toISOString(),
+    };
 
     if (!input.trim()) return;
     try {
-      const newMsg = await chatApi.POST.message(sessionId, payload);
+      const newMsg = await apiChat.POST.messageBySessionId(sessionId, payload);
       setMessages((prev) => [...prev, newMsg]);
       setInput("");
     } catch (err) {
@@ -47,82 +49,82 @@ export function MsgSendBox({ sessionId, setMessages }: MsgSendBoxProps) {
     }
   };
 
-  const handleVoiceChat = async () => {
-    if (isRecording) {
-      // 녹음 중지
-      if (mediaRecorderRef.current) {
-        mediaRecorderRef.current.stop();
-      }
-    } else {
-      if (!userId) {
-        if (mediaRecorderRef.current) {
-          mediaRecorderRef.current.stop();
-        }
-        setIsRecording(false);
-        toast.info("로그인이 필요한 서비스 입니다.");
-        return;
-      }
-      // 녹음 시작
-      try {
-        const stream = await navigator.mediaDevices.getUserMedia({
-          audio: true,
-        });
-        const mediaRecorder = new MediaRecorder(stream);
-        mediaRecorderRef.current = mediaRecorder;
-        audioChunksRef.current = [];
+  // const handleVoiceChat = async () => {
+  //   if (isRecording) {
+  //     // 녹음 중지
+  //     if (mediaRecorderRef.current) {
+  //       mediaRecorderRef.current.stop();
+  //     }
+  //   } else {
+  //     if (!userId) {
+  //       if (mediaRecorderRef.current) {
+  //         mediaRecorderRef.current.stop();
+  //       }
+  //       setIsRecording(false);
+  //       toast.info("로그인이 필요한 서비스 입니다.");
+  //       return;
+  //     }
+  //     // 녹음 시작
+  //     try {
+  //       const stream = await navigator.mediaDevices.getUserMedia({
+  //         audio: true,
+  //       });
+  //       const mediaRecorder = new MediaRecorder(stream);
+  //       mediaRecorderRef.current = mediaRecorder;
+  //       audioChunksRef.current = [];
 
-        mediaRecorder.ondataavailable = (event) => {
-          if (event.data.size > 0) {
-            audioChunksRef.current.push(event.data);
-          }
-        };
+  //       mediaRecorder.ondataavailable = (event) => {
+  //         if (event.data.size > 0) {
+  //           audioChunksRef.current.push(event.data);
+  //         }
+  //       };
 
-        mediaRecorder.onstop = async () => {
-          const audioBlob = new Blob(audioChunksRef.current, {
-            type: "audio/webm",
-          });
+  //       mediaRecorder.onstop = async () => {
+  //         const audioBlob = new Blob(audioChunksRef.current, {
+  //           type: "audio/webm",
+  //         });
 
-          await uploadAudioToServer(audioBlob);
+  //         // await uploadAudioToServer(audioBlob);
 
-          stream.getTracks().forEach((track) => track.stop());
-        };
+  //         stream.getTracks().forEach((track) => track.stop());
+  //       };
 
-        mediaRecorder.start();
-        setIsRecording(true);
-      } catch (e) {
-        toast.error(`마이크 접근 실패: ${e}`);
-      }
-    }
-  };
+  //       mediaRecorder.start();
+  //       setIsRecording(true);
+  //     } catch (e) {
+  //       toast.error(`마이크 접근 실패: ${e}`);
+  //     }
+  //   }
+  // };
 
   // 오디오를 서버에 업로드
-  const uploadAudioToServer = async (audioBlob: Blob) => {
-    if (!userId) return;
-    try {
-      const base64Audio = await new Promise<string>((resolve, reject) => {
-        const reader = new FileReader();
-        reader.onloadend = () => resolve(reader.result as string);
-        reader.onerror = reject;
-        reader.readAsDataURL(audioBlob);
-      });
-      const payload = {
-        user_id: userId,
-        session_id: sessionId,
-        input_audio_url: base64Audio,
-      };
+  // const uploadAudioToServer = async (audioBlob: Blob) => {
+  //   if (!userId) return;
+  //   try {
+  //     const base64Audio = await new Promise<string>((resolve, reject) => {
+  //       const reader = new FileReader();
+  //       reader.onloadend = () => resolve(reader.result as string);
+  //       reader.onerror = reject;
+  //       reader.readAsDataURL(audioBlob);
+  //     });
+  //     const payload = {
+  //       user_id: userId,
+  //       session_id: sessionId,
+  //       input_audio_url: base64Audio,
+  //     };
 
-      const res = await voiceLogApi.POST.voiceLog(payload);
+  //     const res = await voiceLogApi.POST.voiceLog(payload);
 
-      if (res.transcribed_text) {
-        setInput(res.transcribed_text);
-      }
+  //     if (res.transcribed_text) {
+  //       setInput(res.transcribed_text);
+  //     }
 
-      setIsRecording(false);
-    } catch (e) {
-      toast.error(`음성 업로드 실패: ${e}`);
-      setIsRecording(false);
-    }
-  };
+  //     setIsRecording(false);
+  //   } catch (e) {
+  //     toast.error(`음성 업로드 실패: ${e}`);
+  //     setIsRecording(false);
+  //   }
+  // };
 
   const colorCss = css`
     background-color: ${background};
@@ -154,7 +156,7 @@ export function MsgSendBox({ sessionId, setMessages }: MsgSendBoxProps) {
           }
         }}
       />
-      {isVoiceOn && (
+      {/* {isVoiceOn && (
         <div onClick={handleVoiceChat}>
           {isRecording ? (
             <IoMdMic title="현재 녹음 중!" className="recoding" />
@@ -162,7 +164,7 @@ export function MsgSendBox({ sessionId, setMessages }: MsgSendBoxProps) {
             <IoMdMicOff title="버튼을 눌러 음성채팅을 시작하세요" />
           )}
         </div>
-      )}
+      )} */}
       <TbMessageCircle onClick={handleSend} />
     </div>
   );

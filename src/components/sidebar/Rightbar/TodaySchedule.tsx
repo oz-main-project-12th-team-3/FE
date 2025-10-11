@@ -6,7 +6,7 @@ import { flexCenter, itemMixin, scrollbarHidden } from "../../../styles/mixins";
 import DragAndDrop from "../../dragAndDrop/DragAndDrop";
 import { formatTime } from "../../../utils/time";
 import { useThemeColors } from "../../../hooks/useThemeColors";
-import type { Schedule } from "../../../api/schedule/schdule";
+
 import { useNavigate } from "react-router-dom";
 
 // any타입은 절대 사용 x
@@ -14,8 +14,8 @@ export function TodaySchedule({
   items,
   setItems,
 }: {
-  items: Schedule[];
-  setItems: (val: Schedule[]) => void;
+  items: Schedule.Item[];
+  setItems: (val: Schedule.Item[]) => void;
 }) {
   const { modalBackground, scheduleTitleColor, descriptionText } =
     useThemeColors();
@@ -70,7 +70,7 @@ export function TodaySchedule({
     padding: 2rem 0;
   `;
 
-  const handleClick = (schedule: Schedule) => {
+  const handleClick = (schedule: Schedule.Item) => {
     navi("modal/schedule", {
       state: { initialSchedule: schedule, initialView: "form" },
     });

@@ -7,12 +7,13 @@ import { useThemeColors } from "../../../hooks/useThemeColors";
 import { validateEmail, validatePassword } from "../../../utils/validator";
 import { loginApi, type LoginReq } from "../../../api/auth/login";
 import { toast } from "react-toastify";
-import { storeUserEmail } from "../../../store/storeUserEmail";
+import { storeUser } from "../../../store/storeUserEmail";
 import { useNavigate } from "react-router-dom";
 
 export default function LoginForm() {
+  // tfa_code 일단 nullable로 스킵
   const [form, setForm] = useState<LoginReq>({ email: "", password: "" });
-  const { setUser } = storeUserEmail();
+  const { setUser } = storeUser();
   const navi = useNavigate();
 
   const [errors, setErrors] = useState({
@@ -80,9 +81,9 @@ export default function LoginForm() {
     if (!emailError && !passwordError) {
       try {
         const res = await loginApi.POST.login(form);
-        console.log(res);
+        // console.log(res);
         
-        setUser(res.email, res.profile_image_url);
+        setUser(res.email);
 
         toast.success(res.detail);
         navi("/");
