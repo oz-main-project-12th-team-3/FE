@@ -8,10 +8,10 @@ export function NotiTypesSetter() {
   useEffect(() => {
     (async () => {
       try {
-        const res = await apiNoti.GET.types();
-        console.log(res);
+        const notiTypeRes = await apiNoti.GET.types();
+        console.log({notiTypeRes});
         
-        setNotiTypes(res);
+        setNotiTypes(notiTypeRes);
       } catch (error) {
         toast.error(`알림 타입 불러오기 실패:${error}`);
         console.log(error);
