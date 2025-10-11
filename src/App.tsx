@@ -26,8 +26,8 @@ const PasswordChangeModal = lazyModal("passwordChang/PasswordChangeModal");
 const DeleteAccountModal = lazyModal("deleteAccount_modal/DeleteAccountModal");
 const ProfileSettingModal = lazyModal(
   "profileSetting_modal/ProfileSettingModal"
-)
-
+);
+const SetTwoFAModal = lazyModal("set_twoFA_modal/SetTwoFAModal");
 
 export default function AppDesktop() {
   return (
@@ -39,7 +39,7 @@ export default function AppDesktop() {
 
       {/* 배경 */}
       <RiveBackGround />
-      <RiveRobot/>
+      <RiveRobot />
 
       <div css={fitScreen}>
         <Routes>
@@ -55,6 +55,7 @@ export default function AppDesktop() {
             <Route path="password" element={<PasswordChangeModal />} />
             <Route path="deleteaccount" element={<DeleteAccountModal />} />
             <Route path="profilesetting" element={<ProfileSettingModal />} />
+            <Route path="setTwoFA" element={<SetTwoFAModal />} />
           </Route>
         </Routes>
       </div>

@@ -115,6 +115,7 @@ export default function RightLogined({
             onChangeProfile={() => navigate("/modal/profilesetting")}
             onChangePassword={() => navigate("/modal/password")}
             onDeleteAccount={() => handleRoute("/modal/deleteaccount")}
+            onSetTwoFA={() => handleRoute("/modal/setTwoFA")}
           />
         ) : (
           // 기본 모드

@@ -148,7 +148,7 @@ export function ChatLogs() {
           )}
         </span>
         <span className="voice_logs_btn" onClick={handleVoiceChat}>
-          음성채팅기록
+          {/* 음성채팅기록 */}
         </span>
       </div>
       <div

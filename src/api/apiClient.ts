@@ -153,7 +153,7 @@ class ApiClient {
   }
 }
 
-const BASE_URL = import.meta.env.VITE_BASE_URL;
+const BASE_URL = import.meta.env.VITE_API_URL;
 const apiClient = new ApiClient(BASE_URL);
 
 export async function handleApiCall<T>(

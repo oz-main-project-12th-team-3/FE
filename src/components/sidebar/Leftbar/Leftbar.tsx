@@ -6,7 +6,7 @@ import { GlassmorphismDesign } from "../../../styles/baseDesign/GlassmorphismDes
 import { css } from "@emotion/react";
 import { Searchbar } from "./Searchbar";
 import { NewChat } from "./NewChatBtn";
-import { VoiceChat } from "./VoiceChat";
+// import { VoiceChat } from "./VoiceChat";
 import { ChatLogs } from "./ChatLogs";
 import { Logo } from "./Logo";
 
@@ -34,8 +34,8 @@ export function Leftbar() {
             <NewChat />
           </div>
           <hr />
-          <VoiceChat />
-          <hr />
+          {/* <VoiceChat /> */}
+          {/* <hr /> */}
           <ChatLogs />
         </div>
       </GlassmorphismDesign>

@@ -2,7 +2,7 @@
 import { css } from "@emotion/react";
 import { Chat } from "./chat/Chat";
 import { Rightbar } from "./sidebar/Rightbar/Rightbar";
-import { useLocation, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { Leftbar } from "./sidebar/Leftbar/Leftbar";
 import React, { useEffect, useState } from "react";
 import Welcome from "./welcome/WelcomePage";

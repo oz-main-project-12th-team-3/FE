@@ -6,12 +6,14 @@ export function ProfileSettings({
   onBack,
   onChangeProfile,
   onChangePassword,
-  onDeleteAccount
+  onDeleteAccount,
+  onSetTwoFA,
 }: {
   onBack: () => void;
   onChangeProfile: () => void;
   onChangePassword: () => void
   onDeleteAccount: () => void
+  onSetTwoFA: () => void
 }) {
 
   const profileSettingCss = css`
@@ -25,6 +27,7 @@ export function ProfileSettings({
     <div css={profileSettingCss}>
       <button css={baseButton} onClick={onChangeProfile}>프로필 변경</button>
       <button css={baseButton} onClick={onChangePassword}>비밀번호 변경</button>
+      <button css={baseButton} onClick={onSetTwoFA}>2차 인증 설정</button>
       <button css={baseButton} onClick={onDeleteAccount}>회원탈퇴</button>
       <button css={baseButton} onClick={onBack}>
         ← 돌아가기
