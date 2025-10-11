@@ -13,6 +13,7 @@ import Home from "./components/Home";
 import { ThemeModeBtn } from "./components/sidebar/Leftbar/ThemeModeBtn";
 import { RiveBackGround } from "./components/background/RiveBackground";
 import { RiveRobot } from "./components/RiveRobot";
+import { SearchModal } from "./components/modal/search/SearchModal";
 
 const lazyModal = (path: string) =>
   React.lazy(() => import(`./components/modal/${path}`));
@@ -56,6 +57,8 @@ export default function AppDesktop() {
             <Route path="deleteaccount" element={<DeleteAccountModal />} />
             <Route path="profilesetting" element={<ProfileSettingModal />} />
             <Route path="setTwoFA" element={<SetTwoFAModal />} />
+            <Route path="search/:search_params" element={<SearchModal />} />
+
           </Route>
         </Routes>
       </div>

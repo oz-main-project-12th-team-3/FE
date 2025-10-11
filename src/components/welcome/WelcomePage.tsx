@@ -164,6 +164,7 @@ export default function Welcome() {
       const res = await apiChat.POST.chatSession(newChat);
       navi(`/chat/${res.id}`);
     } catch (e) {
+      navi("/");
       toast.error(e instanceof Error ? e.message : "새 채팅 생성 실패");
     }
   };
@@ -189,8 +190,6 @@ export default function Welcome() {
           <br />
           자연스러운 대화와 똑똑한 서비스로 새로운 경험을 선사합니다.
         </p>
-
-
 
         {/* 특징 카드 */}
         <div css={cardGrid}>

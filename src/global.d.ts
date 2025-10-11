@@ -42,6 +42,13 @@ declare global {
       last_message: string;
       updated_at: string;
     };
+    type SearchRes = {
+      id: number;
+      session: number;
+      message: string;
+      sender: string;
+      timestamp: string;
+    };
   }
 
   // ============ Search ============

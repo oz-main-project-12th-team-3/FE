@@ -2,8 +2,10 @@ import { handleApiCall } from "../apiClient";
 
 export const apiChatSearch = {
   GET: {
-    query: async (page: API.PageReq, keyword: string) => {
-      if (!keyword) return;
+    query: async (
+      page: API.PageReq,
+      keyword: string
+    ): Promise<API.Paginated<Chat.SearchRes>> => {
       const params = {
         page: String(page.page),
         page_size: String(page.page_size),
