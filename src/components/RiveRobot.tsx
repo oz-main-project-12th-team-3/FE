@@ -87,8 +87,8 @@ const RobotCss = css`
   position: fixed;
   bottom: 2rem;
   right: 10rem;
-  height: 20rem;
-  width: 20rem;
+  height: 10rem;
+  width: 10rem;
   z-index: 1;
   pointer-events: none;
 `;

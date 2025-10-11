@@ -48,6 +48,7 @@ export function SearchModal() {
       } catch (error) {
         toast.error(`검색결과 불러오기중 오류 발생:${error}`);
       } finally {
+        // moc data(test)
         // setSearchResArr([{
         //   id: 1,
         //   session: 1,

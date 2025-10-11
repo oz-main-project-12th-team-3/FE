@@ -1,22 +1,24 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 import { BsChatDots } from "react-icons/bs";
+import { useNavigate } from "react-router-dom";
 
-export function SearchResult({  result }: { result: Chat.SearchRes }) {
+export function SearchResult({ result }: { result: Chat.SearchRes }) {
+  const navi = useNavigate();
+  const handleClick = () => {
+    navi(`/chat/:${result.session}`);
+  };
   return (
-    <div css={searchResultCss}>
+    <div css={searchResultCss} onClick={handleClick}>
       <div className="result-header">
         <BsChatDots className="chat-icon" />
         <span className="result-id">#{result.id}</span>
       </div>
-      
+
       <div className="result-content">
         <p className="result-title">{result.session}</p>
-        <p className="result-preview">
-          {result.message}
-        </p>
+        <p className="result-preview">{result.message}</p>
       </div>
-
     </div>
   );
 }
@@ -76,6 +78,4 @@ const searchResultCss = css`
       text-overflow: ellipsis;
     }
   }
-
-
 `;
