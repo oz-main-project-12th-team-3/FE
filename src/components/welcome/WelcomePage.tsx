@@ -164,7 +164,7 @@ export default function Welcome() {
   // 시작하기 버튼 누를시 즉시 새 채팅 화면으로 이동
   const handleStart = async () => {
     if (!userEmail) {
-      navi("/auth");
+      navi("/modal/auth");
       toast.info("채팅을 시작하려면 로그인 또는 회원가입이 필요합니다.");
       return;
     }
