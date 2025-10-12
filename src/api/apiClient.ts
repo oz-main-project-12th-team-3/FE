@@ -111,7 +111,7 @@ class ApiClient {
             }
 
             const res = await axios.post(
-              `${this.baseUrl}/api/auth/jwt/refresh/`,
+              `${this.baseUrl}/api/auth/token/refresh/`,
               {},
               { withCredentials: true }
             );
@@ -130,7 +130,7 @@ class ApiClient {
                 "Authorization"
               ] = `Bearer ${access_token}`;
             }
-            if (!!this.api(originalRequest)) toast.info(detail);
+            toast.info(detail);
             return this.api(originalRequest);
           } catch (refreshError) {
             TokenManager.clearTokens();

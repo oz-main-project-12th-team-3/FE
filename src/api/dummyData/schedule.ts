@@ -1,4 +1,4 @@
-export let dummySchedules: Schedule.Item[] = [
+export const dummySchedules: Schedule.Item[] = [
   {
     user: 1,
     id: 1,

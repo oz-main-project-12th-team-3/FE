@@ -15,20 +15,15 @@ import { RiveBackGround } from "./components/background/RiveBackground";
 import { RiveRobot } from "./components/RiveRobot";
 import { SearchModal } from "./components/modal/search/SearchModal";
 
-const lazyModal = (path: string) =>
-  React.lazy(() => import(`./components/modal/${path}`));
-
-const Modal = lazyModal("Modal");
-const AuthModal = lazyModal("authmodal/AuthModal");
-const ScheduleModal = lazyModal("schedule_modal/scheduleModal");
-const NotificationModal = lazyModal("notification_modal/NotificationModal");
-const TermsModal = lazyModal("authmodal/TermsModal");
-const PasswordChangeModal = lazyModal("passwordChang/PasswordChangeModal");
-const DeleteAccountModal = lazyModal("deleteAccount_modal/DeleteAccountModal");
-const ProfileSettingModal = lazyModal(
-  "profileSetting_modal/ProfileSettingModal"
-);
-const SetTwoFAModal = lazyModal("set_twoFA_modal/SetTwoFAModal");
+const Modal = React.lazy(() => import("./components/modal/Modal.tsx"));
+const AuthModal = React.lazy(() => import("./components/modal/authmodal/AuthModal.tsx"));
+const ScheduleModal = React.lazy(() => import("./components/modal/schedule_modal/scheduleModal.tsx"));
+const NotificationModal = React.lazy(() => import("./components/modal/notification_modal/NotificationModal.tsx"));
+const TermsModal = React.lazy(() => import("./components/modal/authmodal/TermsModal.tsx"));
+const PasswordChangeModal = React.lazy(() => import("./components/modal/passwordChang/PasswordChangeModal.tsx"));
+const DeleteAccountModal = React.lazy(() => import("./components/modal/deleteAccount_modal/DeleteAccountModal.tsx"));
+const ProfileSettingModal = React.lazy(() => import("./components/modal/profileSetting_modal/ProfileSettingModal.tsx"));
+const SetTwoFAModal = React.lazy(() => import("./components/modal/set_twoFA_modal/SetTwoFAModal.tsx"));
 
 export default function AppDesktop() {
   return (
