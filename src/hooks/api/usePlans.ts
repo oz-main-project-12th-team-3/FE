@@ -1,14 +1,9 @@
-import { apiPlan } from '../../api/plan/plan';
-import type { Plan } from '../../api/plan/plan';
-import { dummyPlans } from '../../api/dummyData/plan';
-
-const USE_DUMMY_API = true; // false로 변경하면 실제 API 호출
+import { useCallback } from "react";
+// ...
 
 export const usePlans = () => {
-  /**
-   * 모든 요금제 조회
-   */
-  const getAllPlans = async (): Promise<Plan[]> => {
+  // ...
+  const getAllPlans = useCallback(async (): Promise<Plan[]> => { // useCallback으로 감싸기
     console.log('usePlans.getAllPlans 호출');
 
     if (USE_DUMMY_API) {
@@ -21,7 +16,7 @@ export const usePlans = () => {
     }
 
     return await apiPlan.GET.plans();
-  };
+  }, []);
 
   /**
    * 특정 요금제 상세 조회
