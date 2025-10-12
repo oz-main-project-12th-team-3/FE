@@ -1,4 +1,4 @@
-import { handleApiCall, TokenManager } from "../apiClient";
+import { handleApiCall } from "../apiClient";
 
 export type LoginReq = {
   email: string;
@@ -29,11 +29,11 @@ export const loginApi = {
         url: url,
         data: payload,
       });
-      TokenManager.setTokens(
-        res.access_token,
-        res.user_id.toString(),
-        res.expires_in
-      );
+      localStorage.setItem("access_token", res.access_token);
+      if (res.refresh_token) {
+        localStorage.setItem("refresh_token", res.refresh_token);
+      }
+      localStorage.setItem("expires_in", res.expires_in.toString());
       return res;
     },
     /**
@@ -56,7 +56,9 @@ export const loginApi = {
       try {
         return await handleApiCall({ method: "POST", url: url });
       } finally {
-        TokenManager.clearTokens();
+        localStorage.removeItem("access_token");
+        localStorage.removeItem("refresh_token");
+        localStorage.removeItem("expires_in");
       }
     },
   },

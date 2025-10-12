@@ -10,7 +10,7 @@ declare global {
       tfa_required: boolean;
       tfa_step: string;
       temporary_access_token: string | null;
-      temporary_refresh_toke: string | null;
+      refresh_token: string | null;
       profile_image_url: string | null;
     };
   }

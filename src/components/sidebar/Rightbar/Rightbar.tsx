@@ -4,7 +4,6 @@ import { GlassmorphismDesign } from "../../../styles/baseDesign/GlassmorphismDes
 import { RightbarPosition } from "./RightbarPosition";
 import RightLogined from "./RightLogined";
 import RightLogouted from "./RightLogouted";
-import { TokenManager } from "../../../api/apiClient";
 import { toast } from "react-toastify";
 
 // 팀 노션 api 명세서
@@ -37,17 +36,30 @@ export function Rightbar() {
   const [isLogin, setIsLogin] = useState<boolean>(false);
 
   useEffect(() => {
-    (() => {
-      try {
-        setIsLogin(
-          !TokenManager.getAccessToken() || !TokenManager.getUserId()
-            ? false
-            : true
-        );
-      } catch (e) {
-        toast.error(`토큰 확인 중 오류가 발생했습니다:${e}`);
+    const getUserIdFromToken = (): number | null => {
+      const token = localStorage.getItem('access_token');
+      if (token) {
+        try {
+          const payload = JSON.parse(atob(token.split('.')[1]));
+          return payload.user_id;
+        } catch {
+          return null;
+        }
       }
-    })();
+      return null;
+    };
+
+    try {
+      const accessToken = localStorage.getItem('access_token');
+      const userId = getUserIdFromToken();
+      setIsLogin(!!accessToken && !!userId);
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        toast.error(`토큰 확인 중 오류가 발생했습니다: ${error.message}`);
+      } else {
+        toast.error(`토큰 확인 중 오류가 발생했습니다: ${String(error)}`);
+      }
+    }
   }, []);
 
   return (

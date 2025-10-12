@@ -1,4 +1,4 @@
-import axios, { isAxiosError, AxiosRequestConfig } from "axios";
+import axios, { isAxiosError, type AxiosRequestConfig } from "axios";
 
 const apiClient = axios.create({
   baseURL: import.meta.env.VITE_API_BASE_URL,
@@ -62,10 +62,10 @@ apiClient.interceptors.request.use(
   }
 );
 
-export const handleApiCall = async (config: AxiosRequestConfig) => {
+export const handleApiCall = async <T>(config: AxiosRequestConfig): Promise<T> => {
   try {
     const res = await apiClient(config);
-    return res.data;
+    return res.data as T;
   } catch (error: unknown) {
     let message = "알 수 없는 오류가 발생했습니다.";
     if (isAxiosError(error)) {

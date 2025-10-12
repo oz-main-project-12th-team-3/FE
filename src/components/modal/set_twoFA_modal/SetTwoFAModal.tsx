@@ -6,7 +6,7 @@ import { apiTwoFA } from "../../../api/twofa/twofa";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { flexCenter, flexColumn } from "../../../styles/mixins";
-import { TokenManager } from "../../../api/apiClient";
+
 
 export default function SetTwoFAModal() {
   const navigate = useNavigate();
@@ -54,7 +54,7 @@ export default function SetTwoFAModal() {
       const response = await apiTwoFA.POST.success({ code });
 
       if (response.token) {
-        TokenManager.setTokens(response.token);
+        localStorage.setItem("access_token", response.token);
         toast.success("2FA 설정이 완료되었습니다!");
         navigate("/");
       }
