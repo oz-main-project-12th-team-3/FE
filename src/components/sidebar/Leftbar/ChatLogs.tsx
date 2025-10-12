@@ -52,8 +52,7 @@ export function ChatLogs() {
         if (!accessToken) return;
         setIsLoading(true);
         const res = await apiChat.GET
-          .sessions
-          ({page:page, page_size:PAGE_SIZE});
+          .sessions({page:page, page_size:PAGE_SIZE});
         console.log("res", res);
 
         setItems((prev) => sorting(true, [...prev, ...res.results]));

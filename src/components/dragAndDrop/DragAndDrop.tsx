@@ -95,7 +95,7 @@ export default function DragAndDrop<T>({
   };
 
   // 드롭
-  const handleDrop: DragHandler = (e, _index) => {
+  const handleDrop: DragHandler = (e) => {
     e.preventDefault();
     setIsDragging(false);
     setDragIndex(null);
@@ -107,7 +107,7 @@ export default function DragAndDrop<T>({
   };
 
   // 드래그 엔드
-  const handleDragEnd: DragHandler = (e, _index) => {
+  const handleDragEnd: DragHandler = (e) => {
     const target = e.currentTarget as HTMLElement;
     target.style.opacity = "1";
     setIsDragging(false);

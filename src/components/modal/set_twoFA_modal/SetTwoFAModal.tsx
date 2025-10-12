@@ -34,7 +34,7 @@ export default function SetTwoFAModal() {
           setSecret(response.secret);
         }
         setLoading(false);
-      } catch (err) {
+      } catch {
         toast.error("QR 코드를 불러오는데 실패했습니다.");
         setLoading(false);
       }
@@ -58,8 +58,8 @@ export default function SetTwoFAModal() {
         toast.success("2FA 설정이 완료되었습니다!");
         navigate("/");
       }
-    } catch (err: any) {
-      setError(err.message || "인증에 실패했습니다. 코드를 다시 확인해주세요.");
+    } catch (err: unknown) {
+      setError((err as Error).message || "인증에 실패했습니다. 코드를 다시 확인해주세요.");
       toast.error("인증에 실패했습니다.");
       setLoading(false);
     }

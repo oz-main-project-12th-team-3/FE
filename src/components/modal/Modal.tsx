@@ -29,14 +29,14 @@ export default function Modal() {
     return () => {
       SetModalOpen(false)
     };
-  }, []);
+  }, [SetModalOpen]);
 
   // TODO : 모달창 띄우고 뒤로가기 누를시 이전 화면이 제대로 표시되지 않는 문제가 있음
   const handleClose = () => {
     SetModalOpen(false);
-    window.history.length > 1
+    void (window.history.length > 1
       ? navigate(prevPath, { replace: true })
-      : navigate("/", { replace: true });
+      : navigate("/", { replace: true }));
     // console.log(prevPath);
 
     resetSignupForm();

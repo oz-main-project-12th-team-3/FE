@@ -1,6 +1,6 @@
-import React from "react";
 import { useDeviceTypeHook } from "./hooks/useDeviceType.tsx";
 import { useDeviceTypeStore } from "./store/useDeviceTypeStore.ts";
+import React from "react";
 
 const AppMobile = React.lazy(() => import("./AppMobile.tsx"));
 const AppDesktop = React.lazy(() => import("./App.tsx"));

@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { useThemeColors } from "../../../hooks/useThemeColors";
 import AccountInfo from "./AccountInfo";
@@ -45,18 +45,14 @@ const ProfileSettingsModal = () => {
   const [previewImage, setPreviewImage] = useState<string | null>(null);
   const [nickname, setNickname] = useState("");
 
-  useEffect(() => {
-    loadProfile();
-  }, []);
-
-  const loadProfile = async () => {
+  const loadProfile = useCallback(async () => {
     try {
       setLoading(true);
       const data = await getProfile();
 
       setInitialImageUrl(data.profile_image_url);
       setInitialNickname(data.nickname);
-      setEmail(userEmail); 
+      setEmail(userEmail);
 
       setPreviewImage(data.profile_image_url);
       setNickname(data.nickname);
@@ -66,7 +62,11 @@ const ProfileSettingsModal = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [getProfile, userEmail, navigate]);
+
+  useEffect(() => {
+    loadProfile();
+  }, [loadProfile]);
 
   const handleImageChange = (imageUrl: string) => {
     setPreviewImage(imageUrl);
@@ -124,6 +124,7 @@ const ProfileSettingsModal = () => {
     initialNickname,
     loading,
     saving,
+    updateProfile,
   ]);
 
   const modalStyle = css`

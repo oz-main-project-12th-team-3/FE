@@ -15,28 +15,27 @@ export function DragPreview({ label, isVisible }: DragPreviewProps) {
   const { text, background } = useThemeColors();
   const boxRef = useRef<HTMLDivElement | null>(null);
 
-  let rafId: number | null = null;
-
-  const updatePosition = () => {
-    if (rafId) return;
-    rafId = requestAnimationFrame(() => {
-      // 내부에서 재구독 > 리랜더링 유발
-      const { x, y } = useMousePositionStore.getState().mousePosition;
-      if (x === null || y === null || !boxRef.current) {
-        rafId = null;
-        return;
-      }
-
-      boxRef.current.style.left = `${x}px`;
-      boxRef.current.style.top = `${y}px`;
-
-      rafId = null;
-    });
-  };
-
   useEffect(() => {
+    let rafId: number | null = null;
+
+    const updatePosition = () => {
+      if (rafId) return;
+      rafId = requestAnimationFrame(() => {
+        const { x, y } = useMousePositionStore.getState().mousePosition;
+        if (x === null || y === null || !boxRef.current) {
+          rafId = null;
+          return;
+        }
+
+        boxRef.current.style.left = `${x}px`;
+        boxRef.current.style.top = `${y}px`;
+
+        rafId = null;
+      });
+    };
+
     if (isVisible) {
-      updatePosition(); // 이거 안하면 1프레임씩 삑사리남...
+      updatePosition();
     }
     window.addEventListener("dragover", updatePosition);
     return () => {
@@ -45,7 +44,7 @@ export function DragPreview({ label, isVisible }: DragPreviewProps) {
         cancelAnimationFrame(rafId);
       }
     };
-  }, [isVisible]);
+  }, [isVisible, boxRef]);
 
   // 상태 변수에 따라 유동적으로 적용
   const colorCss = css`

@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { ScheduleList } from "./ScheduleList";
 import { ScheduleForm } from "./ScheduleForm";
 import type {  ScheduleFormData, ViewType } from "./types/schedule";
@@ -64,7 +64,7 @@ const ScheduleModal = () => {
   `;
 
   // 일정 목록 로드
-  const loadSchedules = async (): Promise<void> => {
+  const loadSchedules = useCallback(async (): Promise<void> => {
     if (!selectedDate) return;
     setLoading(true);
     try {
@@ -76,11 +76,11 @@ const ScheduleModal = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [selectedDate, getSchedules]);
 
   useEffect(() => {
     loadSchedules();
-  }, [selectedDate]);
+  }, [loadSchedules]);
 
   const handleAddNew = (): void => {
     setEditingSchedule(null);

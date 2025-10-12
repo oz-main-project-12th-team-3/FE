@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useCallback, useRef } from "react";
 import { useMousePositionStore } from "../../store/useMousePositionStore";
 
 /**
@@ -7,13 +7,13 @@ import { useMousePositionStore } from "../../store/useMousePositionStore";
  * @returns {null}
  */
 export function MousePositonSetter() {
-  let raf = 0;
-  const onMove = (e: MouseEvent) => {
-    if (raf) cancelAnimationFrame(raf);
-    raf = requestAnimationFrame(() => {
+  const raf = useRef(0);
+  const onMove = useCallback((e: MouseEvent) => {
+    if (raf.current) cancelAnimationFrame(raf.current);
+    raf.current = requestAnimationFrame(() => {
       useMousePositionStore.getState().setMousePosition(e.clientX, e.clientY);
     });
-  };
+  }, []);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -23,9 +23,9 @@ export function MousePositonSetter() {
     return () => {
       window.removeEventListener("mousemove", onMove);
       window.removeEventListener("dragover", onMove);
-      if (raf) cancelAnimationFrame(raf);
+      if (raf.current) cancelAnimationFrame(raf.current);
     };
-  }, []);
+  }, [onMove]);
 
   return null;
 }

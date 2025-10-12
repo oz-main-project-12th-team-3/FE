@@ -46,7 +46,7 @@ export function ChatContent() {
       }
     };
     fetchMessages();
-  }, [sessionId]);
+  }, [sessionId, page]);
 
   const borderColorCss = css`
     border-color: ${text};

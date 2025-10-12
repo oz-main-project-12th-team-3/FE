@@ -25,13 +25,13 @@ export const apiPaymentHistory = {
     /**
      * 결제 내역 조회
      * @param param
-     * subscription_id (int): 특정 구독에 해당하는 결제 내역 필터링 가능
+     * subscription_id (int): 특정 구독에 해당하는 결제 내역 필터링 가능
      *
-     * status (string): 결제 상태 필터 (e.g., success, refunded)
+     * status (string): 결제 상태 필터 (e.g., success, refunded)
      *
-     * start_date (datetime): 조회 시작 일시
+     * start_date (datetime): 조회 시작 일시
      *
-     * end_date (datetime): 조회 종료 일시
+     * end_date (datetime): 조회 종료 일시
      *
      * @returns {}
      */

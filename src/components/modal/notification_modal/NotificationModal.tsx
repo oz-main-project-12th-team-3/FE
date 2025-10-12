@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { css } from "@emotion/react";
 import { motion } from "framer-motion";
 import NotificationHeader from "./NotificationHeader";
@@ -54,11 +54,11 @@ const NotificationModal = () => {
   // 기존에 원본 타입과 키값이 달라 같은 밸류를 다른 키값으로 반복적으로 매핑되던것을 원본 타입에 맞춰 수정함
   // notiTypes가 서버측에서 타입들을 뽑아오는것이어서 undefined 가능
   // undefined일땐 unknown으로 지정함
-  const mapNotification = (n: Noti.Item): NotificationUI => {
+  const mapNotification = useCallback((n: Noti.Item): NotificationUI => {
     const typeCode =
       notiTypes.find((el) => el.id === n.notification_type)?.code || "unknown";
     return { ...n, type: typeCode, time: formatRelativeTime(n.created_at) };
-  };
+  }, [notiTypes]);
 
   const modalContainer = css`
     background: ${modalBackground};
@@ -107,19 +107,20 @@ const NotificationModal = () => {
     };
 
     fetchNotifications();
-  }, [activeTab, page]);
+  }, [activeTab, page, hasMore, isLoading, mapNotification]);
 
   // 스크롤 이벤트 핸들러
-  useEffect(() => {
-    const handleScroll = () => {
-      if (contentRef.current && !isLoading && hasMore) {
-        const { scrollTop, scrollHeight, clientHeight } = contentRef.current;
-        if (scrollTop + clientHeight >= scrollHeight - 20) { // threshold for near-bottom
-          setPage((prev) => prev + 1);
-        }
+   
+  const handleScroll = useCallback(() => {
+    if (contentRef.current && !isLoading && hasMore) {
+      const { scrollTop, scrollHeight, clientHeight } = contentRef.current;
+      if (scrollTop + clientHeight >= scrollHeight - 20) { // threshold for near-bottom
+        setPage((prev) => prev + 1);
       }
-    };
+    }
+  }, [isLoading, hasMore, setPage, contentRef]);
 
+  useEffect(() => {
     const ref = contentRef.current;
     if (ref) {
       ref.addEventListener("scroll", handleScroll);
@@ -130,7 +131,7 @@ const NotificationModal = () => {
         ref.removeEventListener("scroll", handleScroll);
       }
     };
-  }, [isLoading, hasMore]);
+  }, [handleScroll, contentRef]);
 
   // 알림 단건 읽음 처리
   const handleMarkAsRead = async (id: number) => {

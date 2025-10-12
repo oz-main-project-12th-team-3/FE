@@ -17,6 +17,6 @@ export function NotiTypesSetter() {
         console.log(error);
       }
     })();
-  }, []);
+  }, [setNotiTypes]);
   return null;
 }

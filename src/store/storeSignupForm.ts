@@ -18,7 +18,7 @@ export const INIT_SIGNUP_FORM = {
 
 interface storeSignupForm {
   signupForm: ClientSignupForm;
-  setSignupForm: (val: any) => void;
+  setSignupForm: (val: ClientSignupForm) => void;
   resetSignupForm: () => void;
 }
 

@@ -1,171 +1,80 @@
-import axios from "axios";
-import type {
-  AxiosInstance,
-  InternalAxiosRequestConfig,
-  AxiosError,
-  AxiosRequestConfig,
-  AxiosResponse,
-  Method,
-} from "axios";
-import { toast } from "react-toastify";
+import axios, { isAxiosError, AxiosRequestConfig } from "axios";
 
-const NO_AUTH_URLS = [
-  "auth/signup/",
-  "auth/login/",
-  "auth/password-reset/",
-  "auth/email-check/",
-  "plans/",
-  "notification-types/",
-];
+const apiClient = axios.create({
+  baseURL: import.meta.env.VITE_API_BASE_URL,
+  withCredentials: true,
+});
 
-export class TokenManager {
-  static setTokens(accessToken: string, userId?: string, expiresIn?: number) {
-    sessionStorage.setItem("access_token", accessToken);
-    if (userId) sessionStorage.setItem("user_id", userId);
-    if (expiresIn) {
-      const expirationTime = Date.now() + expiresIn * 1000; // 밀리초로 변환
-      sessionStorage.setItem("expiration_time", expirationTime.toString());
-    }
-  }
+// 요청 인터셉터: 모든 요청에 대해 토큰 유효성 검사 및 갱신 시도
+apiClient.interceptors.request.use(
+  async (config) => {
+    const access_token = localStorage.getItem("access_token");
+    const refresh_token = localStorage.getItem("refresh_token");
 
-  static clearTokens() {
-    sessionStorage.removeItem("access_token");
-    sessionStorage.removeItem("user_id");
-    sessionStorage.removeItem("expiration_time");
-  }
-
-  static getAccessToken(): string | null {
-    return sessionStorage.getItem("access_token");
-  }
-
-  static getUserId(): number | null {
-    const id = sessionStorage.getItem("user_id");
-    return id ? parseInt(id, 10) : null;
-  }
-
-  static getExpirationTime(): number | null {
-    const exp = sessionStorage.getItem("expiration_time");
-    return exp ? parseInt(exp, 10) : null;
-  }
-
-  static isAuthenticated(): boolean {
-    return !!this.getAccessToken();
-  }
-
-  static isTokenExpired(): boolean {
-    const expirationTime = this.getExpirationTime();
-    if (!expirationTime) return true;
-    return expirationTime < Date.now() + 30000; // 30초 마진
-  }
-}
-
-class ApiClient {
-  private api: AxiosInstance;
-  private readonly baseUrl: string;
-
-  constructor(baseUrl: string) {
-    this.baseUrl = baseUrl;
-    this.api = axios.create({
-      baseURL: baseUrl,
-      timeout: 10000,
-      headers: { "Content-Type": "application/json" },
-    });
-
-    this.setupInterceptors();
-  }
-
-  private setupInterceptors() {
-    // Request interceptor
-    this.api.interceptors.request.use((config: InternalAxiosRequestConfig) => {
-      const isNoAuthUrl = NO_AUTH_URLS.some((url) =>
-        config.url?.startsWith(url)
-      );
-      // console.log(config);
-      if (isNoAuthUrl) return config;
-      
-
-      const token = TokenManager.getAccessToken();
-      if (token) config.headers["Authorization"] = `Bearer ${token}`;
+    // 토큰이 없는 경우 (로그인 전 또는 로그아웃 상태)
+    if (!access_token && !refresh_token) {
       return config;
-    });
+    }
 
-    // Response interceptor
-    this.api.interceptors.response.use(
-      (response) => response,
-      async (error: AxiosError) => {
-        const originalRequest = error.config as InternalAxiosRequestConfig & {
-          _retry?: boolean;
-        };
-
-        // 비로그인 상태일시 스킵
-        const hasToken = !!TokenManager.getAccessToken();
-        if (!hasToken) return Promise.reject(error);
-
-        if (error.response?.status === 401 && !originalRequest._retry) {
-          originalRequest._retry = true;
-
-          try {
-            const accessToken = TokenManager.getAccessToken();
-            if (accessToken && !TokenManager.isTokenExpired()) {
-              return this.api(originalRequest);
-            }
-
-            const res = await axios.post(
-              `${this.baseUrl}/api/auth/token/refresh/`,
-              {},
-              { withCredentials: true }
-            );
-            console.log("refresh",res);
-            
-
-            const { access_token, user_id, detail, expires_in } = res.data;
-            TokenManager.setTokens(
-              access_token,
-              user_id?.toString(),
-              expires_in
-            );
-
-            if (originalRequest.headers) {
-              originalRequest.headers[
-                "Authorization"
-              ] = `Bearer ${access_token}`;
-            }
-            toast.info(detail);
-            return this.api(originalRequest);
-          } catch (refreshError) {
-            TokenManager.clearTokens();
-            if (hasToken) {
-              TokenManager.clearTokens();
-              if (typeof window !== "undefined") {
-                toast.error("세션이 만료되었습니다. 다시 로그인해주세요.");
-              }
-            }
-            return Promise.reject(refreshError);
-          }
-        }
-        return Promise.reject(error);
+    // access_token이 유효한 경우
+    if (access_token) {
+      const payload = JSON.parse(atob(access_token.split(".")[1]));
+      const now = Math.floor(Date.now() / 1000);
+      if (payload.exp > now) {
+        config.headers["Authorization"] = `Bearer ${access_token}`;
+        return config;
       }
-    );
+    }
+
+    // access_token이 만료되었지만 refresh_token이 있는 경우
+    if (refresh_token) {
+      try {
+        const refresh_res = await axios.post(
+          `${import.meta.env.VITE_API_BASE_URL}/api/auth/token/refresh/`,
+          {},
+          { withCredentials: true }
+        );
+        const new_access_token = refresh_res.data.access_token;
+        const new_refresh_token = refresh_res.data.refresh_token;
+        const new_expires_in = refresh_res.data.expires_in;
+
+        localStorage.setItem("access_token", new_access_token);
+        localStorage.setItem("refresh_token", new_refresh_token);
+        localStorage.setItem("expires_in", new_expires_in);
+
+        config.headers["Authorization"] = `Bearer ${new_access_token}`;
+        return config;
+      } catch (refreshError) {
+        // 리프레시 토큰 만료 또는 유효하지 않은 경우
+        localStorage.removeItem("access_token");
+        localStorage.removeItem("refresh_token");
+        localStorage.removeItem("expires_in");
+        // 로그인 페이지로 리다이렉트 또는 오류 처리
+        window.location.href = "/login"; // 예시
+        return Promise.reject(refreshError); // 요청 중단
+      }
+    }
+
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
   }
+);
 
-  get instance(): AxiosInstance {
-    return this.api;
-  }
-}
-
-const BASE_URL = import.meta.env.VITE_API_URL;
-const apiClient = new ApiClient(BASE_URL);
-
-export async function handleApiCall<T>(
-  config: { method: Method } & AxiosRequestConfig
-): Promise<T> {
+export const handleApiCall = async (config: AxiosRequestConfig) => {
   try {
-    const res: AxiosResponse<T> = await apiClient.instance.request<T>(config);
+    const res = await apiClient(config);
     return res.data;
-  } catch (error: any) {
-    const message = error.response?.data?.message || error.message;
+  } catch (error: unknown) {
+    let message = "알 수 없는 오류가 발생했습니다.";
+    if (isAxiosError(error)) {
+      message = error.response?.data?.detail || error.message;
+    } else if (error instanceof Error) {
+      message = error.message;
+    }
     throw new Error(
       `!ERROR!\nmethod: ${config.method}\nurl: ${config.url}\ndetails: ${message}`
     );
   }
-}
+};

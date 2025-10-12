@@ -149,8 +149,8 @@ const DeleteAccountModal = () => {
     try {
       await apiUser.DELETE.user(payload);
       toast.success(`회원 탈퇴 성공`)
-    } catch (error) {
-      
+    } catch {
+      // 에러 처리 로직 (예: 로깅) 또는 의도적으로 무시
     }
   };
 

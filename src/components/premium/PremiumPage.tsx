@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import PricingCard from "./PricingCard";
 import { usePlans } from "../../hooks/api/usePlans";
 import type { Plan } from "../../api/plan/plan";
@@ -17,19 +17,20 @@ export default function PremiumPage() {
 
   const { premiumTitle, premiumSubtitle, text } = useThemeColors();
 
-  useEffect(() => {
-    loadPlans();
-  }, []);
-
-  const loadPlans = async () => {
+  const loadPlans = useCallback(async () => {
     try {
       const data = await getAllPlans();
       setPlans(data.filter((plan) => plan.is_active));
     } catch (error) {
       console.error("요금제 로드 실패:", error);
     } finally {
+      // 의도적으로 비워둠 또는 후처리 로직
     }
-  };
+  }, [getAllPlans]);
+
+  useEffect(() => {
+    loadPlans();
+  }, [loadPlans]);
 
   const containerStyle = css`
     ${fitScreen}

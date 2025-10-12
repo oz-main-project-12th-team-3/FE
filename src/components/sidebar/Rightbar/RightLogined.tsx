@@ -42,7 +42,7 @@ export default function RightLogined({
         toast.error(`일정 불러오기 중 에러 발생:${error}`);
       }
     })();
-  }, [todaySchedules]);
+  }, [today]);
 
   useEffect(() => {
     (async () => {
@@ -55,7 +55,7 @@ export default function RightLogined({
         toast.error(`알림 불러오기 중 에러 발생:${error}`);
       }
     })();
-  }, [unreadCount]);
+  }, []);
 
   const loginedContainerCss = css`
     display: flex;

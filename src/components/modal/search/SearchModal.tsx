@@ -63,7 +63,7 @@ export function SearchModal() {
       setSearchResArr([]);
       setParams("");
     };
-  }, [params]);
+  }, [params, page, search_params]);
 
   useEffect(() => {
     return () => {

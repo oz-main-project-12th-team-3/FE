@@ -10,8 +10,14 @@ export const apiNoti = {
      * @returns {} 응답 데이터
      */
     types: async (): Promise<Noti.Type[]> => {
-      const url = `/api/notification-types/`;
-      return await handleApiCall({ method: "GET", url: url });
+      let results: Noti.Type[] = [];
+      let url: string | null = `/api/notification-types/`;
+      while (url) {
+        const response: API.Paginated<Noti.Type> = await handleApiCall({ method: "GET", url: url });
+        results = results.concat(response.results);
+        url = response.next;
+      }
+      return results;
     },
     /**
      * 단일 타입 조회 GET 메서드

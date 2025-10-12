@@ -27,7 +27,7 @@ export default function AuthModalContent() {
   if (currentTab && currentTab !== tab) {
     setTab(currentTab);
   }
-}, [currentTab]);
+}, [currentTab, tab]);
 
 const handleChangeTab = (value:tab) => {
   setTab(value);
