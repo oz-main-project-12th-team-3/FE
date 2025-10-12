@@ -10,6 +10,10 @@ import { useThemeColors } from "../../../hooks/useThemeColors";
 export default function SocialLogin() {
   const { descriptionText } = useThemeColors();
 
+  const handleSocialLogin = (provider: string) => {
+    window.location.href = `/api/social/login/${provider}/`;
+  };
+
   const wrap = css`
     text-align: center;
     font-size: 14px;
@@ -74,16 +78,16 @@ export default function SocialLogin() {
       <div css={wrap}>
         <p>간편 로그인</p>
         <div css={btnGrid}>
-          <button css={socialButton}>
+          <button css={socialButton} onClick={() => handleSocialLogin('naver')}>
             <img src={naver_login} alt="Naver Login" />
           </button>
-          <button css={socialButton}>
+          <button css={socialButton} onClick={() => handleSocialLogin('kakao')}>
             <img src={kakao_login} alt="Kakao Login" />
           </button>
-          <button css={socialButton}>
+          <button css={socialButton} onClick={() => handleSocialLogin('google-oauth2')}>
             <img src={google_login} alt="Google Login" />
           </button>
-          <button css={[socialButton, githubBtn]}>
+          <button css={[socialButton, githubBtn]} onClick={() => handleSocialLogin('github')}>
             <img src={github} alt="GitHub Login" />
             Sign in with
           </button>
